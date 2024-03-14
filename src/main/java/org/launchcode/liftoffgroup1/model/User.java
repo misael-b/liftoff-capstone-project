@@ -1,23 +1,31 @@
 package org.launchcode.liftoffgroup1.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.util.Objects;
 
+@Entity
 public class User {
     private String name;
 
     private String email;
 
-    private final int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    private static int nextId = 1;
-
+//    private static int nextId = 1;
+//
+//    public User() {
+//        id = nextId;
+//        nextId++;
+//    }
     public User() {
-        id = nextId;
-        nextId++;
     }
-
     public User(String name, String email) {
-        this();
         this.name = name;
         this.email = email;
     }

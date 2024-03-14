@@ -1,8 +1,14 @@
 package org.launchcode.liftoffgroup1.model;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
+@Entity
 public class Product {
+    @ManyToOne
+    private User user;
+
     private String name;
 
     private String description;
@@ -13,23 +19,27 @@ public class Product {
 
     private double price;
 
-
-    private final int id;
-
-    private static int nextId = 1;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     public Product() {
-        this.id = nextId;
-        nextId++;
     }
 
     public Product(String name, String description, String picture, String category, double price) {
-        this();
         this.name = name;
         this.description = description;
         this.picture = picture;
         this.category = category;
         this.price = price;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getName() {
