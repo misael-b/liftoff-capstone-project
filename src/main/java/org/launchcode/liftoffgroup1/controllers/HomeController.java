@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,7 @@ public class HomeController {
         return "list";
     }
 
-    @PostMapping("search")
+    @RequestMapping("search")
     public String displaySearchResults(Model model, @RequestParam String searchTerm, @RequestParam(required = false) String sortBy){
         model.addAttribute("searchTerm", searchTerm);
         List<Product> products = productService.search(searchTerm, sortBy);
@@ -78,6 +79,32 @@ public class HomeController {
         }
 
         return "redirect:list";
+    }
+
+    @PostMapping("addToShoppingCartSearch")
+    public String processAddToShoppingCartSearch(RedirectAttributes redirectAttributes, @RequestParam int shoppingCartId, @RequestParam String searchTerm, @RequestParam(required = false) String sortBy){
+        Optional<Product> productOptional = productRepository.findById(shoppingCartId);
+        if (productOptional.isPresent()){
+            Product product = productOptional.get();
+            product.setInShoppingCart(true);
+            productRepository.save(product);
+        }
+        redirectAttributes.addAttribute("searchTerm", searchTerm);
+        List<Product> products = productService.search(searchTerm, sortBy);
+        redirectAttributes.addAttribute("products", products);
+
+        return "redirect:search";
+    }
+
+    @PostMapping("removeFromShoppingCart")
+    public String processRemoveFromShoppingCart(@RequestParam int removeShoppingCartId){
+        Optional<Product> productOptional = productRepository.findById(removeShoppingCartId);
+        if (productOptional.isPresent()){
+            Product product = productOptional.get();
+            product.setInShoppingCart(false);
+            productRepository.save(product);
+        }
+        return "redirect:/user/shopping-cart";
     }
 
 
