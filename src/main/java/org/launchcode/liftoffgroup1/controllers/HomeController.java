@@ -2,7 +2,7 @@ package org.launchcode.liftoffgroup1.controllers;
 
 import org.launchcode.liftoffgroup1.model.Product;
 import org.launchcode.liftoffgroup1.model.data.ProductRepository;
-import org.launchcode.liftoffgroup1.services.ProductService;
+import org.launchcode.liftoffgroup1.model.data.ShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,28 +12,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 
 @Controller
 public class HomeController {
-
-    private final ProductService productService;
     @Autowired
     private ProductRepository productRepository;
 
-    public HomeController(ProductService productService) {
-        this.productService = productService;
-    }
+    @Autowired
+    private ShoppingCartRepository shoppingCartRepository;
 
     @GetMapping("/")
     public String index(Model model) {
-
-
         model.addAttribute("title", "Welcome to the Marketplace");
-
         return "index";
     }
 
@@ -43,28 +36,16 @@ public class HomeController {
             model.addAttribute("products", productRepository.findAll());
             return "list";
         }
-        List<Product> products = productService.list(sortBy);
-//        if(!(sortBy == null)){
-//            ArrayList<Product> sortedProducts =  ProductData.sortByPrice(sortBy,products);
-//            model.addAttribute("products", sortedProducts);
-//        }else {
-            model.addAttribute("products", products);
-//        }
-
+        List<Product> products = list(sortBy);
+        model.addAttribute("products", products);
         return "list";
     }
 
     @RequestMapping("search")
     public String displaySearchResults(Model model, @RequestParam String searchTerm, @RequestParam(required = false) String sortBy){
         model.addAttribute("searchTerm", searchTerm);
-        List<Product> products = productService.search(searchTerm, sortBy);
-        //ArrayList<Product> products =  ProductData.findBySearchTerm(searchTerm);
-//        if(!(sortBy == null)){
-//            ArrayList<Product> sortedProducts =  ProductData.sortByPrice(sortBy,products);
-//            model.addAttribute("products", sortedProducts);
-//        }else {
-            model.addAttribute("products", products);
-//        }
+        List<Product> products = search(searchTerm, sortBy);
+        model.addAttribute("products", products);
         return "list-search";
     }
 
@@ -75,7 +56,7 @@ public class HomeController {
         if (productOptional.isPresent()){
             Product product = productOptional.get();
             product.setInShoppingCart(true);
-            productRepository.save(product);
+            shoppingCartRepository.save(product);
         }
 
         return "redirect:list";
@@ -87,10 +68,10 @@ public class HomeController {
         if (productOptional.isPresent()){
             Product product = productOptional.get();
             product.setInShoppingCart(true);
-            productRepository.save(product);
+            shoppingCartRepository.save(product);
         }
         redirectAttributes.addAttribute("searchTerm", searchTerm);
-        List<Product> products = productService.search(searchTerm, sortBy);
+        List<Product> products = search(searchTerm, sortBy);
         redirectAttributes.addAttribute("products", products);
 
         return "redirect:search";
@@ -98,14 +79,35 @@ public class HomeController {
 
     @PostMapping("removeFromShoppingCart")
     public String processRemoveFromShoppingCart(@RequestParam int removeShoppingCartId){
-        Optional<Product> productOptional = productRepository.findById(removeShoppingCartId);
+        Optional<Product> productOptional = shoppingCartRepository.findById(removeShoppingCartId);
         if (productOptional.isPresent()){
             Product product = productOptional.get();
             product.setInShoppingCart(false);
-            productRepository.save(product);
+            shoppingCartRepository.save(product);
         }
         return "redirect:/user/shopping-cart";
     }
 
+    public List<Product> list(String sortBy) {
+        List<Product> products = productRepository.findAllBy();
+        products = sortByPrice(products, sortBy == null || sortBy.equals("low to high"));
+        return products;
+    }
 
+    public List<Product> search(String term, String sortBy) {
+        List<Product> products = productRepository.findByNameContainsOrCategoryContainsOrDescriptionContains(term, term, term);
+
+        products = sortByPrice(products, sortBy == null || sortBy.equals("low to high"));
+
+        return products;
+    }
+
+    private List<Product> sortByPrice(List<Product> products, boolean asc) {
+        if (asc)
+            products.sort((o1, o2) -> Double.compare(o1.getPrice(), o2.getPrice()));
+        else
+            products.sort((o1, o2) -> Double.compare(o2.getPrice(), o1.getPrice()));
+
+        return products;
+    }
 }
