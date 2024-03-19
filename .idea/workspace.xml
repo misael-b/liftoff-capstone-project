@@ -5,20 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1950d97-173f-4abb-b8c8-c5737fd5ddbd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/frontend/LiftoffProject/.eslintrc.cjs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/LiftoffProject/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/LiftoffProject/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/LiftoffProject/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/LiftoffProject/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/LiftoffProject/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/LiftoffProject/public/vite.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/LiftoffProject/src/App.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/LiftoffProject/src/App.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/LiftoffProject/src/assets/react.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/LiftoffProject/src/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/LiftoffProject/src/main.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/LiftoffProject/vite.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/launchcode/liftoffgroup1/LiftoffGroup1Application.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/launchcode/liftoffgroup1/models/JSON.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/launchcode/liftoffgroup1/LiftoffGroup1ApplicationTests.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,8 +66,9 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "android.gradle.sync.needed": "true",
     "git-widget-placeholder": "frontend",
-    "last_opened_file_path": "C:/Users/krake/OneDrive/Desktop/LaunchCode"
+    "last_opened_file_path": "C:/Users/krake/OneDrive/Desktop/LiftoffProject/backend"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
