@@ -15,6 +15,24 @@
             <div>
                 <ul>
                     <li><a th:href="@{/list}">List</a></li>
+                    <li><a th:href="@{/post/create}">Create a new post</a></li>
+                    <li><a th:href="@{/user}">User Home Page</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div th:fragment="page-header-logged-in">
+        <div>
+            <div>
+                <a th:href="@{/}">Marketplace</a>
+            </div>
+            <div>
+                <ul>
+                    <li><a th:href="@{/list}">List</a></li>
+                    <li><a th:href="@{/post/create}">Create a new post</a></li>
+                    <li><a th:href="@{/user}">User Home Page</a></li>
+                    <li><a th:href="@{/user/shopping-cart}">User Shopping Cart</a></li>
                 </ul>
             </div>
         </div>

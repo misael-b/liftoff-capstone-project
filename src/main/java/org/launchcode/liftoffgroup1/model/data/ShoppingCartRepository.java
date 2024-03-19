@@ -1,9 +1,9 @@
 package org.launchcode.liftoffgroup1.model.data;
 
-import org.launchcode.liftoffgroup1.model.User;
+import org.launchcode.liftoffgroup1.model.Product;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Integer> {
+public interface ShoppingCartRepository extends CrudRepository<Product, Integer> {
 }

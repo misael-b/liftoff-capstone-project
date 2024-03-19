@@ -26,6 +26,7 @@
             <th width="35%">Description</th>
             <th>Category</th>
             <th>Price</th>
+            <th></th>
         </tr>
 
         <tr th:each="product : ${products}">
@@ -35,6 +36,14 @@
                 <th th:text = "${product.description}"></th>
                 <th th:text = "${product.category}"></th>
                 <th th:text = "'$' + ${product.price}"></th>
+                <th>
+                    <form method="post" th:action="@{/addToShoppingCart}">
+                            <p style="visibility: hidden">
+                                <input type="text" th:value="${product.id}" name="shoppingCartId" id="shoppingCartId" />
+                            </p>
+                        <button type="submit" >Buy</button>
+                    </form>
+                </th>
 
         </tr>
 
