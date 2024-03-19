@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="~{fragments :: head}"></head>
+
+<body>
+<div th:replace="~{fragments :: page-header}"></div>
+
+<form th:action="@{/search}" method = "post">
+    <label> Sort by:
+        <select name="sortBy" onchange="this.form.submit()">
+            <option value="">*Select One*</option>
+            <option value="high to low">Price (High-Low)</option>
+            <option value="low to high">Price (Low-High)</option>
+        </select>
+
+    </label>
+
+
+    <div  style="visibility: hidden">
+        <p>
+            <label for="searchTerm">Keyword:</label>
+            <input type="text" th:value="${searchTerm}" name="searchTerm" id="searchTerm" />
+        </p>
+
+    </div>
+
+
+
+</form>
+
+<table style="width:100%">
+
+    <tr th:each="product : ${products}">
+
+        <th> <img th:src="${product.picture}" style="width:200px;height:200px;"> </th>
+        <th th:text = "${product.name}"></th>
+        <th th:text = "${product.description}"></th>
+        <th th:text = "${product.category}"></th>
+        <th th:text = "${product.price}"></th>
+
+
+    </tr>
+
+
+</table>
+
+</body>
+</html>
