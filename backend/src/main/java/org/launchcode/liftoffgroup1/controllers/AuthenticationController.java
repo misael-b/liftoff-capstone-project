@@ -4,10 +4,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.launchcode.liftoffgroup1.model.User;
 import org.launchcode.liftoffgroup1.model.data.UserRepository;
-//import org.launchcode.liftoffgroup1.model.dto.AuthResponseDTO;
+import org.launchcode.liftoffgroup1.model.dto.AuthResponseDTO;
 import org.launchcode.liftoffgroup1.model.dto.LoginDTO;
 import org.launchcode.liftoffgroup1.model.dto.RegisterDTO;
-//import org.launchcode.liftoffgroup1.security.JwtTokenGenerator;
+import org.launchcode.liftoffgroup1.security.JwtTokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,15 +30,15 @@ public class AuthenticationController {
 
     private PasswordEncoder passwordEncoder;
 
-//    private JwtTokenGenerator jwtTokenGenerator;
+    private JwtTokenGenerator jwtTokenGenerator;
 
     @Autowired
     public AuthenticationController(AuthenticationManager authenticationManager, UserRepository userRepository,
-                                    PasswordEncoder passwordEncoder) {
+                                    PasswordEncoder passwordEncoder, JwtTokenGenerator jwtTokenGenerator) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-//        this.jwtTokenGenerator = jwtTokenGenerator;
+        this.jwtTokenGenerator = jwtTokenGenerator;
     }
 
 //    private static final String userSessionKey = "user";
@@ -129,21 +129,21 @@ public class AuthenticationController {
 
     }
 
-//   @PostMapping("login")
-//    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDTO){
+   @PostMapping("login")
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDTO){
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
+       SecurityContextHolder.getContext().setAuthentication(authentication);
+       String token = jwtTokenGenerator.generateToken(authentication);
+       return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
+   }
+
+//    @PostMapping("login")
+//    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO){
 //        Authentication authentication = authenticationManager.authenticate(
 //                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
 //       SecurityContextHolder.getContext().setAuthentication(authentication);
 //       String token = jwtTokenGenerator.generateToken(authentication);
-//       return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
-//   }
-
-    @PostMapping("login")
-    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO){
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
-       SecurityContextHolder.getContext().setAuthentication(authentication);
-//       String token = jwtTokenGenerator.generateToken(authentication);
-       return new ResponseEntity<>("login successful", HttpStatus.OK);}
+//       return new ResponseEntity<>("login successful", HttpStatus.OK);}
 
 }

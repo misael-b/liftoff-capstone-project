@@ -18,13 +18,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-//    private JwtAuthEntryPoint authEntryPoint;
+    private JwtAuthEntryPoint authEntryPoint;
     private CustomUserDetailsService userDetailsService;
 
     @Autowired
-    public SecurityConfig(CustomUserDetailsService userDetailsService) {
+    public SecurityConfig(CustomUserDetailsService userDetailsService, JwtAuthEntryPoint authEntryPoint) {
         this.userDetailsService = userDetailsService;
-//        this.authEntryPoint = authEntryPoint;
+        this.authEntryPoint = authEntryPoint;
     }
 
     @Bean
@@ -35,15 +35,15 @@ public class SecurityConfig {
                 .requestMatchers("/", "/list/**", "/api/auth/**", "/search", "/api/auth/login").permitAll()
                 .anyRequest().authenticated()
 //                                .anyRequest().permitAll()
-//        ).exceptionHandling((exception)-> exception.
-//                        authenticationEntryPoint(authEntryPoint))
+        ).exceptionHandling((exception)-> exception.
+                        authenticationEntryPoint(authEntryPoint))
 
-                ).formLogin((form) -> form
+                .formLogin((form) -> form
                         .loginPage("/user/login")
                         .permitAll()
                 ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-//        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
 
     }
@@ -59,8 +59,8 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public JwtAuthenticationFilter jwtAuthenticationFilter(){
-//        return new JwtAuthenticationFilter();
-//    }
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter(){
+        return new JwtAuthenticationFilter();
+    }
 }
