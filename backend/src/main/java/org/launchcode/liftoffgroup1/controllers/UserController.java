@@ -34,4 +34,9 @@ public class UserController {
         model.addAttribute("user", userRepository.findById(1).get());
         return "user/view-shopping-cart";
     }
+
+    @GetMapping("login")
+    public String displayUserLoginPage(Model model){
+        return "user/login";
+    }
 }
