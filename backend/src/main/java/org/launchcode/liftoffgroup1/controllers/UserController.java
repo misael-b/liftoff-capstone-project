@@ -1,9 +1,11 @@
 package org.launchcode.liftoffgroup1.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.launchcode.liftoffgroup1.model.data.ProductRepository;
 import org.launchcode.liftoffgroup1.model.data.ShoppingCartRepository;
 import org.launchcode.liftoffgroup1.model.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +25,9 @@ public class UserController {
     private ShoppingCartRepository shoppingCartRepository;
 
     @GetMapping()
-    public String displayUserHomePage(Model model){
+    public String displayUserHomePage(Model model, HttpServletRequest request, UsernamePasswordAuthenticationToken token){
+//        String sessionId = request.getRequestedSessionId();
+//        request.getSession().getId()
         model.addAttribute("user", userRepository.findById(1).get());
         return "user/index";
     }

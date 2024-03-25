@@ -38,7 +38,8 @@ public class SecurityConfig {
                         .loginPage("/user/login").defaultSuccessUrl("/", true)
                         .permitAll()
 //                ).rememberMe(Customizer.withDefaults()
-                ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
+                ).logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer.deleteCookies("JSESSIONID")
+                ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
 
 
         return http.build();
