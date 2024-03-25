@@ -35,8 +35,8 @@ public class UserController {
         return "user/view-shopping-cart";
     }
 
-    @GetMapping("login")
-    public String displayUserLoginPage(Model model){
-        return "user/login";
-    }
+//    @GetMapping("login")
+//    public String displayUserLoginPage(Model model){
+//        return "user/login";
+//    }
 }

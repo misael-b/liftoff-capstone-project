@@ -4,14 +4,27 @@
 <head th:replace="~{fragments :: head}"></head>
 
 <body>
-<div th:replace="~{fragments :: page-header-logged-in}"></div>
+
 <h1>User Login</h1>
-<form>
-<!--<form th:action="@{/login}" method="post">-->
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
+<form method="post">
+    <div>
+        <label th:for="username">Username
+            <input th:field="${loginDTO.username}">
+        </label>
+<!--        <p class="error" th:errors="${loginDTO.username}"></p>-->
+    </div>
+    <div >
+        <label>Password
+            <input th:field="${loginDTO.password}" type="password">
+        </label>
+<!--        <p class="error" th:errors="${loginFormDTO.password}"></p>-->
+    </div>
+
+    <input type="submit" value="Log In" />
 </form>
+
+<p>Don't have an account? <a href="/user/register">Register for one.</a></p>
+
 
 </body>
 </html>

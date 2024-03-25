@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,14 +30,16 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/", "/list/**", "/api/auth/**", "/search", "/api/auth/login").permitAll()
+                .requestMatchers("/", "/list/**", "/api/auth/**", "/search", "/user/login", "user/register").permitAll()
                 .anyRequest().authenticated()
 //                                .anyRequest().permitAll()
 
                 ).formLogin((form) -> form
-                        .loginPage("/user/login")
+                        .loginPage("/user/login").defaultSuccessUrl("/", true)
                         .permitAll()
-                ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+//                ).rememberMe(Customizer.withDefaults()
+                ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
+
 
         return http.build();
 

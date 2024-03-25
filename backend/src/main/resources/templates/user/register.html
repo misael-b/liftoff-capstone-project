@@ -7,29 +7,32 @@
 <body>
 
 <form method="post">
-
     <div>
         <label>Name
-            <input name="name" />
+            <input th:field="${registerDTO.name}"/>
         </label>
     </div>
 
     <div>
         <label>email
-            <input name = "email" />
+            <input th:field="${registerDTO.email}"/>
         </label>
     </div>
-
     <div>
         <label>Username
-            <input name = "username" />
+            <input th:field="${registerDTO.username}" />
         </label>
+        <p th:errors="${registerDTO.username}"></p>
     </div>
-
-
-    <div >
+    <div>
         <label>Password
-            <input name = "password" type="password" />
+            <input th:field="${registerDTO.password}" type="password" />
+        </label>
+        <p th:errors="${registerDTO.password}"></p>
+    </div>
+    <div>
+        <label>Verify Password
+            <input th:field="${registerDTO.verifyPassword}" type="password" />
         </label>
     </div>
 

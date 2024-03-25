@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Objects;
 
@@ -23,19 +24,15 @@ public class User {
 
     private String role;
 
-//    private static int nextId = 1;
-//
-//    public User() {
-//        id = nextId;
-//        nextId++;
-//    }
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
     public User() {
     }
     public User(String name, String email, String username, String password) {
         this.name = name;
         this.email = email;
         this.username = username;
-        this.password = password;
+        this.password = encoder.encode(password);
         this.role = "USER";
     }
 
@@ -71,10 +68,6 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getRole() {
         return role;
     }
@@ -86,6 +79,10 @@ public class User {
     @Override
     public String toString() {
         return name;
+    }
+//
+    public boolean isMatchingPassword(String password) {
+        return encoder.matches(password, this.password);
     }
 
     @Override
