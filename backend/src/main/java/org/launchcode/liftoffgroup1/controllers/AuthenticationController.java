@@ -63,6 +63,7 @@ public class AuthenticationController {
         User newUser = new User(registerFormDTO.getName(), registerFormDTO.getEmail(),
                 registerFormDTO.getUsername(),registerFormDTO.getPassword());
         userRepository.save(newUser);
+        request.setAttribute("session", registerFormDTO.getName());
 
         return "redirect: ";
     }
@@ -97,6 +98,7 @@ public class AuthenticationController {
 //            TODO:Error handling
             return "user/login";
         }
+        request.setAttribute("session", loginFormDTO.getName());
 
         return "redirect: /user";
     }

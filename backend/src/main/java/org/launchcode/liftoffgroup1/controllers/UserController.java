@@ -1,11 +1,14 @@
 package org.launchcode.liftoffgroup1.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.launchcode.liftoffgroup1.model.data.ProductRepository;
 import org.launchcode.liftoffgroup1.model.data.ShoppingCartRepository;
 import org.launchcode.liftoffgroup1.model.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,18 +27,22 @@ public class UserController {
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
 
+
+
     @GetMapping()
-    public String displayUserHomePage(Model model, HttpServletRequest request, UsernamePasswordAuthenticationToken token){
-//        String sessionId = request.getRequestedSessionId();
-//        request.getSession().getId()
-        model.addAttribute("user", userRepository.findById(1).get());
+    public String displayUserHomePage(Model model, Authentication authentication){
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+        model.addAttribute("user",username);
         return "user/index";
     }
 
     @GetMapping("shopping-cart")
-    public String displayUserShoppingCart(Model model){
+    public String displayUserShoppingCart(Model model, Authentication authentication){
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
         model.addAttribute("products", shoppingCartRepository.findAll());
-        model.addAttribute("user", userRepository.findById(1).get());
+        model.addAttribute("user", username);
         return "user/view-shopping-cart";
     }
 
