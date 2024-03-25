@@ -26,6 +26,8 @@ public class UserController {
 
     private ArrayList<Product> shoppingCart;
 
+    private String user = "poijfif";
+
     public UserController() {
         this.shoppingCart = new ArrayList<>();
     }
@@ -42,8 +44,16 @@ public class UserController {
     public String displayUserShoppingCart(Model model, Authentication authentication){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String username = userDetails.getUsername();
-        model.addAttribute("products", shoppingCart);
-        model.addAttribute("user", username);
+        if (username.equals(user)){
+            model.addAttribute("products", shoppingCart);
+            model.addAttribute("user", username);
+        }else{
+            clearShoppingCart();
+            model.addAttribute("products", shoppingCart);
+            model.addAttribute("user", username);
+            user = username;
+        }
+
         return "user/view-shopping-cart";
     }
 
