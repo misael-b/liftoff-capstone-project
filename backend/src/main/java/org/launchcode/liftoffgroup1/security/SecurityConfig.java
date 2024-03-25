@@ -37,7 +37,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/", "/list/**", "/api/auth/**", "/search", "/user/login", "user/register").permitAll()
+                .requestMatchers("/", "/list/**", "/search", "/user/login", "user/register").permitAll()
                 .anyRequest().authenticated()
 //                                .anyRequest().permitAll()
 
@@ -46,7 +46,8 @@ public class SecurityConfig {
                         .permitAll()
 //                                .successHandler(new CustomAuthenticationSuccessHandler())
 //                ).rememberMe(Customizer.withDefaults()
-                ).logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer.deleteCookies("JSESSIONID").invalidateHttpSession(true)
+                ).logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer.deleteCookies("JSESSIONID")
+                        .invalidateHttpSession(true)
                 ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
 
 

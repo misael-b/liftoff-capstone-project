@@ -1,8 +1,13 @@
 package org.launchcode.liftoffgroup1.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.launchcode.liftoffgroup1.model.Product;
 import org.launchcode.liftoffgroup1.model.data.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,13 +33,32 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("title", "Welcome to the Marketplace");
+    public String index(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            model.addAttribute("title", "Welcome to the Marketplace");
+            model.addAttribute("id", "");
+        }else {
+            model.addAttribute("title", "Welcome to the Marketplace");
+            String Id = request.getSession().getId();
+            model.addAttribute("id", Id);
+        }
+
         return "index";
     }
 
+
     @RequestMapping("list")
-    public String displayAllProducts(Model model, @RequestParam(required = false) String sortBy){
+    public String displayAllProducts(Model model, @RequestParam(required = false) String sortBy,
+                                     HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            model.addAttribute("id", "");
+        } else{
+            String Id = request.getSession().getId();
+            model.addAttribute("id", Id);
+        }
+
         if (sortBy == null){
             model.addAttribute("products", productRepository.findAll());
             return "list";
@@ -45,7 +69,17 @@ public class HomeController {
     }
 
     @RequestMapping("search")
-    public String displaySearchResults(Model model, @RequestParam String searchTerm, @RequestParam(required = false) String sortBy){
+    public String displaySearchResults(Model model, @RequestParam String searchTerm,
+                                       @RequestParam(required = false) String sortBy,
+                                       HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            model.addAttribute("id", "");
+        } else{
+            String Id = request.getSession().getId();
+            model.addAttribute("id", Id);
+        }
+
         model.addAttribute("searchTerm", searchTerm);
         List<Product> products = search(searchTerm, sortBy);
         model.addAttribute("products", products);

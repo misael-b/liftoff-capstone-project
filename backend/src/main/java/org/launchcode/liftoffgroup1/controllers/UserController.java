@@ -26,7 +26,7 @@ public class UserController {
 
     private ArrayList<Product> shoppingCart;
 
-    private String user = "poijfif";
+    private String user = "";
 
     public UserController() {
         this.shoppingCart = new ArrayList<>();

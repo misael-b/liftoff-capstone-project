@@ -3,7 +3,8 @@
 <head th:replace="~{fragments :: head}"></head>
 
 <body>
-    <div th:replace="~{fragments :: page-header}"></div>
+<th:block th:unless="${id.length()}"><div th:replace="~{fragments :: page-header}"></div></th:block>
+<th:block th:if="${id.length()}"><div th:replace="~{fragments :: page-header-logged-in}"></div></th:block>
 
     <form th:action="@{/list}" method = "post">
         <label> Sort by:
