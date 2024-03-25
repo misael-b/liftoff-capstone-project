@@ -2,7 +2,6 @@ package org.launchcode.liftoffgroup1.controllers;
 
 import org.launchcode.liftoffgroup1.model.Product;
 import org.launchcode.liftoffgroup1.model.data.ProductRepository;
-import org.launchcode.liftoffgroup1.model.data.ShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +20,12 @@ public class HomeController {
     @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
-    private ShoppingCartRepository shoppingCartRepository;
+
+    private UserController userController;
+
+    public HomeController(UserController userController) {
+        this.userController = userController;
+    }
 
     @GetMapping("/")
     public String index(Model model) {
@@ -55,8 +58,9 @@ public class HomeController {
         Optional<Product> productOptional = productRepository.findById(shoppingCartId);
         if (productOptional.isPresent()){
             Product product = productOptional.get();
-            product.setInShoppingCart(true);
-            shoppingCartRepository.save(product);
+            //product.setInShoppingCart(true);
+            userController.addToShoppingCart(product);
+            //shoppingCartRepository.save(product);
         }
 
         return "redirect:list";
@@ -67,8 +71,9 @@ public class HomeController {
         Optional<Product> productOptional = productRepository.findById(shoppingCartId);
         if (productOptional.isPresent()){
             Product product = productOptional.get();
-            product.setInShoppingCart(true);
-            shoppingCartRepository.save(product);
+//            product.setInShoppingCart(true);
+//            shoppingCartRepository.save(product);
+            userController.addToShoppingCart(product);
         }
         redirectAttributes.addAttribute("searchTerm", searchTerm);
         List<Product> products = search(searchTerm, sortBy);
@@ -79,11 +84,12 @@ public class HomeController {
 
     @PostMapping("removeFromShoppingCart")
     public String processRemoveFromShoppingCart(@RequestParam int removeShoppingCartId){
-        Optional<Product> productOptional = shoppingCartRepository.findById(removeShoppingCartId);
+        Optional<Product> productOptional = productRepository.findById(removeShoppingCartId);
         if (productOptional.isPresent()){
             Product product = productOptional.get();
-            product.setInShoppingCart(false);
-            shoppingCartRepository.save(product);
+//            product.setInShoppingCart(false);
+//            productRepository.save(product);
+            userController.removeFromShoppingCart(product);
         }
         return "redirect:/user/shopping-cart";
     }

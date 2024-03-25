@@ -42,11 +42,11 @@ public class SecurityConfig {
 //                                .anyRequest().permitAll()
 
                 ).formLogin((form) -> form
-                        .loginPage("/user/login").defaultSuccessUrl("/", true)
+                        .loginPage("/user/login").defaultSuccessUrl("/user", true)
                         .permitAll()
 //                                .successHandler(new CustomAuthenticationSuccessHandler())
 //                ).rememberMe(Customizer.withDefaults()
-                ).logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer.deleteCookies("JSESSIONID")
+                ).logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer.deleteCookies("JSESSIONID").invalidateHttpSession(true)
                 ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
 
 

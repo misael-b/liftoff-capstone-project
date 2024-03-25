@@ -19,7 +19,6 @@ public class Product {
 
     private double price;
 
-    private boolean inShoppingCart;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -89,13 +88,6 @@ public class Product {
         return id;
     }
 
-    public boolean isInShoppingCart() {
-        return inShoppingCart;
-    }
-
-    public void setInShoppingCart(boolean inShoppingCart) {
-        this.inShoppingCart = inShoppingCart;
-    }
 
     @Override
     public String toString() {

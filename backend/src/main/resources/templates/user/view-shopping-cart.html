@@ -20,7 +20,7 @@
 
     </tr>
 
-    <tr th:each="product : ${products}" th:if = "${product.inShoppingCart}">
+    <tr th:each="product : ${products}" th:if = "${products}">
 
         <th> <img th:src="${product.picture}" style="width:200px;height:200px;"> </th>
         <th th:text = "${product.name}"></th>
