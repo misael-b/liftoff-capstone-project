@@ -92,9 +92,7 @@ public class HomeController {
         Optional<Product> productOptional = productRepository.findById(shoppingCartId);
         if (productOptional.isPresent()){
             Product product = productOptional.get();
-            //product.setInShoppingCart(true);
             userController.addToShoppingCart(product);
-            //shoppingCartRepository.save(product);
         }
 
         return "redirect:list";
@@ -105,8 +103,6 @@ public class HomeController {
         Optional<Product> productOptional = productRepository.findById(shoppingCartId);
         if (productOptional.isPresent()){
             Product product = productOptional.get();
-//            product.setInShoppingCart(true);
-//            shoppingCartRepository.save(product);
             userController.addToShoppingCart(product);
         }
         redirectAttributes.addAttribute("searchTerm", searchTerm);
@@ -121,8 +117,6 @@ public class HomeController {
         Optional<Product> productOptional = productRepository.findById(removeShoppingCartId);
         if (productOptional.isPresent()){
             Product product = productOptional.get();
-//            product.setInShoppingCart(false);
-//            productRepository.save(product);
             userController.removeFromShoppingCart(product);
         }
         return "redirect:/user/shopping-cart";
