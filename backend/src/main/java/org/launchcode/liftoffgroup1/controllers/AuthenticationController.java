@@ -51,6 +51,8 @@ public class AuthenticationController {
         user.setUsername(registerDTO.getUsername());
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
         user.setRole("USER");
+        user.setName(registerDTO.getName());
+        user.setEmail(registerDTO.getEmail());
         userRepository.save(user);
         return new ResponseEntity<>("User registered success", HttpStatus.OK);
 
