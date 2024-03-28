@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/auth")
+@RequestMapping("/login")
 public class AuthenticationController {
     private AuthenticationManager authenticationManager;
     private UserRepository userRepository;
@@ -42,23 +42,7 @@ public class AuthenticationController {
 
 
 
-    @PostMapping("register")
-    public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO){
-        if (userRepository.existsByUsername(registerDTO.getUsername())){
-            return new ResponseEntity<>("Username is taken", HttpStatus.BAD_REQUEST);
-        }
-        User user = new User();
-        user.setUsername(registerDTO.getUsername());
-        user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
-        user.setRole("USER");
-        user.setName(registerDTO.getName());
-        user.setEmail(registerDTO.getEmail());
-        userRepository.save(user);
-        return new ResponseEntity<>("User registered success", HttpStatus.OK);
-
-    }
-
-   @PostMapping("login")
+   @PostMapping()
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDTO){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
