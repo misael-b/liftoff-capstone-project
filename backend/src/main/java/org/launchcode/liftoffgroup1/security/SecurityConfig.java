@@ -32,9 +32,9 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/", "/list/**", "/api/auth/**", "/search", "/api/auth/login").permitAll()
-                .anyRequest().authenticated()
-//                                .anyRequest().permitAll()
+//                .requestMatchers("/", "/list/**", "/api/auth/**", "/search", "/api/auth/login").permitAll()
+//                .anyRequest().authenticated()
+                                .anyRequest().permitAll()
         ).exceptionHandling((exception)-> exception.
                         authenticationEntryPoint(authEntryPoint))
 
