@@ -8,27 +8,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("user")
 public class UserController {
 
-    @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
     private UserRepository userRepository;
 
 
     private PasswordEncoder passwordEncoder;
 
-
+    @Autowired
+    public UserController(ProductRepository productRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.productRepository = productRepository;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @GetMapping("/{username}")
     public User getUserInfo(@PathVariable String username){
@@ -51,7 +52,7 @@ public class UserController {
 
     }
 
-    @PatchMapping("/{username}/edit")
+    @PatchMapping("/{username}")
     public ResponseEntity<String> editUser(@PathVariable String username, @RequestBody RegisterDTO registerDTO){
         Optional<User> optionalUser = userRepository.findByUsername(username);
         if(optionalUser.isPresent()){
@@ -59,12 +60,13 @@ public class UserController {
             user.setName(registerDTO.getName());
             user.setEmail(registerDTO.getEmail());
             user.setPassword(registerDTO.getPassword());
+            userRepository.save(user);
             return new ResponseEntity<>("User details have been updated!", HttpStatus.OK);
         }
         return new ResponseEntity<>("User does not exist!", HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("{username}")
+    @DeleteMapping("/{username}")
     public ResponseEntity<String> deleteUser(@PathVariable String username, @RequestBody RegisterDTO registerDTO){
         Optional<User> user = userRepository.findByUsername(username);
         if(user.isPresent()){

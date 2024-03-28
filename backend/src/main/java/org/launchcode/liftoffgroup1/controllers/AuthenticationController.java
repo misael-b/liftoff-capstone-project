@@ -1,10 +1,8 @@
 package org.launchcode.liftoffgroup1.controllers;
 
-import org.launchcode.liftoffgroup1.model.User;
 import org.launchcode.liftoffgroup1.model.data.UserRepository;
 import org.launchcode.liftoffgroup1.model.dto.AuthResponseDTO;
 import org.launchcode.liftoffgroup1.model.dto.LoginDTO;
-import org.launchcode.liftoffgroup1.model.dto.RegisterDTO;
 import org.launchcode.liftoffgroup1.security.JwtTokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,28 +11,24 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("login")
 public class AuthenticationController {
     private AuthenticationManager authenticationManager;
     private UserRepository userRepository;
 
-    private PasswordEncoder passwordEncoder;
 
     private JwtTokenGenerator jwtTokenGenerator;
 
     @Autowired
-    public AuthenticationController(AuthenticationManager authenticationManager, UserRepository userRepository,
-                                    PasswordEncoder passwordEncoder, JwtTokenGenerator jwtTokenGenerator) {
+    public AuthenticationController(AuthenticationManager authenticationManager, UserRepository userRepository, JwtTokenGenerator jwtTokenGenerator) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
         this.jwtTokenGenerator = jwtTokenGenerator;
     }
 
@@ -42,7 +36,8 @@ public class AuthenticationController {
 
 
 
-   @PostMapping()
+
+   @PostMapping("login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDTO){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
