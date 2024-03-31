@@ -58,9 +58,18 @@ public class UserController {
         Optional<User> optionalUser = userRepository.findByUsername(username);
         if(optionalUser.isPresent()){
             User user = optionalUser.get();
-            user.setName(registerDTO.getName());
-            user.setEmail(registerDTO.getEmail());
-            user.setPassword(registerDTO.getPassword());
+            if(!registerDTO.getName().isEmpty()){
+                user.setName(registerDTO.getName());
+            }
+
+            if(!registerDTO.getEmail().isEmpty()){
+                user.setEmail(registerDTO.getEmail());
+            }
+
+            if(!registerDTO.getPassword().isEmpty()){
+                user.setPassword(registerDTO.getPassword());
+            }
+
             userRepository.save(user);
             return new ResponseEntity<>("User details have been updated!", HttpStatus.OK);
         }
@@ -68,8 +77,8 @@ public class UserController {
     }
 
     @DeleteMapping("/{username}")
-    public ResponseEntity<String> deleteUser(@PathVariable String username, @RequestBody RegisterDTO registerDTO){
-        Optional<User> user = userRepository.findByUsername(username);
+    public ResponseEntity<String> deleteUser(@RequestBody RegisterDTO registerDTO){
+        Optional<User> user = userRepository.findByUsername(registerDTO.getUsername());
         if(user.isPresent()){
             User user1 = user.get();
             userRepository.delete(user1);
