@@ -15,6 +15,7 @@ import java.util.Optional;
 
 
 @RestController
+@CrossOrigin("http://localhost:3000/")
 public class HomeController {
     @Autowired
     private ProductRepository productRepository;
