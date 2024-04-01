@@ -1,5 +1,5 @@
 "use client";
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
 const search3 = () => {
@@ -21,6 +21,7 @@ const search3 = () => {
 
             if (response.status === 200) {
                 console.log(response)
+                console.log(response.data)
             }
         } catch (e) {
             console.log("error", e);
@@ -28,21 +29,26 @@ const search3 = () => {
     }
 
     const handleChange = (event) => {
-        const {search, value} = event.target;
-        setWord(prevWord => ({ ...prevWord, [search]: value}));
+        const {name, value} = event.target;
+        setWord(prevWord => ({ ...prevWord, [name]: value}));
     };
-  return (
-    <form onSubmit={handleSearch}>
-        <input
-            type="text"
-            name="search"
-            value={word.search}
-            onChange={handleChange}
-            placeholder='Search:'
-        />
-        <button type="submit">Search</button>
-    </form>
-  )
+
+        return (
+            <>
+                <form onSubmit={handleSearch}>
+                    <input 
+                        type="text"
+                        name="search"
+                        value={word.search}
+                        onChange={handleChange}
+                        placeholder="Search:"
+                    />
+                    <button type="submit">Search</button>
+                </form>
+            </>
+          )
+
+  
 }
 
 export default search3

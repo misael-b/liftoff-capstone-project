@@ -3,24 +3,17 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 
-const handleSearch = async (event) => {
-    event.preventDefault();
+const handleSearch = async (word) => {
+    event.preventDefault()
+    if (word != null) {
         try {
-            const response = await axios.get(
-                "http://localhost:8080/search?searchTerm=" + "tv",
-                {
-                    headers: {
-                        accept: "*/*",
-                        "Content-Type": "application/json"
-                    }
-                }
-            )
-
-            
+            // console.log(word)
+            return await axios.get("http://localhost:8080/search?searchTerm=" + "tv")
 
         } catch (e) {
             console.log("error", e);
         }
+    }
 
 }
 
@@ -32,10 +25,6 @@ export default function Search2() {
     const [products, setProducts] = useState(null);
     const [loading, setLoading] = useState(true);
     const [input, setInput] = useState("")
-    const [word, setWord] = useState({search: ''})
-    const payload = {
-        search: ""
-    }
 
     useEffect(() => {
         const fetchData = async () => {
