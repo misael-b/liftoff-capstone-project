@@ -2,7 +2,6 @@ package org.launchcode.liftoffgroup1.controllers;
 
 import org.launchcode.liftoffgroup1.model.Product;
 import org.launchcode.liftoffgroup1.model.data.ProductRepository;
-import org.launchcode.liftoffgroup1.model.data.ShoppingCartRepository;
 import org.launchcode.liftoffgroup1.model.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +20,6 @@ public class ProductController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private ShoppingCartRepository shoppingCartRepository;
 
     @GetMapping("create")
     public String displayCreatePostForm(Model model) {

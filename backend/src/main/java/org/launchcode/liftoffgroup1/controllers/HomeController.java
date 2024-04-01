@@ -2,108 +2,59 @@ package org.launchcode.liftoffgroup1.controllers;
 
 import org.launchcode.liftoffgroup1.model.Product;
 import org.launchcode.liftoffgroup1.model.data.ProductRepository;
-import org.launchcode.liftoffgroup1.model.data.ShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 
-@Controller
+@RestController
 public class HomeController {
     @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
-    private ShoppingCartRepository shoppingCartRepository;
 
-    @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("title", "Welcome to the Marketplace");
-        return "index";
-    }
-
-    @RequestMapping("list")
-    public String displayAllProducts(Model model, @RequestParam(required = false) String sortBy){
-        if (sortBy == null){
-            model.addAttribute("products", productRepository.findAll());
-            return "list";
-        }
-        List<Product> products = list(sortBy);
-        model.addAttribute("products", products);
-        return "list";
-    }
-
-    @RequestMapping("search")
-    public String displaySearchResults(Model model, @RequestParam String searchTerm, @RequestParam(required = false) String sortBy){
-        model.addAttribute("searchTerm", searchTerm);
-        List<Product> products = search(searchTerm, sortBy);
-        model.addAttribute("products", products);
-        return "list-search";
+    @GetMapping("list")
+    public List<Product> displayAllProducts(Model model, @RequestParam(required = false) String sortBy){
+        return (List<Product>) productRepository.findAll();
     }
 
 
-    @PostMapping("addToShoppingCart")
-    public String processAddToShoppingCart(@RequestParam int shoppingCartId){
-        Optional<Product> productOptional = productRepository.findById(shoppingCartId);
-        if (productOptional.isPresent()){
-            Product product = productOptional.get();
-            product.setInShoppingCart(true);
-            shoppingCartRepository.save(product);
-        }
-
-        return "redirect:list";
+//    http://localhost:8080/search?searchTerm=tv
+    @GetMapping("search")
+    public List<Product> displaySearchResults(@RequestParam String searchTerm){
+        return  search(searchTerm);
     }
 
-    @PostMapping("addToShoppingCartSearch")
-    public String processAddToShoppingCartSearch(RedirectAttributes redirectAttributes, @RequestParam int shoppingCartId, @RequestParam String searchTerm, @RequestParam(required = false) String sortBy){
-        Optional<Product> productOptional = productRepository.findById(shoppingCartId);
-        if (productOptional.isPresent()){
-            Product product = productOptional.get();
-            product.setInShoppingCart(true);
-            shoppingCartRepository.save(product);
-        }
-        redirectAttributes.addAttribute("searchTerm", searchTerm);
-        List<Product> products = search(searchTerm, sortBy);
-        redirectAttributes.addAttribute("products", products);
-
-        return "redirect:search";
+    @GetMapping("list/{sort}")
+    public List<Product> sortSearchResults(@PathVariable String sort){
+       List<Product> products = (List<Product>) productRepository.findAll();
+       return sortByPrice(products, sort);
     }
 
-    @PostMapping("removeFromShoppingCart")
-    public String processRemoveFromShoppingCart(@RequestParam int removeShoppingCartId){
-        Optional<Product> productOptional = shoppingCartRepository.findById(removeShoppingCartId);
-        if (productOptional.isPresent()){
-            Product product = productOptional.get();
-            product.setInShoppingCart(false);
-            shoppingCartRepository.save(product);
-        }
-        return "redirect:/user/shopping-cart";
-    }
-
-    public List<Product> list(String sortBy) {
-        List<Product> products = productRepository.findAllBy();
-        products = sortByPrice(products, sortBy == null || sortBy.equals("low to high"));
-        return products;
-    }
-
-    public List<Product> search(String term, String sortBy) {
+    public List<Product> search(String term) {
         List<Product> products = productRepository.findByNameContainsOrCategoryContainsOrDescriptionContains(term, term, term);
 
-        products = sortByPrice(products, sortBy == null || sortBy.equals("low to high"));
-
         return products;
     }
 
-    private List<Product> sortByPrice(List<Product> products, boolean asc) {
-        if (asc)
+    public List<Product> search(String term, String sort) {
+        List<Product> products = productRepository.findByNameContainsOrCategoryContainsOrDescriptionContains(term, term, term);
+        if(sort.isEmpty()){
+            return products;
+        }else {
+            return sortByPrice(products,sort);
+        }
+    }
+
+    private List<Product> sortByPrice(List<Product> products, String sort) {
+        if (sort.equals("asc"))
             products.sort((o1, o2) -> Double.compare(o1.getPrice(), o2.getPrice()));
         else
             products.sort((o1, o2) -> Double.compare(o2.getPrice(), o1.getPrice()));
