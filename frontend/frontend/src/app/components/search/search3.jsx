@@ -26,8 +26,22 @@ const search3 = () => {
             console.log("error", e);
         }
     }
+
+    const handleChange = (event) => {
+        const {search, value} = event.target;
+        setWord(prevWord => ({ ...prevWord, [search]: value}));
+    };
   return (
-    <div>search3</div>
+    <form onSubmit={handleSearch}>
+        <input
+            type="text"
+            name="search"
+            value={word.search}
+            onChange={handleChange}
+            placeholder='Search:'
+        />
+        <button type="submit">Search</button>
+    </form>
   )
 }
 
