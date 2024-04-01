@@ -2,13 +2,23 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
+const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+        const response = axios.post("http://localhost:8080/ShoppingCart/add?Id=" + event.target.id)
+
+    } catch (e) {
+        console.log("error", e);
+    }
+}
+
 const search3 = () => {
     const [word, setWord] = useState({ search: '' })
     const [products, setProducts] = useState(null);
 
     const handleSearch = async (event) => {
         event.preventDefault();
-        console.log(word.search)
+        // console.log(word.search)
         try {
             const response = await axios.get(
                 
@@ -80,20 +90,9 @@ const search3 = () => {
                                 <th>{product.category}</th>
                                 <th> ${product.price}</th>
                                 <th>
-                                    {/* <form onSubmit={addToShoppingCart(product.id)} onsubmit="return false;">
-                                    <p visibility hidden>
-                                        <input value={product.id} name="id" />
-                                    </p>
-                                    <button type="submit" >Buy</button>
-                                </form> */}
-                                    {/* <button onClick={addToShoppingCart(product.id)} value={product.id} type="button">Buy</button> */}
-                                    {/* <form onSubmit={handleSubmit} id={product.id}> */}
-                                    {/* <input
-                                        name={product.id}
-                                        value={product.id}
-                                    /> */}
-                                    {/* <button type="submit">Buy</button>
-                                </form> */}
+                                    <form onSubmit={handleSubmit} id={product.id}>
+                                        <button type="submit">Buy</button>
+                                        </form>
 
                                 </th>
 

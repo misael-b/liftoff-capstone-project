@@ -77,18 +77,8 @@ export default function posts() {
                             <th>{product.category}</th>
                             <th> ${product.price}</th>
                             <th>
-                                {/* <form onSubmit={addToShoppingCart(product.id)} onsubmit="return false;">
-                                    <p visibility hidden>
-                                        <input value={product.id} name="id" />
-                                    </p>
-                                    <button type="submit" >Buy</button>
-                                </form> */}
-                                {/* <button onClick={addToShoppingCart(product.id)} value={product.id} type="button">Buy</button> */}
+                                
                                 <form onSubmit={handleSubmit} id={product.id}>
-                                    {/* <input
-                                        name={product.id}
-                                        value={product.id}
-                                    /> */}
                                     <button type="submit">Buy</button>
                                 </form>
 
