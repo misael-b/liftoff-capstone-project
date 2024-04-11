@@ -67,7 +67,7 @@ public class UserController {
             }
 
             if(!registerDTO.getPassword().isEmpty()){
-                user.setPassword(registerDTO.getPassword());
+                user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
             }
 
             userRepository.save(user);
