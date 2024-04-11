@@ -75,6 +75,9 @@ export default function posts() {
                     <option value="">*Select One*</option>
                     <option value="desc">Price (High-Low)</option>
                     <option value="asc">Price (Low-High)</option>
+                    <option value="category-asc">Category (A-Z)</option>
+                    <option value="name-asc">Name (A-Z)</option>
+
                 </select>
 
             </label>
