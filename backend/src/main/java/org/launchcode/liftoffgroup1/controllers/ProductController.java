@@ -5,10 +5,14 @@ import org.launchcode.liftoffgroup1.model.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
+@Controller
 @RequestMapping("post")
+@CrossOrigin("http://localhost:3000/")
 public class ProductController {
     @Autowired
     private ProductRepository productRepository;
@@ -17,22 +21,22 @@ public class ProductController {
     private UserRepository userRepository;
 
 
-    @PostMapping("post")
-    public String processCreatePostForm() {
-        return "";
-    }
-
-    @GetMapping("get")
+    @GetMapping("create")
     public String displayCreatePostForm(Model model) {
         return "post/create-post";
     }
 
-    @PutMapping("put")
+    @PostMapping("create")
+    public String processCreatePostForm() {
+        return "";
+    }
+
+    @GetMapping("delete")
     public String displayDeletePostForm(Model model) {
         return "post/delete-post";
     }
 
-    @DeleteMapping("delete")
+    @PostMapping("delete")
     public String processDeletePostFrom(){
         return "";
     }
