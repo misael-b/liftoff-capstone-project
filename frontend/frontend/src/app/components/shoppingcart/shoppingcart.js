@@ -15,16 +15,23 @@ export default function shoppingCart() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = axios.delete("http://localhost:8080/ShoppingCart/remove?Id=" + event.target.id);
-
-            const response2 = await getAllShoppingCartPosts();
-            setProducts(response2.data);
+            
+            const responseFromDelete = axios.delete("http://localhost:8080/ShoppingCart/remove?Id=" + event.target.id);
+            
+            // fetchData();
+            // const response2 = await getAllShoppingCartPosts();
+            
 
 
 
         } catch (e) {
             console.log("error", e);
+        } finally {
+            const response = await getAllShoppingCartPosts();
+            setProducts(response.data);
+            
         }
+        location.reload()
     }
 
 
