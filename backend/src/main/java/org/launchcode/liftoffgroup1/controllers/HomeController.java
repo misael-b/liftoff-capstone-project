@@ -1,5 +1,7 @@
 package org.launchcode.liftoffgroup1.controllers;
 
+import org.launchcode.liftoffgroup1.model.CategoryComparator;
+import org.launchcode.liftoffgroup1.model.NameComparator;
 import org.launchcode.liftoffgroup1.model.Product;
 import org.launchcode.liftoffgroup1.model.data.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @RestController
+@CrossOrigin("http://localhost:3000/")
 public class HomeController {
     @Autowired
     private ProductRepository productRepository;
@@ -54,10 +55,17 @@ public class HomeController {
     }
 
     private List<Product> sortByPrice(List<Product> products, String sort) {
-        if (sort.equals("asc"))
+        if (sort.equals("asc")){
             products.sort((o1, o2) -> Double.compare(o1.getPrice(), o2.getPrice()));
-        else
+        }else if(sort.equals("desc")){
             products.sort((o1, o2) -> Double.compare(o2.getPrice(), o1.getPrice()));
+        } else if (sort.equals("category-asc")) {
+            Comparator comparator = new CategoryComparator();
+            products.sort(comparator);
+        }else if (sort.equals("name-asc")) {
+            Comparator comparator = new NameComparator();
+            products.sort(comparator);
+        }
 
         return products;
     }
