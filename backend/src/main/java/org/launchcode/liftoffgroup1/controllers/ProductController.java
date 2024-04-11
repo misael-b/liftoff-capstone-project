@@ -5,11 +5,9 @@ import org.launchcode.liftoffgroup1.model.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("post")
 public class ProductController {
     @Autowired
@@ -19,22 +17,22 @@ public class ProductController {
     private UserRepository userRepository;
 
 
-    @GetMapping("create")
-    public String displayCreatePostForm(Model model) {
-        return "post/create-post";
-    }
-
-    @PostMapping("create")
+    @PostMapping("post")
     public String processCreatePostForm() {
         return "";
     }
 
-    @GetMapping("delete")
+    @GetMapping("get")
+    public String displayCreatePostForm(Model model) {
+        return "post/create-post";
+    }
+
+    @PutMapping("put")
     public String displayDeletePostForm(Model model) {
         return "post/delete-post";
     }
 
-    @PostMapping("delete")
+    @DeleteMapping("delete")
     public String processDeletePostFrom(){
         return "";
     }
