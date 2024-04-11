@@ -1,4 +1,4 @@
-/* @tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -155,5 +155,3 @@ body {
   float: right;
   position: relative;
 }
-=======
-} */
