@@ -24,11 +24,13 @@ const page = async (e) => {
   return (
     <Layout>
       <div className="listOfUserPosts"></div>
+      
       <div className="createPostButtonContainer">
         <form action={navigate}>
-          <button>Sell a New Item</button>
+          <button>New Post</button>
         </form>
         </div>
+        <hr className="verticalLine"></hr>
     </Layout>
   )
 }

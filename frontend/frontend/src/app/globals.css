@@ -111,11 +111,16 @@ body {
 
 .body {
   vertical-align: bottom;
+  color: #ddd;
 }
 
 #teamName { 
   font-family: Courier New, Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace;
-  font-size: 32px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 26.4px;
+  font-size: 32px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 700;
+  line-height: 26.4px;
   vertical-align: bottom;
   width: 10%;
   padding-top: 13px;
@@ -123,7 +128,29 @@ body {
   padding-left: 6px;
 }
 
-#teamName h2:hover {
-  background-color: #ddd;
-  color: black;
+.listOfUserPosts {
+  vertical-align: bottom;
+}
+
+.createPostButtonContainer {
+  vertical-align: bottom;
+  margin-top: 84px;
+  margin-right: 20px;
+  float: right;
+  background-color: red;
+  border-radius: 8px;
+  width: 100px;
+  text-align: center;
+  position: relative;
+}
+
+.verticalLine {
+  border-left: 3px solid #bbb;
+  border-radius: 1px;
+  width: 10px;
+  height: 50px;
+  margin-top: 64px;
+  margin-right: 50px;
+  float: right;
+  position: relative;
 }
