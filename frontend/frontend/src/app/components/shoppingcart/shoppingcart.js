@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-// import { redirect } from "react-router-dom";
 
 function getAllShoppingCartPosts() {
     return axios.get("http://localhost:8080/ShoppingCart")
@@ -17,12 +16,6 @@ export default function shoppingCart() {
         try {
             
             const responseFromDelete = axios.delete("http://localhost:8080/ShoppingCart/remove?Id=" + event.target.id);
-            
-            // fetchData();
-            // const response2 = await getAllShoppingCartPosts();
-            
-
-
 
         } catch (e) {
             console.log("error", e);
@@ -87,10 +80,6 @@ export default function shoppingCart() {
 
                             <th>
                                 <form onSubmit={handleSubmit} id={product.id}>
-                                    {/* <input
-                                        name={product.id}
-                                        value={product.id}
-                                    /> */}
                                     <button type="submit">Remove</button>
                                 </form>
                             </th>
