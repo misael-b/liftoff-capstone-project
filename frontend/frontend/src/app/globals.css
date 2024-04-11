@@ -38,6 +38,7 @@ body {
   height: 54px;
   background-color: #005F6A;
   overflow: hidden;
+  vertical-align: top;  
 }
 
 .navbar a {
@@ -103,3 +104,6 @@ body {
 
 }
 
+.body {
+  vertical-align: bottom;
+}

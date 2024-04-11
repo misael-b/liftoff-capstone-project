@@ -2,7 +2,12 @@
 import React, {useEffect} from 'react'
 import axios from 'axios';
 
+
 const page = () => {
+const data = {
+
+}
+
     useEffect(() => {
         const response = axios.get(
             'http://localhost8080/post/get/' + data,
@@ -22,7 +27,7 @@ const page = () => {
 
 
   return (
-    <div>page</div>
+    <div></div>
   )
 }
 

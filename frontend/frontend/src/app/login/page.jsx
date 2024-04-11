@@ -1,5 +1,6 @@
 "use client";
 import React, {useState} from 'react'
+import Layout from '../layout'
 
 const page = () => {
     const [user, setUser] = useState({username: '', password: ''})
@@ -31,7 +32,7 @@ const page = () => {
 
     }
   return (
-    <>
+    <Layout>
         <form>
             <input 
                 type="text"
@@ -49,7 +50,7 @@ const page = () => {
             />
             <button type="submit">Submit</button>
         </form>
-    </>
+    </Layout>
   )
 }
 
