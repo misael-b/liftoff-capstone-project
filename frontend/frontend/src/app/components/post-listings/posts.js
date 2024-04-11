@@ -23,6 +23,8 @@ const handleSubmit = async (event) => {
 
 
 
+
+
 export default function posts() {
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState(null);
@@ -43,8 +45,44 @@ export default function posts() {
         fetchData();
     }, []);
 
+    function HandleChangle(event) {
+        const { name, value } = event.target
+        console.log(value)
+        try {
+            // console.log("http://localhost:8080/list/" + sorting)
+            const sortResponce = axios.get("http://localhost:8080/list/" + value).then(
+                function (response) {
+                    setProducts(response.data)
+                }
+            )
+        } catch (e) {
+            console.log("error", e);
+        }
+        
+        
+        
+
+    }
+
+
+
     return (<div>
         <h1>View All Posts</h1>
+
+        <form>
+            <label> Sort by:
+                <select name="sortBy" onChange={HandleChangle}>
+                    <option value="">*Select One*</option>
+                    <option value="desc">Price (High-Low)</option>
+                    <option value="asc">Price (Low-High)</option>
+                </select>
+
+            </label>
+
+        </form>
+
+
+
 
         <table width='100%'>
             <thead>
