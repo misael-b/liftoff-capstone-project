@@ -40,6 +40,7 @@ body {
   overflow: hidden;
   vertical-align: top;  
   position: absolute;
+
 }
 
 .navbar a {
@@ -112,6 +113,15 @@ body {
 .body {
   vertical-align: bottom;
   color: #ddd;
+  bottom: 0px;
+}
+
+.body * {
+  margin-top: 27px;
+}
+
+.body input {
+  color: black;
 }
 
 #teamName { 
@@ -153,4 +163,37 @@ body {
   margin-right: 50px;
   float: right;
   position: relative;
+}
+
+.userSignupForm {
+  border-radius: 8px;
+  background-color: lightgray;
+  vertical-align: middle;
+  width: 500px;
+  height: 500px;
+  margin: auto;
+  margin-top: 70px;
+}
+
+.userSignupForm input {
+  margin: auto;
+  margin-left: 150px;
+  color: black;
+}
+
+.userSignupForm button {
+  margin-left: 150px;
+  background-color: #005F6A;
+  border-radius: 8px;
+  width: 186px
+}
+
+.userSignupForm h1 {
+  color: black;
+  font-size: 40px;
+  text-align: center;
+}
+
+#login input {
+  color: black;
 }

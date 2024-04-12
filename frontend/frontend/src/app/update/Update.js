@@ -13,6 +13,10 @@ const Update = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        if (payload.name === "" && payload.email === "" && payload.password === "") {
+            window.alert("All inputs empty");
+            return;
+        }
         try {
             const response = await axios.patch(
                 "http://localhost:8080/user/" + user.username,
