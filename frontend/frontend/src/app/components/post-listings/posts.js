@@ -39,6 +39,7 @@ const handleSubmit = async (event) => {
 export default function posts() {
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState(null);
+    const loggedIn = localStorage.getItem('user');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -129,10 +130,10 @@ export default function posts() {
                             <th>{product.category}</th>
                             <th> ${product.price}</th>
                             <th>
-                                
-                                <form onSubmit={handleSubmit} id={product.id}>
+                                {loggedIn ? <form onSubmit={handleSubmit} id={product.id}>
                                     <button type="submit">Buy</button>
-                                </form>
+                                </form> : <div><p>Login to purchage</p></div>}
+                                
 
                             </th>
 
