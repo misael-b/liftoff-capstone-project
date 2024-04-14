@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -32,21 +33,34 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests((requests) -> requests
-//                .requestMatchers("/", "/list/**", "/api/auth/**", "/search", "/api/auth/login").permitAll()
-//                .anyRequest().authenticated()
-                                .anyRequest().permitAll()
+                .requestMatchers("/", "/list/**", "/search", "/login/login","/user/register").permitAll()
+                .anyRequest().authenticated()
+//                                .anyRequest().permitAll()
         ).exceptionHandling((exception)-> exception.
                         authenticationEntryPoint(authEntryPoint))
 
-                .formLogin((form) -> form
-                        .loginPage("/user/login")
-                        .permitAll()
+                .formLogin(
+//                        (form) -> form
+//                        .loginPage("/user/login")
+//                        .permitAll()
+                        AbstractHttpConfigurer::disable
                 ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
+//        http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.httpBasic();
         return http.build();
 
     }
+//
+//    @Bean
+//    public DaoAuthenticationProvider authenticationProvider() {
+//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//
+//        authProvider.setUserDetailsService(userDetailsService);
+//        authProvider.setPasswordEncoder(passwordEncoder());
+//
+//        return authProvider;
+//    }
 
 
     @Bean

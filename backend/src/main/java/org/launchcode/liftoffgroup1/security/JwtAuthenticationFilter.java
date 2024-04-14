@@ -4,6 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.hibernate.annotations.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,9 +39,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String getJWTFromRequest(HttpServletRequest request){
-        String tokenHeader = request.getHeader("Authentication");
+        String tokenHeader = request.getHeader("Authorization");
         if(StringUtils.hasText(tokenHeader) && tokenHeader.startsWith("Bearer ")){
-            return tokenHeader.substring(7, tokenHeader.length());
+            return tokenHeader.substring(7);
         }
         return null;
 

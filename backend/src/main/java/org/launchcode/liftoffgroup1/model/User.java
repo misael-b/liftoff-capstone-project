@@ -1,11 +1,8 @@
 package org.launchcode.liftoffgroup1.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class User {
@@ -21,14 +18,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String role;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(  name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles = new ArrayList<>();
 
-//    private static int nextId = 1;
-//
-//    public User() {
-//        id = nextId;
-//        nextId++;
-//    }
+
     public User() {
     }
     public User(String name, String email, String username, String password) {
@@ -36,7 +32,6 @@ public class User {
         this.email = email;
         this.username = username;
         this.password = password;
-        this.role = "USER";
     }
 
     public String getName() {
@@ -75,12 +70,12 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     @Override
