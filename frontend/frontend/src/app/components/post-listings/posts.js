@@ -16,15 +16,15 @@ const handleSubmit = async (event) => {
     console.log(AuthStr)
     event.preventDefault();
     try {
-        const response = axios.post("http://localhost:8080/ShoppingCart/add?Id=" + event.target.id
+        axios.get("http://localhost:8080/ShoppingCart/add?Id=" + event.target.id
             , {
                 headers: {
                     accept: "*/*",
                     "Content-Type": "application/json",
                     Authorization: AuthStr
-                }, 
-    }
-)
+                },
+
+            })
     } catch (e) {
         console.log("error", e);
     }

@@ -26,8 +26,18 @@ export default function shoppingCart() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
+            const token = JSON.parse(localStorage.getItem('user')).accessToken
+            const AuthStr = 'Bearer '.concat(token);
             
-            const responseFromDelete = axios.delete("http://localhost:8080/ShoppingCart/remove?Id=" + event.target.id);
+            const responseFromDelete = axios.get("http://localhost:8080/ShoppingCart/remove?Id=" + event.target.id
+                , {
+                    headers: {
+                        accept: "*/*",
+                        "Content-Type": "application/json",
+                        Authorization: AuthStr
+                    },
+
+                })
 
         } catch (e) {
             console.log("error", e);
