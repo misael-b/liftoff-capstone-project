@@ -3,7 +3,19 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function getAllShoppingCartPosts() {
-    return axios.get("http://localhost:8080/ShoppingCart")
+    const token = JSON.parse(localStorage.getItem('user')).accessToken
+
+
+    const AuthStr = 'Bearer '.concat(token);
+    return axios.get("http://localhost:8080/ShoppingCart"
+        , {
+        headers: {
+            accept: "*/*",
+                "Content-Type": "application/json",
+            Authorization: AuthStr
+        }, 
+        
+    })
 };
 
 
@@ -68,7 +80,7 @@ export default function shoppingCart() {
                     <th></th>
                 </tr>
             </thead>
-            {!loading && (
+            {!loading &&  (
                 <tbody>
                     {products.map((product) => (
                         <tr>
