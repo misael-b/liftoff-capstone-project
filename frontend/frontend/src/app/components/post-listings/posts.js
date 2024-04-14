@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+
  function getAllPosts() {
     return axios.get("http://localhost:8080/list")
       
@@ -10,10 +11,20 @@ import axios from "axios";
 
 
 const handleSubmit = async (event) => {
+    const token = JSON.parse(localStorage.getItem('user')).accessToken
+    const AuthStr = 'Bearer '.concat(token);
+    console.log(AuthStr)
     event.preventDefault();
     try {
-        const response = axios.post("http://localhost:8080/ShoppingCart/add?Id=" + event.target.id)
-    
+        const response = axios.post("http://localhost:8080/ShoppingCart/add?Id=" + event.target.id
+            , {
+                headers: {
+                    accept: "*/*",
+                    "Content-Type": "application/json",
+                    Authorization: AuthStr
+                }, 
+    }
+)
     } catch (e) {
         console.log("error", e);
     }
