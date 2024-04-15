@@ -44,6 +44,7 @@ const page = () => {
                 value={user.username}
                 onChange={handleChange}
                 placeholder= "Enter your username:"
+                
             />
             <input 
                 type="password"
