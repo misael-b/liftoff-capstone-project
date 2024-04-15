@@ -8,17 +8,17 @@ const Delete = () => {
     const payload = {
         username: user.username
     }
-    // const handleConfirm = () => {
-    //     const userVerify = confirm("Are you sure you want to delete this account?");
+    const handleConfirm = () => {
+        const userVerify = confirm("Are you sure you want to delete this account?");
 
-    //     if (userVerify) {
-    //         payload.username = user.username;
-    //     } 
-    // }
+        if (userVerify) {
+            payload.username = user.username;
+        } 
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // handleConfirm();
+        handleConfirm();
 
         try {
             const response = await axios.delete("http://localhost:8080/user/" + user.username,
