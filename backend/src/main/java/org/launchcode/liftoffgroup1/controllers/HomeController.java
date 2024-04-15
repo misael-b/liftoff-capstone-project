@@ -27,7 +27,7 @@ public class HomeController {
     }
 
 
-//    http://localhost:8080/search?searchTerm=tv
+    //    http://localhost:8080/search?searchTerm=tv
     @GetMapping("search")
     public List<Product> displaySearchResults(@RequestParam String searchTerm){
         return  search(searchTerm);
@@ -35,8 +35,8 @@ public class HomeController {
 
     @GetMapping("list/{sort}")
     public List<Product> sortSearchResults(@PathVariable String sort){
-       List<Product> products = (List<Product>) productRepository.findAll();
-       return sortByPrice(products, sort);
+        List<Product> products = (List<Product>) productRepository.findAll();
+        return sortByPrice(products, sort);
     }
 
     public List<Product> search(String term) {

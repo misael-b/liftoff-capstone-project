@@ -6,6 +6,7 @@ import org.launchcode.liftoffgroup1.model.data.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class ShoppingCartController {
 
 
     // http://localhost:8080/ShoppingCart/add?Id=1
-    @PostMapping("add")
+    @GetMapping("add")
     public ResponseEntity processAddToShoppingCart(@RequestParam int Id){
         Optional<Product> productOptional = productRepository.findById(Id);
         if (productOptional.isPresent()){
@@ -39,8 +40,8 @@ public class ShoppingCartController {
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
-//    http://localhost:8080/ShoppingCart/remove?Id=1
-    @DeleteMapping("remove")
+    //    http://localhost:8080/ShoppingCart/remove?Id=1
+    @GetMapping("remove")
     public ResponseEntity processRemoveFromShoppingCart(@RequestParam int Id){
         Optional<Product> productOptional = productRepository.findById(Id);
         if (productOptional.isPresent()){
@@ -52,7 +53,7 @@ public class ShoppingCartController {
     }
 
 
-   // http://localhost:8080/ShoppingCart
+    // http://localhost:8080/ShoppingCart
     @GetMapping("")
     public List<Product> displayUserShoppingCart(){
         return shoppingCart;
@@ -72,19 +73,4 @@ public class ShoppingCartController {
         shoppingCart = new ArrayList<>();
     }
 
-
-
-    //    @PostMapping("addToShoppingCartSearch")
-//    public String processAddToShoppingCartSearch(RedirectAttributes redirectAttributes, @RequestParam int shoppingCartId, @RequestParam String searchTerm, @RequestParam(required = false) String sortBy){
-//        Optional<Product> productOptional = productRepository.findById(shoppingCartId);
-//        if (productOptional.isPresent()){
-//            Product product = productOptional.get();
-//            userController.addToShoppingCart(product);
-//        }
-//        redirectAttributes.addAttribute("searchTerm", searchTerm);
-//        List<Product> products = search(searchTerm, sortBy);
-//        redirectAttributes.addAttribute("products", products);
-//
-//        return "redirect:search";
-//    }
 }

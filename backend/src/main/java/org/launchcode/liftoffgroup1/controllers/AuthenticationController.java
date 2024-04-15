@@ -1,5 +1,7 @@
 package org.launchcode.liftoffgroup1.controllers;
 
+import org.launchcode.liftoffgroup1.model.data.ProductRepository;
+import org.launchcode.liftoffgroup1.model.data.RoleRepository;
 import org.launchcode.liftoffgroup1.model.data.UserRepository;
 import org.launchcode.liftoffgroup1.model.dto.AuthResponseDTO;
 import org.launchcode.liftoffgroup1.model.dto.LoginDTO;
@@ -12,47 +14,45 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @RestController
 @RequestMapping("login")
 @CrossOrigin("http://localhost:3000/")
 public class AuthenticationController {
-    private AuthenticationManager authenticationManager;
+    private ProductRepository productRepository;
+
     private UserRepository userRepository;
+    private RoleRepository roleRepository;
 
 
-    private JwtTokenGenerator jwtTokenGenerator;
+    private PasswordEncoder passwordEncoder;
+    private AuthenticationManager authenticationManager;
+
+    private JwtTokenGenerator tokenGenerator;
 
     @Autowired
-    public AuthenticationController(AuthenticationManager authenticationManager, UserRepository userRepository, JwtTokenGenerator jwtTokenGenerator) {
-        this.authenticationManager = authenticationManager;
+    public AuthenticationController(ProductRepository productRepository, UserRepository userRepository,
+                                    PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager,
+                                    RoleRepository roleRepository, JwtTokenGenerator tokenGenerator) {
+        this.productRepository = productRepository;
         this.userRepository = userRepository;
-        this.jwtTokenGenerator = jwtTokenGenerator;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.roleRepository = roleRepository;
+        this.tokenGenerator = tokenGenerator;
     }
 
-  // API:
-
-
-
-
-   @PostMapping("login")
+    @PostMapping("login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDTO){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
-       SecurityContextHolder.getContext().setAuthentication(authentication);
-       String token = jwtTokenGenerator.generateToken(authentication);
-       return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
-   }
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = tokenGenerator.generateToken(authentication);
+        return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
+    }
 
-//    @PostMapping("login")
-//    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO){
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
-//       SecurityContextHolder.getContext().setAuthentication(authentication);
-//       String token = jwtTokenGenerator.generateToken(authentication);
-//       return new ResponseEntity<>("login successful", HttpStatus.OK);}
 
 }
