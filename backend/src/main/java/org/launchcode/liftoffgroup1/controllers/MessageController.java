@@ -18,7 +18,7 @@ public class MessageController {
 
     @PostMapping("/create")
     public ResponseEntity<String> createMessage (@RequestBody Message message) {
-
+        
     }
 
     @GetMapping("/read")

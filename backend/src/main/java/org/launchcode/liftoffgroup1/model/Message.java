@@ -1,6 +1,8 @@
 package org.launchcode.liftoffgroup1.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 import java.util.Date;
 
@@ -12,6 +14,11 @@ public class Message {
     private User user;
 
     private Date date;
+
+
+    @Id
+    @GeneratedValue
+    private int id;
 
     public Message (String aMessage, User aUser) {
         message = aMessage;
