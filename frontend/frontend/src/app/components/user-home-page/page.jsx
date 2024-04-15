@@ -7,7 +7,7 @@ const page = () => {
     return (
         <>
             <GetFromUsername />
-            <Profile/>
+            <Profile />
         </>
     )
 }

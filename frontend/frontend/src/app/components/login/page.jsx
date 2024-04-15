@@ -1,9 +1,9 @@
-import Posts from "./posts";
+import Login from "./login"
 
 export default function Home() {
     return (
         <>
-            <Posts />
+            <Login />
         </>
     )
 };

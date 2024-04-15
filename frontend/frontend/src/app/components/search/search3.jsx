@@ -1,5 +1,5 @@
 "use client";
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const handleSubmit = async (event) => {
@@ -18,10 +18,10 @@ const search3 = () => {
 
     const handleSearch = async (event) => {
         event.preventDefault();
-        // console.log(word.search)
+
         try {
             const response = await axios.get(
-                
+
                 "http://localhost:8080/search?searchTerm=" + word.search,
                 {
                     headers: {
@@ -42,77 +42,77 @@ const search3 = () => {
     }
 
     const handleChange = (event) => {
-        const {name, value} = event.target;
-        setWord(prevWord => ({ ...prevWord, [name]: value}));
+        const { name, value } = event.target;
+        setWord(prevWord => ({ ...prevWord, [name]: value }));
     };
 
-        return (
-            <>
-                <form onSubmit={handleSearch}>
-                    <input 
-                        type="text"
-                        name="search"
-                        value={word.search}
-                        onChange={handleChange}
-                        placeholder="Search:"
-                    />
-                    <button type="submit">Search</button>
-                </form>
+    return (
+        <>
+            <form onSubmit={handleSearch}>
+                <input
+                    type="text"
+                    name="search"
+                    value={word.search}
+                    onChange={handleChange}
+                    placeholder="Search:"
+                />
+                <button type="submit">Search</button>
+            </form>
 
-                {(products != null) && (<table width='100%' >
-                    <thead>
+            {(products != null) && (<table width='100%' >
+                <thead>
+                    <tr>
+                        <th>
+                            Picture
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th width='20%' >
+                            Description
+                        </th>
+                        <th>
+                            Category
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {products.map((product) => (
                         <tr>
+                            <th><img src={product.picture} width={200} /></th>
+                            <th>{product.name}</th>
+                            <th>{product.description}</th>
+                            <th>{product.category}</th>
+                            <th> ${product.price}</th>
                             <th>
-                                Picture
+                                <form onSubmit={handleSubmit} id={product.id}>
+                                    <button type="submit">Buy</button>
+                                </form>
+
                             </th>
-                            <th>
-                                Name
-                            </th>
-                            <th width='20%' >
-                                Description
-                            </th>
-                            <th>
-                                Category
-                            </th>
-                            <th>
-                                Price
-                            </th>
-                            <th></th>
+
                         </tr>
-                    </thead>
-
-                    <tbody>
-                        {products.map((product) => (
-                            <tr>
-                                <th><img src={product.picture} width={200} /></th>
-                                <th>{product.name}</th>
-                                <th>{product.description}</th>
-                                <th>{product.category}</th>
-                                <th> ${product.price}</th>
-                                <th>
-                                    <form onSubmit={handleSubmit} id={product.id}>
-                                        <button type="submit">Buy</button>
-                                        </form>
-
-                                </th>
-
-                            </tr>
 
 
 
-                        ))}
+                    ))}
 
-                    </tbody>
+                </tbody>
 
-                </table>)}
+            </table>)}
 
 
 
 
-            </>
-          )
+        </>
+    )
 
-  
+
 }
 
 export default search3

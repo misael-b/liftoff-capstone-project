@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import axios from 'axios';
 
 const Update = () => {
-    const [user, setUser] = useState({ name: '', email: '', id: '' , password: ''});
+    const [user, setUser] = useState({ name: '', email: '', id: '', password: '' });
 
     const payload = {
         name: user.name,
@@ -14,6 +14,8 @@ const Update = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
+            const token = JSON.parse(localStorage.getItem('user')).accessToken
+            const AuthStr = 'Bearer '.concat(token);
             const response = await axios.patch(
                 "http://localhost:8080/user/" + user.username,
                 payload,
@@ -21,6 +23,7 @@ const Update = () => {
                     headers: {
                         accept: "*/*",
                         "Content-Type": "application/json",
+                        Authorization: AuthStr
                     }
                 }
             )

@@ -2,18 +2,29 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
- function getAllPosts() {
+
+function getAllPosts() {
     return axios.get("http://localhost:8080/list")
-      
+
 };
 
 
 
 const handleSubmit = async (event) => {
+    const token = JSON.parse(localStorage.getItem('user')).accessToken
+    const AuthStr = 'Bearer '.concat(token);
+    // console.log(AuthStr)
     event.preventDefault();
     try {
-        const response = axios.post("http://localhost:8080/ShoppingCart/add?Id=" + event.target.id)
-    
+        axios.get("http://localhost:8080/ShoppingCart/add?Id=" + event.target.id
+            , {
+                headers: {
+                    accept: "*/*",
+                    "Content-Type": "application/json",
+                    Authorization: AuthStr
+                },
+
+            })
     } catch (e) {
         console.log("error", e);
     }
@@ -28,6 +39,7 @@ const handleSubmit = async (event) => {
 export default function posts() {
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState(null);
+    const loggedIn = localStorage.getItem('user');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -49,7 +61,7 @@ export default function posts() {
         const { name, value } = event.target
         console.log(value)
         try {
-            // console.log("http://localhost:8080/list/" + sorting)
+        
             const sortResponce = axios.get("http://localhost:8080/list/" + value).then(
                 function (response) {
                     setProducts(response.data)
@@ -58,9 +70,9 @@ export default function posts() {
         } catch (e) {
             console.log("error", e);
         }
-        
-        
-        
+
+
+
 
     }
 
@@ -112,25 +124,25 @@ export default function posts() {
                 <tbody>
                     {products.map((product) => (
                         <tr>
-                            <th><img src={product.picture} width={200}/></th>
+                            <th><img src={product.picture} width={200} /></th>
                             <th>{product.name}</th>
                             <th>{product.description}</th>
                             <th>{product.category}</th>
                             <th> ${product.price}</th>
                             <th>
-                                
-                                <form onSubmit={handleSubmit} id={product.id}>
+                                {loggedIn ? <form onSubmit={handleSubmit} id={product.id}>
                                     <button type="submit">Buy</button>
-                                </form>
+                                </form> : <div><p>Login to purchage</p></div>}
+
 
                             </th>
 
                         </tr>
-                        
-                        
-                    
+
+
+
                     ))}
-                   
+
                 </tbody>
             )}
         </table>
@@ -139,10 +151,5 @@ export default function posts() {
 
     </div>)
 }
-    
-
-   
-
-
 
 

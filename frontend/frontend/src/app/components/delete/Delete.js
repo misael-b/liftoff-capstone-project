@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const Delete = () => {
 
-    const [user, setVerify] = useState({ username: ''})
+    const [user, setVerify] = useState({ username: '' })
     const payload = {
         username: user.username
     }
@@ -27,7 +27,7 @@ const Delete = () => {
                         username: user.username
                     }
                 })
-            
+
 
             if (response.status === 200) {
                 console.log("worked");

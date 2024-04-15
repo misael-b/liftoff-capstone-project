@@ -4,7 +4,7 @@ import axios from "axios";
 
 function userform() {
     const [FormUser, setUser] = useState({ name: "", email: '' });
-    
+
 
 
     const payload = {

@@ -1,9 +1,9 @@
-import Posts from "./posts";
+import Logout from "./logout"
 
 export default function Home() {
     return (
         <>
-            <Posts />
+            <Logout />
         </>
     )
 };
