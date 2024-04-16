@@ -1,5 +1,6 @@
 package org.launchcode.liftoffgroup1.controllers;
 
+import org.launchcode.liftoffgroup1.model.User;
 import org.launchcode.liftoffgroup1.model.data.ProductRepository;
 import org.launchcode.liftoffgroup1.model.data.RoleRepository;
 import org.launchcode.liftoffgroup1.model.data.UserRepository;
@@ -34,22 +35,20 @@ public class AuthenticationController {
 
     private JwtTokenGenerator tokenGenerator;
 
+    private UserController userController;
+
     @Autowired
     public AuthenticationController(ProductRepository productRepository, UserRepository userRepository,
                           PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager,
-                          RoleRepository roleRepository, JwtTokenGenerator tokenGenerator) {
+                          RoleRepository roleRepository, JwtTokenGenerator tokenGenerator, UserController userController) {
         this.productRepository = productRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.roleRepository = roleRepository;
         this.tokenGenerator = tokenGenerator;
+        this.userController = userController;
     }
-
-  // API:
-
-
-
 
    @PostMapping("login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDTO){
@@ -60,12 +59,11 @@ public class AuthenticationController {
        return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
    }
 
-//    @PostMapping("login")
-//    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO){
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
-//       SecurityContextHolder.getContext().setAuthentication(authentication);
-//       String token = jwtTokenGenerator.generateToken(authentication);
-//       return new ResponseEntity<>("login successful", HttpStatus.OK);}
+   @GetMapping("user")
+    public User returnUserFromToken(Authentication authentication){
+        String username = authentication.getName();
+       return userController.findByUsername(username);
+   }
+
 
 }

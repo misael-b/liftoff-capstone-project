@@ -5,11 +5,8 @@ import org.launchcode.liftoffgroup1.model.NameComparator;
 import org.launchcode.liftoffgroup1.model.Product;
 import org.launchcode.liftoffgroup1.model.data.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 

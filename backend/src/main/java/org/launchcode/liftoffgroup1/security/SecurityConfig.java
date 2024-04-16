@@ -25,13 +25,6 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.List;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -50,7 +43,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        System.out.println("1");
         http.csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests((requests) -> requests
@@ -61,18 +53,10 @@ public class SecurityConfig {
                         authenticationEntryPoint(authEntryPoint))
 
                 .formLogin(
-//                        (form) -> form
-//                        .loginPage("/user/login")
-//                        .permitAll()
                         AbstractHttpConfigurer::disable
                 ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
-//        http.authenticationProvider(authenticationProvider());
-        System.out.println("2");
-//        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-        System.out.println("3");
         http.httpBasic();
-        System.out.println("4");
         return http.build();
 
     }
@@ -92,35 +76,10 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-//    @Bean
-//    PasswordEncoder passwordEncoder(){
-//        return new BCryptPasswordEncoder();
-//    }
-
-//    @Bean
-//    public JwtAuthenticationFilter jwtAuthenticationFilter(){
-//        return new JwtAuthenticationFilter();
-//    }
-
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//
-//        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
-//        configuration.setAllowedMethods(List.of("GET","POST", "DELETE", "PATCH"));
-//        configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//
-//        source.registerCorsConfiguration("/**",configuration);
-//
-//        return source;
-//    }
-@Bean
-JwtDecoder jwtDecoder() {
-    return NimbusJwtDecoder.withPublicKey(rsaKeys.publicKey()).build();
-}
+    @Bean
+    JwtDecoder jwtDecoder() {
+        return NimbusJwtDecoder.withPublicKey(rsaKeys.publicKey()).build();
+    }
 
     @Bean
     JwtEncoder jwtEncoder() {

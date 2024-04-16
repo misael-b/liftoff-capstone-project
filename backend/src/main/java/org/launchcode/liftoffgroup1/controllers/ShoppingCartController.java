@@ -73,19 +73,4 @@ public class ShoppingCartController {
         shoppingCart = new ArrayList<>();
     }
 
-
-
-    //    @PostMapping("addToShoppingCartSearch")
-//    public String processAddToShoppingCartSearch(RedirectAttributes redirectAttributes, @RequestParam int shoppingCartId, @RequestParam String searchTerm, @RequestParam(required = false) String sortBy){
-//        Optional<Product> productOptional = productRepository.findById(shoppingCartId);
-//        if (productOptional.isPresent()){
-//            Product product = productOptional.get();
-//            userController.addToShoppingCart(product);
-//        }
-//        redirectAttributes.addAttribute("searchTerm", searchTerm);
-//        List<Product> products = search(searchTerm, sortBy);
-//        redirectAttributes.addAttribute("products", products);
-//
-//        return "redirect:search";
-//    }
 }
