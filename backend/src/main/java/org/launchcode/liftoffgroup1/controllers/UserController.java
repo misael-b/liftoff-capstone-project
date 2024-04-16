@@ -1,16 +1,19 @@
 package org.launchcode.liftoffgroup1.controllers;
 
+import org.launchcode.liftoffgroup1.model.Role;
 import org.launchcode.liftoffgroup1.model.User;
 import org.launchcode.liftoffgroup1.model.data.ProductRepository;
+import org.launchcode.liftoffgroup1.model.data.RoleRepository;
 import org.launchcode.liftoffgroup1.model.data.UserRepository;
 import org.launchcode.liftoffgroup1.model.dto.RegisterDTO;
+import org.launchcode.liftoffgroup1.security.JwtTokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import org.springframework.web.bind.annotation.*;
-
+import java.util.Collections;
 import java.util.Optional;
 
 @RestController
@@ -21,15 +24,24 @@ public class UserController {
     private ProductRepository productRepository;
 
     private UserRepository userRepository;
+    private RoleRepository roleRepository;
 
 
     private PasswordEncoder passwordEncoder;
+    private AuthenticationManager authenticationManager;
+
+    private JwtTokenGenerator tokenGenerator;
 
     @Autowired
-    public UserController(ProductRepository productRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserController(ProductRepository productRepository, UserRepository userRepository,
+                          PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager,
+                          RoleRepository roleRepository, JwtTokenGenerator tokenGenerator) {
         this.productRepository = productRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.roleRepository = roleRepository;
+        this.tokenGenerator = tokenGenerator;
     }
 
     @GetMapping("/{username}")
@@ -45,9 +57,12 @@ public class UserController {
         User user = new User();
         user.setUsername(registerDTO.getUsername());
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
-        user.setRole("USER");
         user.setName(registerDTO.getName());
         user.setEmail(registerDTO.getEmail());
+
+        Role role = roleRepository.findByName("USER").get();
+        user.setRoles(Collections.singletonList(role));
+
         userRepository.save(user);
         return new ResponseEntity<>("User registered success", HttpStatus.OK);
 
@@ -67,7 +82,7 @@ public class UserController {
             }
 
             if(!registerDTO.getPassword().isEmpty()){
-                user.setPassword(registerDTO.getPassword());
+                user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
             }
 
             userRepository.save(user);

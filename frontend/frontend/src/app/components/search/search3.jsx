@@ -4,8 +4,18 @@ import axios from 'axios';
 
 const handleSubmit = async (event) => {
     event.preventDefault();
+    const token = JSON.parse(localStorage.getItem('user')).accessToken
+    const AuthStr = 'Bearer '.concat(token);
     try {
-        const response = axios.post("http://localhost:8080/ShoppingCart/add?Id=" + event.target.id)
+        const response = axios.get("http://localhost:8080/ShoppingCart/add?Id=" + event.target.id,
+            {
+                headers: {
+                    accept: "*/*",
+                    "Content-Type": "application/json",
+                    Authorization: AuthStr
+                },
+
+            })
 
     } catch (e) {
         console.log("error", e);
@@ -15,6 +25,7 @@ const handleSubmit = async (event) => {
 const search3 = () => {
     const [word, setWord] = useState({ search: '' })
     const [products, setProducts] = useState(null);
+    // const loggedIn = localStorage.getItem('user');
 
     const handleSearch = async (event) => {
         event.preventDefault();
@@ -90,9 +101,15 @@ const search3 = () => {
                                 <th>{product.category}</th>
                                 <th> ${product.price}</th>
                                 <th>
-                                    <form onSubmit={handleSubmit} id={product.id}>
-                                        <button type="submit">Buy</button>
-                                        </form>
+                                    {!localStorage.getItem('user') ?
+                                        <div><p>Login to purchage</p></div>
+                                        : 
+                                    <div>
+                                            <form onSubmit={handleSubmit} id={product.id}>
+                                                <button type="submit">Buy</button>
+                                            </form>
+                                        </div>}
+
 
                                 </th>
 
