@@ -41,17 +41,17 @@ public class ProductController {
     }
 
     @GetMapping("/get/{searchTerm}")
-    public ResponseEntity<Object> displayCreatePostForm(@PathVariable String searchTerm) {
+    public ResponseEntity<Object> displayProductBySearchTerm(@PathVariable String searchTerm) {
         return new ResponseEntity<>(productRepository.findByNameContainsOrCategoryContainsOrDescriptionContains(searchTerm, searchTerm, searchTerm), HttpStatus.OK);
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Object> displayCreatePostForm(@PathVariable Integer id) {
+    public ResponseEntity<Object> displayProductById(@PathVariable Integer id) {
         return new ResponseEntity<>(productRepository.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/get")
-    public ResponseEntity<Object> displayCreatePostForm() {
+    public ResponseEntity<Object> displayAllProductsList() {
         return new ResponseEntity<>(productRepository.findAllBy(), HttpStatus.OK);
     }
 
