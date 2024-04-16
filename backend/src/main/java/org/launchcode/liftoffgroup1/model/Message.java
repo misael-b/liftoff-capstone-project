@@ -15,7 +15,6 @@ public class Message {
 
     private Date date;
 
-
     @Id
     @GeneratedValue
     private int id;
