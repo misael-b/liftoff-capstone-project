@@ -25,7 +25,7 @@ const handleSubmit = async (event) => {
 const search3 = () => {
     const [word, setWord] = useState({ search: '' })
     const [products, setProducts] = useState(null);
-    const loggedIn = localStorage.getItem('user');
+    // const loggedIn = localStorage.getItem('user');
 
     const handleSearch = async (event) => {
         event.preventDefault();
@@ -101,7 +101,7 @@ const search3 = () => {
                                 <th>{product.category}</th>
                                 <th> ${product.price}</th>
                                 <th>
-                                    {!loggedIn ?
+                                    {!localStorage.getItem('user') ?
                                         <div><p>Login to purchage</p></div>
                                         : 
                                     <div>
