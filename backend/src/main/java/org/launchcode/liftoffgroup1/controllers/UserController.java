@@ -1,5 +1,6 @@
 package org.launchcode.liftoffgroup1.controllers;
 
+import jakarta.validation.Valid;
 import org.launchcode.liftoffgroup1.model.Role;
 import org.launchcode.liftoffgroup1.model.User;
 import org.launchcode.liftoffgroup1.model.data.ProductRepository;
@@ -50,7 +51,7 @@ public class UserController {
     }
 
     @PostMapping("register")
-    public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO){
+    public ResponseEntity<String> register(@Valid @RequestBody RegisterDTO registerDTO){
         if (userRepository.existsByUsername(registerDTO.getUsername())){
             return new ResponseEntity<>("Username is taken", HttpStatus.BAD_REQUEST);
         }

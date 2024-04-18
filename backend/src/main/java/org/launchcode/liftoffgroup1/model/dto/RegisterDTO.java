@@ -1,11 +1,19 @@
 package org.launchcode.liftoffgroup1.model.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public class RegisterDTO {
+    @NotBlank
     private String username;
+
+    @NotBlank
     private String password;
 
+    @Email
     private String email;
 
+    @NotBlank
     private String name;
 
     public String getUsername() {
