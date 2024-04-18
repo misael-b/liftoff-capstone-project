@@ -46,6 +46,28 @@ const page = () => {
         console.log(response);
     })
 
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        console.log(localStorage.getItem("user"))
+        const token = JSON.parse(localStorage.getItem('user')).accessToken
+        const AuthStr = 'Bearer'.concat(token);
+        try {
+            const response = await axios.get(
+                'http://localhost:8080/message/readLogs',
+                {
+                    headers: {
+                        accept: "*/*",
+                        "Content-Type": "application/json",
+                        Authorization: AuthStr
+                    }
+                }
+            )
+            
+            console.log(response)
+        } catch (e) {
+            console.log("error", e)
+        }
+    }
 
   return (
     <div>
@@ -56,6 +78,10 @@ const page = () => {
                 }
             </th>
         </table>
+        <form onSubmit={handleSubmit}>
+        <button type="submit" >BUtton</button>
+        </form>
+        
     </div>
   )
 }

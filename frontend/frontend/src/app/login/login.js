@@ -25,6 +25,7 @@ const Login = () => {
             )
 
             localStorage.setItem("user", JSON.stringify(response.data))
+            
             // console.log(JSON.parse(localStorage.getItem('user')).accessToken)
         } catch (e) {
             console.log("Sign in failed", e);
