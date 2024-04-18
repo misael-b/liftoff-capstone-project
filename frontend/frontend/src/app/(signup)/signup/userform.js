@@ -25,6 +25,7 @@ function userform() {
                 payload,
                 {
                     headers: {
+                        accept: "*/*",
                         'Content-Type': 'application/json',
                     },
                 }
@@ -38,7 +39,6 @@ function userform() {
         } catch (e) {
             console.log("error", e);
         } 
-        console.log(redirectTarget)
 
         
         

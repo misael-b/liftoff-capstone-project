@@ -1,26 +1,35 @@
-import React from 'react'
+"use client";
+import React, {useEffect} from 'react'
+import axios from 'axios';
 
-export async function getServerSideProps() {
-    const response = await axios.get(
-        'http://localhost:8080/message/readLogs',
-        {
-            headers: {
-                //user token to find user
-                accept: "*/*",
-                "Content-Type": "application/json",
-            }
+
+
+const page = () => {
+
+    useEffect(async () => {
+        try {
+            const response = await axios.get(
+                'http://localhost:8080/message/readLogs',
+                {
+                    headers: {
+                        accept: "*/*",
+                        "Content-Type": "application/json",
+                        //usertoken
+                    }
+                }
+            )
+        } catch (e) {
+            console.log('error', e);
         }
-    )
-
-    return {props: {response}}
-}
+    })
 
 
-const page = ( {response} ) => {
   return (
     <div>
         <table>
- 
+            <th>
+                
+            </th>
         </table>
     </div>
   )
