@@ -3,10 +3,14 @@ package org.launchcode.liftoffgroup1.controllers;
 
 import org.launchcode.liftoffgroup1.model.Message;
 import org.launchcode.liftoffgroup1.model.MessageLog;
+import org.launchcode.liftoffgroup1.model.User;
 import org.launchcode.liftoffgroup1.model.data.MessageLogRepository;
 import org.launchcode.liftoffgroup1.model.data.MessageRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.launchcode.liftoffgroup1.controllers.AuthenticationController;
 
 import java.util.List;
 
@@ -16,7 +20,17 @@ import java.util.List;
 public class MessageController {
 
     private MessageRepository messageRepository;
+
+
     private MessageLogRepository messageLogRepository;
+
+    private UserController userController;
+    @Autowired
+    public MessageController(MessageRepository messageRepository, MessageLogRepository messageLogRepository, UserController userController) {
+        this.messageRepository = messageRepository;
+        this.messageLogRepository = messageLogRepository;
+        this.userController = userController;
+    }
 
     @PostMapping("/create")
     public ResponseEntity<String> createMessage (@RequestBody Message message) {
@@ -31,8 +45,14 @@ public class MessageController {
 //    }
 //
     @GetMapping("/readLogs")
-    public ResponseEntity<Iterable<MessageLog>> readAllMessageLogs (/* grab user token and get username */) {
-        return ResponseEntity.ok(messageLogRepository.findAll());
+    public ResponseEntity<User> readAllMessageLogs (Authentication authentication) {
+        User data = returnUserFromToken(authentication);
+        return ResponseEntity.ok(data);
+    }
+
+    public User returnUserFromToken(Authentication authentication){
+        String username = authentication.getName();
+        return userController.findByUsername(username);
     }
 //    @PutMapping("/update")
 //    public ResponseEntity<String> updateMessage () {
