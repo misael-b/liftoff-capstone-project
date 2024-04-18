@@ -104,14 +104,15 @@ public class UserController {
     }
 
     public User findByUsername(String username){
-        Iterable<User> users  = userRepository.findAll();
-        for(User user : users){
-            String userName = user.getUsername();
-            if(userName.equals(username)){
-                return user;
-            }
-        }
-        return null;
+        return userRepository.findByUsername(username).orElse(null);
+//        Iterable<User> users  = userRepository.findAll();
+//        for(User user : users){
+//            String userName = user.getUsername();
+//            if(userName.equals(username)){
+//                return user;
+//            }
+//        }
+//        return null;
     }
 
 
