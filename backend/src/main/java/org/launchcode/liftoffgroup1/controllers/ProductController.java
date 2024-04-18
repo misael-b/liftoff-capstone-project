@@ -1,15 +1,19 @@
 package org.launchcode.liftoffgroup1.controllers;
 
 import org.launchcode.liftoffgroup1.model.Product;
+import org.launchcode.liftoffgroup1.model.User;
 import org.launchcode.liftoffgroup1.model.data.ProductRepository;
 import org.launchcode.liftoffgroup1.model.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("post")
@@ -28,8 +32,11 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<String> processCreatePostForm(@RequestBody Product product) {
+    public ResponseEntity<String> processCreatePostForm(@RequestBody Product product, Authentication authentication) {
         // TODO: Set product user here based on authenticated user
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUsername(username);
+        product.setUser(user.orElseThrow());
         productRepository.save(product);
         return new ResponseEntity<>("Product Saved", HttpStatus.OK);
     }
