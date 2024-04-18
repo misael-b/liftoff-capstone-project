@@ -1,9 +1,9 @@
-import UserForm from './userform';
+import Logout from "./logout"
 
 export default function Home() {
     return (
         <>
-            <UserForm />
+            <Logout />
         </>
     )
 };
