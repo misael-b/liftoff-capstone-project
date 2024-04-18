@@ -2,11 +2,14 @@ package org.launchcode.liftoffgroup1.controllers;
 
 
 import org.launchcode.liftoffgroup1.model.Product;
+import org.launchcode.liftoffgroup1.model.User;
 import org.launchcode.liftoffgroup1.model.data.ProductRepository;
+import org.launchcode.liftoffgroup1.model.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,7 +23,12 @@ public class ShoppingCartController {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private UserRepository userRepository;
     private ArrayList<Product> shoppingCart;
+
+    private String user;
 
     public ShoppingCartController() {
         this.shoppingCart = new ArrayList<>();
@@ -55,7 +63,21 @@ public class ShoppingCartController {
 
    // http://localhost:8080/ShoppingCart
     @GetMapping("")
-    public List<Product> displayUserShoppingCart(){
+    public List<Product> displayUserShoppingCart(Authentication authentication){
+        String username = authentication.getName();
+        if (this.user == null){
+            this.user = username;
+        }else{
+            if (!this.user.equals(username)) {
+                clearShoppingCart();
+                this.user = username;
+                return shoppingCart;
+
+            }
+
+        }
+
+
         return shoppingCart;
     }
 
