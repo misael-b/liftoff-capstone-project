@@ -185,7 +185,7 @@ body {
   margin-left: 150px;
   background-color: #005F6A;
   border-radius: 8px;
-  width: 186px
+  width: 186px;
 }
 
 .userSignupForm h1 {
@@ -196,4 +196,27 @@ body {
 
 #login input {
   color: black;
+}
+
+.messageForm {
+  border-radius: 8px;
+  background-color: lightgray;
+  vertical-align: middle;
+  width: 1000px;
+  height: 1000px;
+  margin: auto;
+  margin-top: 70px;
+}
+
+#messageField {
+  margin: auto;
+  margin-left: 150px;
+  color: black;
+}
+
+#messageSubmit {
+  margin-left: 150px;
+  background-color: #005F6A;
+  border-radius: 8px;
+  width: 186px;
 }
