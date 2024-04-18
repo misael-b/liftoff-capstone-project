@@ -16,17 +16,21 @@
   }
 }
 
-/* body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+body {
     background-color: white;
-} */
+}
 
+table{
+  color: black;
+}
+
+label{
+  color: black;
+}
+
+button{
+  color: black;
+}
 @layer utilities {
   .text-balance {
     text-wrap: balance;

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Layout from '../layout'
-import { navigate } from '../actions'
+import { homePage, navigate } from '../actions'
 import { redirect } from "react-router-dom";
 
 function getAllShoppingCartPosts() {
@@ -21,6 +21,7 @@ function getAllShoppingCartPosts() {
 
       })
   } else {
+    homePage();
     return null
   }
 
@@ -80,7 +81,7 @@ const page = () => {
 
   return (<Layout>
     <div >
-      {!products ? /* TODO: LOGIN PAGE REDIRECT */ <p style={{margin: 70}}>NOT LOGGED IN REDIRECT TO LOGIN PAGE</p> :
+      {!products ? /* TODO: LOGIN PAGE REDIRECT */ <p style={{margin: 70, color: "red"}}>PLEASE LOGIN TO VIEW SHOPPING CART</p> :
         <div>
           <h1>View All Posts</h1>
 
@@ -134,9 +135,6 @@ const page = () => {
     </div>
   </Layout>
   )
-  // return (
-  //   <div>page</div>
-  // )
 }
 
 export default page
