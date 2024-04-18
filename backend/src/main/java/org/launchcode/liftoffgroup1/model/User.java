@@ -6,6 +6,7 @@ import java.util.*;
 
 @Entity
 public class User {
+
     private String name;
 
     private String email;
@@ -13,6 +14,7 @@ public class User {
     private String username;
 
     private String password;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("user")
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin
 public class UserController {
 
     private ProductRepository productRepository;

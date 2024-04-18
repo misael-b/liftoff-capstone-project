@@ -1,8 +1,6 @@
 package org.launchcode.liftoffgroup1.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
@@ -11,6 +9,7 @@ public class Message {
 
     private String message;
 
+    @ManyToOne
     private User user;
 
     private Date date;
@@ -29,7 +28,7 @@ public class Message {
 
     public void setMessage(String aMessage) {message = aMessage;}
 
-    public User getUser() {return user;}
+   public User getUser() {return user;}
 
     public Date getDate() {return date;}
 
