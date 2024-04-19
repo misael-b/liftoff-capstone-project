@@ -1,10 +1,11 @@
 "use client";
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Layout from '../layout'
 import axios from 'axios'
 
 const page = () => {
-    const [user, setUser] = useState({username: '', password: ''})
+    const [user, setUser] = useState({ username: '', password: '' })
+
 
     const payload = {
         username: user.username,
@@ -24,39 +25,42 @@ const page = () => {
                 }
             )
 
-            console.log(response);
+            localStorage.setItem("user", JSON.stringify(response.data))
+            // console.log(JSON.parse(localStorage.getItem('user')).accessToken)
         } catch (e) {
             console.log("Sign in failed", e);
         }
     }
 
     const handleChange = (event) => {
-        const {name, value} = event.target;
-        setUser(prevUser => ({ ...prevUser, [name]: value}));
-      };
+        const { name, value } = event.target;
+        setUser(prevUser => ({ ...prevUser, [name]: value }));
+    };
 
-  return (
-    <Layout>
-        <form id="login" onSubmit={handleSubmit}>
-            <input 
-                type="text"
-                name="username"
-                value={user.username}
-                onChange={handleChange}
-                placeholder= "Enter your username:"
-                
-            />
-            <input 
-                type="password"
-                name="password"
-                value={user.password}
-                onChange={handleChange}
-                placeholder= "Enter your password:"
-            />
-            <button type="submit">Submit</button>
-        </form>
-    </Layout>
-  )
+    return (
+        <Layout>
+            <div>
+                <form id="login" onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        name="username"
+                        value={user.username}
+                        onChange={handleChange}
+                        placeholder="Enter your username:"
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        value={user.password}
+                        onChange={handleChange}
+                        placeholder="Enter your password:"
+                    />
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </Layout>
+        
+    )
 }
 
 export default page
