@@ -8,10 +8,15 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class MessageLog {
 
-//    @ManyToOne
-//    private User user;
+    private User user1;
+    private User user2;
 
     @Id
     @GeneratedValue
     private int id;
+
+    public MessageLog (User user1, User user2) {
+        this.user1 = user1;
+        this.user2 = user2;
+    }
 }

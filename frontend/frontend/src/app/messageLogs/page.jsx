@@ -1,84 +1,78 @@
 "use client";
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import axios from 'axios';
-
-
+import {newLog} from '../actions'
+let isLoggedIn;
 
 const page = () => {
     let response;
+    const [data, setData] = useState([]);
+    const [messageLogUser, setMessageLogUser] = useState({user: ''})
 
-    const fetchLogs = async () => {
-        const token = JSON.parse(localStorage.getItem('user')).accessToken
-        const AuthStr = 'Bearer'.concat(token);
-        try {
-            // const getUserResponse = await axios.get(
-            //     'http://localhost:8080/login/user',
-            //     {
-            //         headers: {
-            //             accept: "*/*",
-            //             "Content-Type": "application/json",
-            //             Authorization: AuthStr,
-            //         }
-            //     }
-            // )
+    
+   
 
-            // console.log(getUserResponse);
-
-            const getResponse = await axios.get(
-                'http://localhost:8080/message/readLogs',
-                {
-                    headers: {
-                        accept: "*/*",
-                        "Content-Type": "application/json",
-                        Authorization: AuthStr
-                    }
-                }
-            )
-
-            console.log(getResponse);
-        } catch (e) {
-            console.log('error', e);
-        }
-    }
 
     useEffect(() => {
-        response = fetchLogs();
-        console.log(response);
-    })
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        console.log(localStorage.getItem("user"))
-        const token = JSON.parse(localStorage.getItem('user')).accessToken
-        const AuthStr = 'Bearer'.concat(token);
-        try {
-            const response = await axios.get(
-                'http://localhost:8080/message/readLogs',
-                {
-                    headers: {
-                        accept: "*/*",
-                        "Content-Type": "application/json",
-                        Authorization: AuthStr
-                    }
+        if (typeof window !== 'undefined') {
+            if (localStorage.getItem('user') !== null) {
+                isLoggedIn = localStorage.getItem("user");
+                if (isLoggedIn.accessToken !== "") {
+                    isLoggedIn = true;
+                } else {
+                    isLoggedIn = false;
                 }
-            )
-            
-            console.log(response)
-        } catch (e) {
-            console.log("error", e)
+            }
         }
+
+        const token = JSON.parse(localStorage.getItem('user')).accessToken
+        const AuthStr = 'Bearer '.concat(token);
+
+        axios.get(
+            'http://localhost:8080/message/readLogs',
+            {
+                headers: {
+                    accept: "*/*",
+                    "Content-Type": "application/json",
+                    Authorization: AuthStr,
+                }
+            }
+        ).then((res) => {
+            response = res;
+            setData(res.data);
+        })
+    }, []);
+
+    const handleSubmitNewLog = (e) => {
+        e.preventDefault()
+        newLog();
     }
+
+    const handleChange = (event) => {
+        const {name, value} = event.target;
+        setMessageLogUser(prevMessageLogUser => ({ ...prevMessageLogUser, [name]: value}));
+      };
 
   return (
     <div>
         <table>
-            <th>
-                {
-                    response
-                }
-            </th>
+            <tr>
+                <th>
+                    Logs
+                </th>
+            </tr>
+            { !isLoggedIn ? 
+            <div>
+                <p color="red">Please log in to continue</p>
+            </div> :
+             
+                // response.data.map((item) => {
+                //     <div>item</div>
+                // })
+             <></>
+            }
         </table>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitNewLog}>
         <button type="submit" >BUtton</button>
         </form>
         

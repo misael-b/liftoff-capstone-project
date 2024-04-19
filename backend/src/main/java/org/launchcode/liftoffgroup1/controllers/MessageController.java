@@ -38,6 +38,13 @@ public class MessageController {
         return ResponseEntity.ok("Message created successfully");
     }
 
+    @PostMapping("/create")
+    public ResponseEntity<String> createMessageLog (@RequestBody String username, Authentication authentication) {
+        User activeUser = returnUserFromToken(authentication);
+        User receivingUser = userController.findByUsername(username);
+
+    }
+
 //    @GetMapping("/read")
 //    public ResponseEntity<String> readMessageLog (/* Some way to identify users */) {
 //
