@@ -13,3 +13,7 @@ export async function homePage() {
 export async function userHomePage() {
   redirect("/profile");
 }
+
+export async function updateUserInfo() {
+  redirect("/update-user");
+}

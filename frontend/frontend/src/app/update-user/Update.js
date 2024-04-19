@@ -1,9 +1,11 @@
 "use client";
 import React, { useState } from 'react'
 import axios from 'axios';
+import { userHomePage } from '../actions';
 
 const Update = () => {
-    const [user, setUser] = useState({ name: '', email: '', id: '' , password: ''});
+    const [user, setUser] = useState({ name: '', email: '', id: '', password: '' });
+    
 
     const payload = {
         name: user.name,
@@ -13,31 +15,51 @@ const Update = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (payload.name === "" && payload.email === "" && payload.password === "") {
-            window.alert("All inputs empty");
-            return;
-        }
-        try {
-            const response = await axios.patch(
-                "http://localhost:8080/user/" + user.username,
-                payload,
-                {
-                    headers: {
-                        accept: "*/*",
-                        "Content-Type": "application/json",
+        if (typeof window !== 'undefined') {
+            if (localStorage.getItem('user') !== null) {
+                const token = JSON.parse(localStorage.getItem('user')).accessToken
+                const AuthStr = 'Bearer '.concat(token);
+                axios.get(
+                    'http://localhost:8080/login/user',
+                    {
+                        headers: {
+                            accept: "*/*",
+                            "Content-Type": 'application/json',
+                            Authorization: AuthStr
+                        }
                     }
-                }
-            )
+                ).then((res) => {
+                    let userSignedIn = res.data
+                    let username = userSignedIn.username
+                    try {
+                        const response = axios.patch(
+                            "http://localhost:8080/user/" + username,
+                            payload,
+                            {
+                                headers: {
+                                    accept: "*/*",
+                                    "Content-Type": "application/json",
+                                    Authorization: AuthStr
+                                }
+                            }
+                        )
 
-            if (response.status === 200) {
-                console.log(response)
-                console.log("worked")
+                        if (response.status === 200) {
+                            console.log(response)
+                            console.log("worked")
+                        }
+                    } catch (e) {
+                        console.log("failed", e)
+                    } finally {
+                        userHomePage()
+                    }
+
+
+                })
             }
-        } catch (e) {
-            console.log("failed", e)
-        }
-    }
 
+        }
+    };
     const handleChange = (event) => {
         const { name, value } = event.target;
         setUser(prevUser => ({ ...prevUser, [name]: value }));
@@ -66,13 +88,6 @@ const Update = () => {
                 value={user.password}
                 onChange={handleChange}
                 placeholder="Enter a new password:"
-            />
-            <input
-                type="text"
-                name="username"
-                value={user.username}
-                onChange={handleChange}
-                placeholder="Enter username:"
             />
             <button type="submit">Submit</button>
         </form>

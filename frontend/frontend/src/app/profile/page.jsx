@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Layout from '../layout'
-import { homePage } from "../actions";
+import { homePage, updateUserInfo } from "../actions";
 
 async function handleLogout(event) {
   event.preventDefault();
@@ -10,13 +10,16 @@ async function handleLogout(event) {
     const token = JSON.parse(localStorage.getItem('user')).accessToken
     const AuthStr = 'Bearer '.concat(token);
     window.localStorage.removeItem('user')
-    console.log(JSON.parse(localStorage.getItem('user')).accessToken)
   } catch (e) {
-    console.log("Sign to logout", e);
+    console.log("Sign in to logout", e);
   }
   finally {
     homePage()
   }
+}
+async function handleEdit(event) {
+  event.preventDefault();
+  updateUserInfo()
 }
 
 
@@ -58,6 +61,7 @@ const page = () => {
   return (<Layout>
     <p style={{ color: "black", margin: 70 }}>Welcome {username}</p>
     <button onClick={handleLogout}>Logout</button>
+    <button onClick={handleEdit}>Edit Profile</button>
   </Layout>
 
   )
