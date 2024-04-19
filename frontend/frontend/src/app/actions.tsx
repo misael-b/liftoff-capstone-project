@@ -9,3 +9,7 @@ export async function navigate() {
 export async function homePage() {
   redirect("/login");
 }
+
+export async function userHomePage() {
+  redirect("/profile");
+}

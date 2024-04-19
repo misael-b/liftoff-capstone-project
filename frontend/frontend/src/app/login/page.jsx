@@ -2,9 +2,11 @@
 import React, { useState } from 'react'
 import Layout from '../layout'
 import axios from 'axios'
+import { userHomePage } from '../actions';
 
 const page = () => {
     const [user, setUser] = useState({ username: '', password: '' })
+    let LoggedIn;
 
 
     const payload = {
@@ -26,9 +28,11 @@ const page = () => {
             )
 
             localStorage.setItem("user", JSON.stringify(response.data))
-            // console.log(JSON.parse(localStorage.getItem('user')).accessToken)
+            userHomePage()
+            
         } catch (e) {
-            console.log("Sign in failed", e);
+            LoggedIn = true
+            console.log(LoggedIn)
         }
     }
 
@@ -58,6 +62,7 @@ const page = () => {
                     <button type="submit">Submit</button>
                 </form>
             </div>
+            {/* {LoggedIn ? <p style={{ color: "red" }}>Bad Login Credentials</p> : <></>} */ LoggedIn && <p style={{ color: "red" }}>Bad Login Credentials</p>}
         </Layout>
         
     )
