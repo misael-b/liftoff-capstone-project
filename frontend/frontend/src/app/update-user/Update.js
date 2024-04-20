@@ -66,31 +66,33 @@ const Update = () => {
     }
 
 
-    return (
-        <form onSubmit={handleSubmit}>
+    return (<div className="userSignupForm">
+        <form onSubmit={handleSubmit} >
             <input
                 type="text"
                 name="name"
                 value={user.name}
                 onChange={handleChange}
                 placeholder="Enter a new name:"
-            />
+            /><br />
             <input
                 type="email"
                 name="email"
                 value={user.email}
                 onChange={handleChange}
                 placeholder="Enter a new email:"
-            />
+            /><br />
             <input
                 type="password"
                 name="password"
                 value={user.password}
                 onChange={handleChange}
                 placeholder="Enter a new password:"
-            />
+            /><br />
             <button type="submit">Submit</button>
         </form>
+    </div>
+        
     )
 }
 

@@ -6,7 +6,7 @@ import { userHomePage } from '../actions';
 
 const page = () => {
     const [user, setUser] = useState({ username: '', password: '' })
-    let LoggedIn;
+    const [errors, setErrors] = useState(false)
 
 
     const payload = {
@@ -31,8 +31,8 @@ const page = () => {
             userHomePage()
             
         } catch (e) {
-            LoggedIn = true
-            console.log(LoggedIn)
+            setErrors(true)
+            // console.log(LoggedIn)
         }
     }
 
@@ -43,7 +43,8 @@ const page = () => {
 
     return (
         <Layout>
-            <div>
+            <div className="userSignupForm">
+                <h1>Login:</h1>
                 <form id="login" onSubmit={handleSubmit}>
                     <input
                         type="text"
@@ -51,18 +52,18 @@ const page = () => {
                         value={user.username}
                         onChange={handleChange}
                         placeholder="Enter your username:"
-                    />
+                    /><br />
                     <input
                         type="password"
                         name="password"
                         value={user.password}
                         onChange={handleChange}
                         placeholder="Enter your password:"
-                    />
+                    /><br />
                     <button type="submit">Submit</button>
                 </form>
             </div>
-            {/* {LoggedIn ? <p style={{ color: "red" }}>Bad Login Credentials</p> : <></>} */ LoggedIn && <p style={{ color: "red" }}>Bad Login Credentials</p>}
+            {errors && <p style={{ color: "red" }}>Bad Login Credentials! Try Again!</p>}
         </Layout>
         
     )
