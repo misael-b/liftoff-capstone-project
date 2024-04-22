@@ -6,17 +6,22 @@ import axios from 'axios'
 
 
 const page = () => {
-    const [messageLogUser, setMessageLogUser] = useState({user: ''})
     let isLoggedIn;
+    const [user, setUser] = useState({user: ''})
 
     const payload = {
-        user: messageLogUser.user
+        user: user.user
     }
 
-    const handleChange = (event) => {
+    const handleChange2 = (event) => {
         const {name, value} = event.target;
         setMessageLogUser(prevMessageLogUser => ({ ...prevMessageLogUser, [name]: value}));
     };
+
+    const handleChange = (event) => {
+        const {name, value} = event.target;
+        setUser(prevUser => ({ ...prevUser, [name]: value}));
+      };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -53,11 +58,11 @@ const page = () => {
             <div>
                 <form onSubmit={handleSubmit}>
                     <input
-                        type='text'
-                        name='messageLogUser'
-                        value={messageLogUser.user}
+                        type="text"
+                        name="searchTerm"
+                        value={user.user}
                         onChange={handleChange}
-                        placeholder='Enter a username:'
+                        placeholder="Search:"
                     />
                     <button type="submit">Submit</button>
                 </form>
