@@ -5,10 +5,10 @@ import jakarta.persistence.*;
 @Entity
 public class MessageLog {
 
-    @OneToOne
+    @ManyToOne
     private User user1;
 
-    @OneToOne
+    @ManyToOne
     private User user2;
 
     @Id

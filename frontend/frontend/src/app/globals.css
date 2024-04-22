@@ -125,9 +125,7 @@ button{
   bottom: 0px;
 }
 
-.body * {
-  margin-top: 27px;
-}
+
 
 .body input {
   color: black;
@@ -228,4 +226,8 @@ button{
   background-color: #005F6A;
   border-radius: 8px;
   width: 186px;
+}
+
+.login {
+  color: red;
 }

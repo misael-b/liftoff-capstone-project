@@ -23,7 +23,7 @@ const Login = () => {
                     }
                 }
             )
-
+            console.log(response)
             localStorage.setItem("user", JSON.stringify(response.data))
             
             // console.log(JSON.parse(localStorage.getItem('user')).accessToken)

@@ -8,10 +8,10 @@ export default function Index() {
     <div>
    <BrowserRouter>
     <Routes>
-      <Route path="/" element={NavBar}/>
+      <Route path="/"/>
     </Routes>
    </BrowserRouter>
-   <NavBar/>
+   {/* <NavBar/> */}
    </div>
   );
 }

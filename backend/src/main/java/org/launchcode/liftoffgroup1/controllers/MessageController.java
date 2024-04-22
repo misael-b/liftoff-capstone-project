@@ -20,10 +20,7 @@ import java.util.List;
 public class MessageController {
 
     private MessageRepository messageRepository;
-
-
     private MessageLogRepository messageLogRepository;
-
     private UserController userController;
 
     @Autowired
@@ -39,12 +36,13 @@ public class MessageController {
         return ResponseEntity.ok("Message created successfully");
     }
 
-//    @PostMapping("/create")
-//    public ResponseEntity<String> createMessageLog (@RequestBody String username, Authentication authentication) {
-//        User activeUser = returnUserFromToken(authentication);
-//        User receivingUser = userController.findByUsername(username);
-//
-//    }
+    @PostMapping("/createLog")
+    public ResponseEntity<String> createMessageLog (Authentication authentication, @RequestBody String user) {
+        User activeUser = returnUserFromToken(authentication);
+        User receivingUser = userController.findByUsername(user);
+        messageLogRepository.save(new MessageLog(activeUser, receivingUser));
+        return ResponseEntity.ok(receivingUser.toString());
+    }
 
 //    @GetMapping("/read")
 //    public ResponseEntity<String> readMessageLog (/* Some way to identify users */) {
