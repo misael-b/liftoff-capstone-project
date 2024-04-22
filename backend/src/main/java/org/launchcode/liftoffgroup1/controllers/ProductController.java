@@ -33,7 +33,6 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<String> processCreatePostForm(@RequestBody Product product, Authentication authentication) {
-        // TODO: Set product user here based on authenticated user
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUsername(username);
         product.setUser(user.orElseThrow());
