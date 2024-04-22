@@ -9,3 +9,11 @@ export async function navigate() {
 export async function homePage() {
   redirect("/login");
 }
+
+export async function userHomePage() {
+  redirect("/profile");
+}
+
+export async function updateUserInfo() {
+  redirect("/update-user");
+}

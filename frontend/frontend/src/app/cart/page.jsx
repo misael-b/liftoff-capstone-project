@@ -69,7 +69,7 @@ const page = () => {
         } else {
           redirect("/login")
         }
-        
+
       } catch (error) {
         console.log(error);
       } finally {
@@ -81,7 +81,7 @@ const page = () => {
 
   return (<Layout>
     <div >
-      {!products ? /* TODO: LOGIN PAGE REDIRECT */ <p style={{margin: 70, color: "red"}}>PLEASE LOGIN TO VIEW SHOPPING CART</p> :
+      {!products ? /* TODO: LOGIN PAGE REDIRECT */ <p style={{ margin: 70, color: "red" }}>PLEASE LOGIN TO VIEW SHOPPING CART</p> :
         <div>
           <h1>View All Posts</h1>
 

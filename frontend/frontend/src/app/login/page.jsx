@@ -1,10 +1,13 @@
 "use client";
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Layout from '../layout'
 import axios from 'axios'
+import { userHomePage } from '../actions';
 
 const page = () => {
-    const [user, setUser] = useState({username: '', password: ''})
+    const [user, setUser] = useState({ username: '', password: '' })
+    const [errors, setErrors] = useState(false)
+
 
     const payload = {
         username: user.username,
@@ -24,39 +27,46 @@ const page = () => {
                 }
             )
 
-            console.log(response);
+            localStorage.setItem("user", JSON.stringify(response.data))
+            userHomePage()
+            
         } catch (e) {
-            console.log("Sign in failed", e);
+            setErrors(true)
+            // console.log(LoggedIn)
         }
     }
 
     const handleChange = (event) => {
-        const {name, value} = event.target;
-        setUser(prevUser => ({ ...prevUser, [name]: value}));
-      };
+        const { name, value } = event.target;
+        setUser(prevUser => ({ ...prevUser, [name]: value }));
+    };
 
-  return (
-    <Layout>
-        <form id="login" onSubmit={handleSubmit}>
-            <input 
-                type="text"
-                name="username"
-                value={user.username}
-                onChange={handleChange}
-                placeholder= "Enter your username:"
-                
-            />
-            <input 
-                type="password"
-                name="password"
-                value={user.password}
-                onChange={handleChange}
-                placeholder= "Enter your password:"
-            />
-            <button type="submit">Submit</button>
-        </form>
-    </Layout>
-  )
+    return (
+        <Layout>
+            <div className="userSignupForm">
+                <h1>Login:</h1>
+                <form id="login" onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        name="username"
+                        value={user.username}
+                        onChange={handleChange}
+                        placeholder="Enter your username:"
+                    /><br />
+                    <input
+                        type="password"
+                        name="password"
+                        value={user.password}
+                        onChange={handleChange}
+                        placeholder="Enter your password:"
+                    /><br />
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            {errors && <p style={{ color: "red" }}>Bad Login Credentials! Try Again!</p>}
+        </Layout>
+        
+    )
 }
 
 export default page

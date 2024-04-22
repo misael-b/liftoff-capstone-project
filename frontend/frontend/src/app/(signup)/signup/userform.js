@@ -5,6 +5,9 @@ import { homePage } from '../../actions';
 
 function userform() {
     const [FormUser, setUser] = useState({ name: "", email: '' });
+    const [errorsInUsername, setErrorsInUsername] = useState(false)
+    const [errors, setErrors] = useState(false)
+    const [errorsEmail, seterrorsEmail] = useState(false)
     
 
 
@@ -32,13 +35,25 @@ function userform() {
             console.log(response);
             if (response.status === 200) {
                 homePage();
+            } else if (response.status === 400){
+                // console.log("failed");
+                setErrorsInUsername(true)
             } else {
-                console.log("failed");
+                setErrors(true)
             }
         } catch (e) {
-            console.log("error", e);
+            // console.log("error", e);
+            if (e.response.status === 400) {
+                // console.log("failed");
+                setErrorsInUsername(true)
+            } 
+            else if (FormUser.username !== "" && FormUser.password !== "" && FormUser.email !== "" && FormUser.name !== "") {
+                seterrorsEmail(true)
+            }else {
+                setErrors(true)
+            }
+            
         } 
-        console.log(redirectTarget)
 
         
         
@@ -49,6 +64,9 @@ function userform() {
     const handleChange = (event) => {
         const { name, value } = event.target;
         setUser(prevUser => ({ ...prevUser, [name]: value }));
+        setErrors(false)
+        setErrorsInUsername(false)
+        seterrorsEmail(false)
     };
 
     return (
@@ -88,7 +106,10 @@ function userform() {
                 id="userPassword"
             /><br/>
             <button type="submit">Submit</button>
-        </form>
+            </form>
+            {errorsInUsername && <p style={{ color: "red" }}>Username Already Exists! Try Again!</p>}
+            {errors && <p style={{ color: "red" }}>All fields are required!!</p>}
+            {errorsEmail && <p style={{ color: "red" }}>Please Enter a valid email</p>}
     </div>
     );
 };

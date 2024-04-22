@@ -1,10 +1,14 @@
 import React from 'react'
 import Update from './Update';
+import Layout from '../layout'
 
 
 const page = () => {
     return (
-        <Update />
+        <Layout>
+            <Update />
+        </Layout>
+        
     )
 }
 
