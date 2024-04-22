@@ -55,13 +55,7 @@ const page = () => {
 
   return (
     <div>
-        <table>
-            <tr>
-                <th>
-                    Logs
-                </th>
-            </tr>
-            { !isLoggedIn ? 
+         { !isLoggedIn ? 
             <div>
                 <p color="red">Please log in to continue</p>
             </div> :
@@ -71,11 +65,16 @@ const page = () => {
                 // })
              <></>
             }
+        <table>
+            <tr>
+                <th>
+                    Logs
+                </th>
+            </tr>
         </table>
         <form onSubmit={handleSubmitNewLog}>
-        <button type="submit" >BUtton</button>
+            <button type="submit" >BUtton</button>
         </form>
-        
     </div>
   )
 }

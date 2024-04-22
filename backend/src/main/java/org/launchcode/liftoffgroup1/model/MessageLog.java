@@ -1,14 +1,14 @@
 package org.launchcode.liftoffgroup1.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class MessageLog {
 
+    @OneToOne
     private User user1;
+
+    @OneToOne
     private User user2;
 
     @Id
@@ -19,4 +19,10 @@ public class MessageLog {
         this.user1 = user1;
         this.user2 = user2;
     }
+
+    public User getUser1() {return user1;}
+
+    public User getUser2() {return user2;}
+
+    public int getId() {return id;}
 }

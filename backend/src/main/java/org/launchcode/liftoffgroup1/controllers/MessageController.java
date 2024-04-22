@@ -25,6 +25,7 @@ public class MessageController {
     private MessageLogRepository messageLogRepository;
 
     private UserController userController;
+
     @Autowired
     public MessageController(MessageRepository messageRepository, MessageLogRepository messageLogRepository, UserController userController) {
         this.messageRepository = messageRepository;
@@ -38,12 +39,12 @@ public class MessageController {
         return ResponseEntity.ok("Message created successfully");
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<String> createMessageLog (@RequestBody String username, Authentication authentication) {
-        User activeUser = returnUserFromToken(authentication);
-        User receivingUser = userController.findByUsername(username);
-
-    }
+//    @PostMapping("/create")
+//    public ResponseEntity<String> createMessageLog (@RequestBody String username, Authentication authentication) {
+//        User activeUser = returnUserFromToken(authentication);
+//        User receivingUser = userController.findByUsername(username);
+//
+//    }
 
 //    @GetMapping("/read")
 //    public ResponseEntity<String> readMessageLog (/* Some way to identify users */) {

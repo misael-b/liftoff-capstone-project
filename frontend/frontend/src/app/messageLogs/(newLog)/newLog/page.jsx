@@ -7,6 +7,7 @@ import axios from 'axios'
 
 const page = () => {
     const [messageLogUser, setMessageLogUser] = useState({user: ''})
+    let isLoggedIn;
 
     const payload = {
         user: messageLogUser.user
@@ -18,9 +19,16 @@ const page = () => {
     };
 
     const handleSubmit = async (e) => {
-        const token = JSON.parse(localStorage.getItem('user')).accessToken
-        const AuthStr = 'Bearer '.concat(token);
         e.preventDefault();
+        try {
+            const token = JSON.parse(localStorage.getItem('user')).accessToken
+            const AuthStr = 'Bearer '.concat(token);
+            isLoggedIn = true;
+        } catch (e) {
+            isLoggedIn = false;
+        }
+        
+        
         try {
             const response = await axios.post(
                 'http://localhost:8080/message',
@@ -41,18 +49,20 @@ const page = () => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type='text'
-                    name='messageLogUser'
-                    value={messageLogUser.user}
-                    onChange={handleChange}
-                    placeholder='Enter a username:'
-                />
-                <button type="submit">Submit</button>
-            </form>
-        </div>
+        <Layout>
+            <div>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type='text'
+                        name='messageLogUser'
+                        value={messageLogUser.user}
+                        onChange={handleChange}
+                        placeholder='Enter a username:'
+                    />
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </Layout>
     )
 }
 
