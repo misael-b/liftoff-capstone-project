@@ -13,3 +13,11 @@ export async function homePage() {
 export async function newLog() {
   redirect("/messageLogs/newLog")
 }
+
+export async function userHomePage() {
+  redirect("/profile");
+}
+
+export async function updateUserInfo() {
+  redirect("/update-user");
+}

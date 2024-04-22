@@ -1,8 +1,7 @@
 "use client";
 import React, { useState } from 'react'
-import axios from 'axios'
 
-const Logout = () => {
+const page = () => {
     const [user, setUser] = useState({ username: '', password: '' })
 
 
@@ -28,13 +27,14 @@ const Logout = () => {
     };
 
     return (
+        
         <div>
             <form id="logout" onSubmit={handleSubmit}>
-                
+
                 <button type="submit">Logout</button>
             </form>
         </div>
     )
 }
 
-export default Logout
+export default page

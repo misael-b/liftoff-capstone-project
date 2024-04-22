@@ -7,5 +7,42 @@
 <div th:replace="~{fragments :: page-header}"></div>
 <h1>CREATE A POST FORM HERE! </h1>
 
+<div class="container my-3">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h2>CREATE NEW LISTING</h2>
+            <form th:action="@{create}" th:object="${product}" method="post">
+<!--                <ul th:if="${#fields.hasErrors('*')}">-->
+<!--                    <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>-->
+<!--                </ul>-->
+                <div class="form-row">
+                    <div class="col-md-6 form-group">
+                        <label>Name of Item</label>
+                        <input type="text" class="form-control" th:field="*{name}">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" th:field="*{description}" rows="3"></textarea>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Picture URL</label>
+                        <input type="text" class="form-control" th:field="*{picture}">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Category</label>
+                        <input type="text" class="form-control" th:field="*{category}">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Price</label>
+                        <input type="number" step="any" class="form-control" th:field="*{price}">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block mt-3">Create Listing</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
