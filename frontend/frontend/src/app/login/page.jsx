@@ -1,14 +1,4 @@
-<<<<<<< HEAD
-import Login from "./login"
 
-export default function Home() {
-    return (
-        <>
-            <Login />
-        </>
-    )
-};
-=======
 "use client";
 import React, { useState } from 'react'
 import Layout from '../layout'
@@ -81,4 +71,3 @@ const page = () => {
 }
 
 export default page
->>>>>>> main

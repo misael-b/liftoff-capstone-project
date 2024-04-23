@@ -2,10 +2,12 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import {newLog} from '../actions'
-let isLoggedIn;
+
 
 const page = () => {
     let response;
+    let isLoggedIn;
+    let AuthStr;
     const [data, setData] = useState([]);
     const [messageLogUser, setMessageLogUser] = useState({user: ''})
 
@@ -26,7 +28,7 @@ const page = () => {
         }
 
         const token = JSON.parse(localStorage.getItem('user')).accessToken
-        const AuthStr = 'Bearer '.concat(token);
+        AuthStr = 'Bearer '.concat(token);
 
         axios.get(
             'http://localhost:8080/message/readLogs',
@@ -40,6 +42,16 @@ const page = () => {
         ).then((res) => {
             response = res;
             setData(res.data);
+            // res.data.map((item) => {
+            //     setData(
+            //         [
+            //             ...data, {user1: item.user1, user2: item.user2}
+            //         ]
+            //     )
+            // })
+            console.log(res)
+            console.log(data)
+            
         })
     }, []);
 
@@ -48,24 +60,16 @@ const page = () => {
         newLog();
     }
 
-    const handleChange = (event) => {
-        const {name, value} = event.target;
-        setMessageLogUser(prevMessageLogUser => ({ ...prevMessageLogUser, [name]: value}));
-      };
 
   return (
     <div>
-         { !isLoggedIn ? 
+        { !isLoggedIn ? 
             <div>
                 <p color="red">Please log in to continue</p>
             </div> :
-             
-                // response.data.map((item) => {
-                //     <div>item</div>
-                // })
              <></>
-            }
-        <table>
+        }
+        <table className="logTable">
             <tr>
                 <th>
                     Logs
@@ -73,7 +77,7 @@ const page = () => {
             </tr>
         </table>
         <form onSubmit={handleSubmitNewLog}>
-            <button type="submit" >BUtton</button>
+            <button type="submit" style={{color: "red"}}>Create New Log</button>
         </form>
     </div>
   )

@@ -231,3 +231,11 @@ button{
 .login {
   color: red;
 }
+
+.logTable {
+  margin-top: 70px;
+}
+
+#logout {
+  margin-top: 70px;
+}

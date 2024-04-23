@@ -4,6 +4,7 @@ import React, {useState, useEffect} from 'react'
 import Layout from '../layout'
 import axios from 'axios'
 import Link from 'next/link'
+import {messageLogs} from "../../../actions"
 
 const page = () => {
     let isLoggedIn;
@@ -45,7 +46,10 @@ const page = () => {
                 }
             )
 
-            console.log(response)
+            if (response.status === 200) {
+                messageLogs();
+            }
+
         } catch (e) {
             console.log(payload);
             console.log("error", e)
