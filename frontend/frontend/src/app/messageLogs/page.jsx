@@ -9,11 +9,6 @@ const page = () => {
     let isLoggedIn;
     let AuthStr;
     const [data, setData] = useState([]);
-    const [messageLogUser, setMessageLogUser] = useState({user: ''})
-
-    
-   
-
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -29,19 +24,24 @@ const page = () => {
 
         const token = JSON.parse(localStorage.getItem('user')).accessToken
         AuthStr = 'Bearer '.concat(token);
-
-        axios.get(
-            'http://localhost:8080/message/readLogs',
-            {
-                headers: {
-                    accept: "*/*",
-                    "Content-Type": "application/json",
-                    Authorization: AuthStr,
+        const asyncFunc = async () => {
+            const response = await axios.get(
+                'http://localhost:8080/message/readLogs',
+                {
+                    headers: {
+                        accept: "*/*",
+                        "Content-Type": "application/json",
+                        Authorization: AuthStr,
+                    }
                 }
-            }
-        ).then((res) => {
-            response = res;
-            setData(res.data);
+            )
+
+            console.log(response.data)
+            setData(response.data);
+            console.log(data)
+        }
+        asyncFunc();
+        
             // res.data.map((item) => {
             //     setData(
             //         [
@@ -49,10 +49,6 @@ const page = () => {
             //         ]
             //     )
             // })
-            console.log(res)
-            console.log(data)
-            
-        })
     }, []);
 
     const handleSubmitNewLog = (e) => {
