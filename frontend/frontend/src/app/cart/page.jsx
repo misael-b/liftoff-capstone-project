@@ -37,7 +37,7 @@ const page = () => {
       const token = JSON.parse(localStorage.getItem('user')).accessToken
       const AuthStr = 'Bearer '.concat(token);
 
-      const responseFromDelete = axios.get("http://localhost:8080/ShoppingCart/remove?Id=" + event.target.id
+      const responseFromDelete = await axios.get("http://localhost:8080/ShoppingCart/remove?Id=" + event.target.id
         , {
           headers: {
             accept: "*/*",
@@ -83,7 +83,7 @@ const page = () => {
     <div >
       {!products ? /* TODO: LOGIN PAGE REDIRECT */ <p style={{ margin: 70, color: "red" }}>PLEASE LOGIN TO VIEW SHOPPING CART</p> :
         <div>
-          <h1>View All Posts</h1>
+          <h1 style={{margin:70, fontSize:30}}>Shopping Cart</h1>
 
           <table width='100%'>
             <thead>
@@ -130,6 +130,7 @@ const page = () => {
               </tbody>
             )}
           </table>
+        
         </div>
       }
     </div>

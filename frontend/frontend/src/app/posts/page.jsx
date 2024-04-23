@@ -72,7 +72,7 @@ const page = () => {
     return (
         <Layout>
             <div>
-                <h1>View All Posts</h1>
+                <h1 style={{ margin: 50, fontSize:40}}>View All Posts</h1>
 
                 <form>
                     <label> Sort by:

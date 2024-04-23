@@ -32,6 +32,7 @@ const page = () => {
 
     // const [word, setWord] = useState({ search: '' })
     const [products, setProducts] = useState(null);
+    const [searchWord, setSearchWord] = useState("");
 
     const handleSearch = async (search) => {
         // event.preventDefault();
@@ -51,6 +52,7 @@ const page = () => {
 
             if (response.status === 200) {
                 setProducts(response.data)
+                setSearchWord(search)
                 // console.log(response.data)
             }
         } catch (e) {
@@ -75,6 +77,7 @@ const page = () => {
 
   return (
       <>
+          <h1 style={{ margin: 50, fontSize: 40 }}> Search Results for: "{searchWord}"</h1>
 
           {(products != null) && (<table width='100%' >
               <thead>

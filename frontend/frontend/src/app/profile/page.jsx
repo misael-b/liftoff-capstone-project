@@ -137,7 +137,8 @@ const page = () => {
           </tbody>
         )}
       </table>
-      {(products === null) ? <p> No posts: <a href="http://localhost:3000/create-post">Create A New Post Here</a> </p> : <> </>}
+
+      {products === null ? <p> No posts: <a href="http://localhost:3000/create-post">Create A New Post Here</a> </p> : <> </>}
 
 
     </div>
