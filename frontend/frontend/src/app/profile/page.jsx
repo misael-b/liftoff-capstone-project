@@ -24,10 +24,16 @@ async function handleEdit(event) {
 
 
 
+
+
 const page = () => {
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  const [products, setProducts] = useState([]);
+
   if (typeof window !== 'undefined') {
     if (localStorage.getItem('user') !== null) {
       let user;
@@ -51,17 +57,92 @@ const page = () => {
 
 
         })
+        axios.get(
+          'http://localhost:8080/post/user-posts',
+          {
+            headers: {
+              accept: "*/*",
+              "Content-Type": 'application/json',
+              Authorization: AuthStr
+            }
+          }
+        ).then((res) => {
+          setProducts(res.data)
+
+
+        })
       }, []);
+
     } else {
       homePage()
     }
   }
+
+
   
 
   return (<Layout>
-    <p style={{ color: "black", margin: 70 }}>Welcome {username}</p>
-    <button onClick={handleLogout}>Logout</button>
-    <button onClick={handleEdit}>Edit Profile</button>
+    
+    <div className="createPostButtonContainer">
+      <button onClick={handleLogout}>Logout</button>
+    </div>
+
+    <div className="createPostButtonContainer">
+      <button onClick={handleEdit}>Edit Profile</button>
+    </div>
+    
+    
+    <p style={{ color: "black", margin: 70 }}>Welcome {username} !</p>
+
+    <div>
+      <h1>View Your Posts: </h1>
+
+      <table width='100%'>
+        <thead>
+          <tr>
+            <th>
+              Picture
+            </th>
+            <th>
+              Name
+            </th>
+            <th width='20%' >
+              Description
+            </th>
+            <th>
+              Category
+            </th>
+            <th>
+              Price
+            </th>
+          </tr>
+          
+        </thead>
+        {((products !== null)&&
+          <tbody>
+            {products.map((product) => (
+              <tr>
+                <th><img src={product.picture} width={200} /></th>
+                <th>{product.name}</th>
+                <th>{product.description}</th>
+                <th>{product.category}</th>
+                <th> ${product.price}</th>
+
+              </tr>
+
+
+
+            ))}
+
+          </tbody>
+        )}
+      </table>
+      {(products === null) ? <p> No posts: <a href="http://localhost:3000/create-post">Create A New Post Here</a> </p> : <> </>}
+
+
+    </div>
+    
+
   </Layout>
 
   )
