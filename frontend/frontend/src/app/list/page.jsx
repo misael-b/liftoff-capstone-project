@@ -32,7 +32,7 @@ const page = () => {
     const search = searchParams.get('searchTerm')
 
     // const [word, setWord] = useState({ search: '' })
-    const [products, setProducts] = useState(null);
+    const [products, setProducts] = useState([]);
     const [searchWord, setSearchWord] = useState("");
 
     const handleSearch = async (search) => {
@@ -141,7 +141,7 @@ const page = () => {
                           <th> ${product.price}</th>
                           <th>
                               {!localStorage.getItem('user') ?
-                                  <div><p>Login to purchage</p></div>
+                                  <div><p><a href='http://localhost:3000/login' style={{ color: "blue" }}>Login</a> to purchage</p></div>
                                   :
                                   <div>
                                       <form onSubmit={handleSubmit} id={product.id}>
@@ -158,6 +158,8 @@ const page = () => {
               </tbody>
 
                   </table>)}
+                  {(products.length == 0) && (<p style={{ fontSize: 40 }}>No Results found.</p>)}
+
               </div>
           )} 
           

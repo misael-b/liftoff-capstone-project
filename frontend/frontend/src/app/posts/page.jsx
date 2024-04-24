@@ -127,7 +127,7 @@ const page = () => {
                                     <th>
                                         {localStorage.getItem('user') ? <form onSubmit={handleSubmit} id={product.id}>
                                             <button type="submit" class="buyButton"><span>Buy </span></button>
-                                        </form> : <div><p>Login to purchage</p></div>}
+                                        </form> : <div><p><a href='http://localhost:3000/login' style={{ color: "blue" }}>Login</a> to purchage</p></div>}
 
 
                                     </th>
