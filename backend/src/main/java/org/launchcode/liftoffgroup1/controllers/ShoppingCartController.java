@@ -37,7 +37,7 @@ public class ShoppingCartController {
 
 
     // http://localhost:8080/ShoppingCart/add?Id=1
-    @GetMapping("add")
+    @PostMapping("add")
     public ResponseEntity processAddToShoppingCart(@RequestParam int Id){
         Optional<Product> productOptional = productRepository.findById(Id);
         if (productOptional.isPresent()){
@@ -49,7 +49,7 @@ public class ShoppingCartController {
     }
 
 //    http://localhost:8080/ShoppingCart/remove?Id=1
-    @GetMapping("remove")
+    @DeleteMapping("remove")
     public ResponseEntity processRemoveFromShoppingCart(@RequestParam int Id){
         Optional<Product> productOptional = productRepository.findById(Id);
         if (productOptional.isPresent()){

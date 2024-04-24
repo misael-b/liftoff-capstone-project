@@ -38,7 +38,7 @@ const page = () => {
       const token = JSON.parse(localStorage.getItem('user')).accessToken
       const AuthStr = 'Bearer '.concat(token);
 
-      const responseFromDelete = await axios.get("http://localhost:8080/ShoppingCart/remove?Id=" + event.target.id
+      const responseFromDelete = await axios.delete("http://localhost:8080/ShoppingCart/remove?Id=" + event.target.id
         , {
           headers: {
             accept: "*/*",

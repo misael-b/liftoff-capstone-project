@@ -14,9 +14,13 @@ const handleSubmit = async (event) => {
     const token = JSON.parse(localStorage.getItem('user')).accessToken
     const AuthStr = 'Bearer '.concat(token);
     event.preventDefault();
+
+    const payload = {
+        id: event.target.id
+    }
     try {
-        axios.get("http://localhost:8080/ShoppingCart/add?Id=" + event.target.id
-            , {
+        axios.post("http://localhost:8080/ShoppingCart/add?Id=" + event.target.id
+            , payload, {
                 headers: {
                     accept: "*/*",
                     "Content-Type": "application/json",
