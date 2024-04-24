@@ -99,6 +99,11 @@ button{
   height: 30px;
 }
 
+#posts {
+  width: 40px;
+  height: 30px;
+}
+
 .searchBar {
   padding-left: 30%;
   position: center;
@@ -203,6 +208,36 @@ button{
   text-align: center;
 }
 
+.userLoginForm{
+  border-radius: 8px;
+    background-color: lightgray;
+    vertical-align: middle;
+    width: 500px;
+    height: 300px;
+    margin: auto;
+    margin-top: 70px;
+}
+
+.userLoginForm input {
+  margin: auto;
+  margin-left: 150px;
+  color: black;
+}
+
+.userLoginForm button {
+  margin-left: 150px;
+  background-color: #005F6A;
+  border-radius: 8px;
+  width: 186px
+}
+
+.userLoginForm h1 {
+  vertical-align:middle;
+  color: black;
+  font-size: 40px;
+  text-align: center;
+}
+
 #login input {
   color: black;
 }
@@ -215,7 +250,7 @@ thead {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #354a5f;
+  background-color: #005F6A;
   color: white;
   text-align: center;
 }
@@ -230,6 +265,52 @@ thead {
   width: 100px;
   text-align: center;
   position: relative;
+}
+
+.buyButton {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #005F6A;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 18px;
+  padding: 10px;
+  width: 100px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.buyButton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.buyButton span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.buyButton:hover span {
+  padding-right: 25px;
+}
+
+.buyButton:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.buyButton:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(5px);
 }
 
 

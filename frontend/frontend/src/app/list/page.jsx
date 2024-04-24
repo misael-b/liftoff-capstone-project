@@ -26,6 +26,7 @@ const handleSubmit = async (event) => {
 
 
 const page = () => {
+    const [domLoaded, setDomLoaded] = useState(false);
     const searchParams = useSearchParams();
 
     const search = searchParams.get('searchTerm')
@@ -40,7 +41,7 @@ const page = () => {
         try {
             const response = await axios.get(
 
-                "http://localhost:8080/search?searchTerm=" + search,
+                "http://localhost:8080/search?searchTerm=" + search + "&sort=",
                 {
                     headers: {
                         accept: "*/*",
@@ -53,31 +54,60 @@ const page = () => {
             if (response.status === 200) {
                 setProducts(response.data)
                 setSearchWord(search)
-                // console.log(response.data)
             }
         } catch (e) {
             console.log("error", e);
         }
     }
+
+
+    function HandleChangle(event) {
+        const { name, value } = event.target
+        if (value) {
+            try {
+                // console.log("http://localhost:8080/list/" + sorting)
+                const sortResponce = axios.get("http://localhost:8080/search?searchTerm=" + search + "&sort=" + value).then(
+                    function (response) {
+                        setProducts(response.data)
+                    }
+                )
+            } catch (e) {
+                console.log("error", e);
+            } }
+
+    }
     
-
-    // console.log(search);
+    useEffect(() => {
+        setDomLoaded(true);
+        const fetchData = async () => { 
+            handleSearch(search)
+        };
+        fetchData();
+    }, []);
     
     
-    handleSearch(search)
-
-    // const handleChange = (event) => {
-    //     const { name, value } = event.target;
-    //     setWord(prevWord => ({ ...prevWord, [name]: value }));
-    // };
-
-
-
-
-
   return (
       <>
+          {domLoaded && (
+              <div>
+          
           <h1 style={{ margin: 50, fontSize: 40 }}> Search Results for: "{searchWord}"</h1>
+
+          <form>
+              <label> Sort by:
+                  <select name="sortBy" onChange={HandleChangle}>
+                      <option value="">*Select One*</option>
+                      <option value="desc">Price (High-Low)</option>
+                      <option value="asc">Price (Low-High)</option>
+                      <option value="category-asc">Category (A-Z)</option>
+                      <option value="name-asc">Name (A-Z)</option>
+
+                  </select>
+
+              </label>
+
+            </form>
+                  <br /><br />
 
           {(products != null) && (<table width='100%' >
               <thead>
@@ -115,7 +145,7 @@ const page = () => {
                                   :
                                   <div>
                                       <form onSubmit={handleSubmit} id={product.id}>
-                                          <button type="submit">Buy</button>
+                                          <button type="submit" class="buyButton"><span>Buy </span></button>
                                       </form>
                                   </div>}
 
@@ -123,18 +153,14 @@ const page = () => {
                           </th>
 
                       </tr>
-
-
-
                   ))}
 
               </tbody>
 
-          </table>)}
-
-
-
-
+                  </table>)}
+              </div>
+          )} 
+          
       </>
 
   )

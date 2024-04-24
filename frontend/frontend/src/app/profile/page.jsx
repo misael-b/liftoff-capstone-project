@@ -30,7 +30,7 @@ const page = () => {
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [domLoaded, setDomLoaded] = useState(false);
   
 
   const [products, setProducts] = useState([]);
@@ -39,6 +39,7 @@ const page = () => {
     if (localStorage.getItem('user') !== null) {
       let user;
       useEffect(() => {
+        setDomLoaded(true);
         const token = JSON.parse(localStorage.getItem('user')).accessToken
         const AuthStr = 'Bearer '.concat(token);
         axios.get(
@@ -83,6 +84,8 @@ const page = () => {
   
 
   return (<Layout>
+    {domLoaded && (
+      <div>
     
     <div className="ProfileButtonContainer">
       <button onClick={handleLogout}>Logout</button>
@@ -101,16 +104,16 @@ const page = () => {
       <table className="ShoppingCartTable">
         <thead>
           <tr>
-            <th>
+            <th style={{ width: 200 }}>
               Picture
             </th>
-            <th>
+            <th style={{ width: 200 }}>
               Name
             </th>
-            <th >
+            <th style={{ width: 200 }}>
               Description
-            </th>
-            <th>
+            </th >
+            <th style={{ width: 200 }}>
               Category
             </th>
             <th style={{ width:200}}>
@@ -154,7 +157,9 @@ const page = () => {
       <p style={{ fontWeight: 900, fontSize: 18 }}>EMAIL : </p>
       <p>{email}</p>
       
-    </div>
+        </div>
+      </div>
+    )} 
     
 
   </Layout>

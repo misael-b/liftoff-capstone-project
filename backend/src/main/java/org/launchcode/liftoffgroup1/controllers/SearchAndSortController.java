@@ -19,19 +19,19 @@ public class SearchAndSortController {
 
 
     @GetMapping("list")
-    public List<Product> displayAllProducts(Model model, @RequestParam(required = false) String sortBy){
+    public List<Product> displayAllProducts(){
         return (List<Product>) productRepository.findAll();
     }
 
 
 //    http://localhost:8080/search?searchTerm=tv
     @GetMapping("search")
-    public List<Product> displaySearchResults(@RequestParam String searchTerm){
-        return  search(searchTerm);
+    public List<Product> displaySearchResults(@RequestParam String searchTerm, @RequestParam String sort){
+        return  search(searchTerm, sort);
     }
 
     @GetMapping("list/{sort}")
-    public List<Product> sortSearchResults(@PathVariable String sort){
+    public List<Product> sortAllResults(@PathVariable String sort){
        List<Product> products = (List<Product>) productRepository.findAll();
        return sortByPrice(products, sort);
     }
