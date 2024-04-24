@@ -5,7 +5,9 @@ import NavBar from "./components/NavBar"
 export default function Home() {
   return (
     <>
-      <div>test</div>
+      <div style={{margin:70}}>
+        <p>WElcoeme</p>
+      </div>
     </>
   );
 }

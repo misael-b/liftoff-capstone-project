@@ -31,6 +31,7 @@ const page = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(true);
+  
 
   const [products, setProducts] = useState([]);
 
@@ -83,21 +84,21 @@ const page = () => {
 
   return (<Layout>
     
-    <div className="createPostButtonContainer">
+    <div className="ProfileButtonContainer">
       <button onClick={handleLogout}>Logout</button>
     </div>
 
-    <div className="createPostButtonContainer">
+    <div className="ProfileButtonContainer">
       <button onClick={handleEdit}>Edit Profile</button>
     </div>
     
     
-    <p style={{ color: "black", margin: 70 }}>Welcome {username} !</p>
+    <h1 style={{ color: "black", margin: 70, fontSize: 50 }}>Welcome {username} !</h1>
 
-    <div>
-      <h1>View Your Posts: </h1>
-
-      <table width='100%'>
+    <div style={{ float: "left", width: "80%", height: 100 }}>
+      <p style={{ fontSize: 30 }}>View Your Posts: </p>
+      <br></br>
+      <table className="ShoppingCartTable">
         <thead>
           <tr>
             <th>
@@ -106,13 +107,13 @@ const page = () => {
             <th>
               Name
             </th>
-            <th width='20%' >
+            <th >
               Description
             </th>
             <th>
               Category
             </th>
-            <th>
+            <th style={{ width:200}}>
               Price
             </th>
           </tr>
@@ -137,10 +138,22 @@ const page = () => {
           </tbody>
         )}
       </table>
+      <br></br>
+      {(products.length == 0) && <p> No posts: <a href="http://localhost:3000/create-post" style={{ color: "blue" }}>Create A New Post Here</a> </p>}
 
-      {products === null ? <p> No posts: <a href="http://localhost:3000/create-post">Create A New Post Here</a> </p> : <> </>}
 
+    </div>
 
+    <div style={{ float: "right",  width: "18%"}}>
+      <p style={{ fontSize: 30 }}>Account Details: </p>
+      <br></br>
+      <p style={{ fontWeight: 900, fontSize: 18  }}>USERNAME : </p>
+      <p>{username}</p>
+      <p style={{ fontWeight: 900, fontSize: 18 }}>NAME : </p>
+      <p>{ name}</p>
+      <p style={{ fontWeight: 900, fontSize: 18 }}>EMAIL : </p>
+      <p>{email}</p>
+      
     </div>
     
 

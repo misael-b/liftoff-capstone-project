@@ -11,7 +11,7 @@ export default function Index() {
       <Route path="/"/>
     </Routes>
    </BrowserRouter>
-   {/* <NavBar/> */}
+      {/* <NavBar/> */}
    </div>
   );
 }

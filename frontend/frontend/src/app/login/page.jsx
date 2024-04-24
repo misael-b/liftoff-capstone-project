@@ -62,8 +62,11 @@ const page = () => {
                     /><br />
                     <button type="submit">Submit</button>
                 </form>
+                <p>Create Account <a href='http://localhost:3000/signup' style={{ color: "blue" }}>Here</a></p>
+                {errors && <p style={{ color: "red" }}>Bad Login Credentials! Try Again!</p>}
             </div>
-            {errors && <p style={{ color: "red" }}>Bad Login Credentials! Try Again!</p>}
+           
+            
         </Layout>
         
     )

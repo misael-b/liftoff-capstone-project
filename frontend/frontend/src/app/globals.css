@@ -206,3 +206,31 @@ button{
 #login input {
   color: black;
 }
+
+
+
+thead {
+  border-bottom: 2px solid #354a5f;
+  padding: 8px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #354a5f;
+  color: white;
+  text-align: center;
+}
+
+.ProfileButtonContainer {
+  vertical-align: bottom;
+  /* margin-top: 10px; */
+  margin-right: 20px;
+  float: right;
+  background-color: red;
+  border-radius: 8px;
+  width: 100px;
+  text-align: center;
+  position: relative;
+}
+
+
+

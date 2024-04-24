@@ -54,7 +54,6 @@ const page = () => {
       setProducts(response.data);
 
     }
-    location.reload()
   }
 
 
@@ -88,13 +87,13 @@ const page = () => {
           <table width='100%'>
             <thead>
               <tr>
-                <th>
+                <th width='20%' >
                   Picture
                 </th>
                 <th>
                   Name
                 </th>
-                <th width='20%' >
+                <th width='25%' >
                   Description
                 </th>
                 <th>
@@ -110,7 +109,7 @@ const page = () => {
               <tbody>
                 {products.map((product) => (
                   <tr>
-                    <th><img src={product.picture} width={200} /></th>
+                    <th><img src={product.picture} width={200} style={{ marginLeft: "auto", marginRight: "auto"}}/></th>
                     <th>{product.name}</th>
                     <th>{product.description}</th>
                     <th>{product.category}</th>
@@ -130,7 +129,7 @@ const page = () => {
               </tbody>
             )}
           </table>
-        
+          {(products.length == 0) && <p> No Items in Shopping Cart: <a href="http://localhost:3000/posts" style={{ color: "blue" }}>View All products</a> </p>}
         </div>
       }
     </div>

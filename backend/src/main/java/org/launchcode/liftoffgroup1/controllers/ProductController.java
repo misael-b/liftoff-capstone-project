@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -58,9 +59,9 @@ public class ProductController {
         return new ResponseEntity<>(productRepository.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/get")
-    public ResponseEntity<Object> displayAllProductsList() {
-        return new ResponseEntity<>(productRepository.findAllBy(), HttpStatus.OK);
+    @GetMapping("list")
+    public List<Product> displayAllProducts(Model model, @RequestParam(required = false) String sortBy){
+        return (List<Product>) productRepository.findAll();
     }
 
     @DeleteMapping("/get/{id}")
