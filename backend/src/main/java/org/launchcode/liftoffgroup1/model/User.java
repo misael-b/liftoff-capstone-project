@@ -85,6 +85,9 @@ public class User {
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     @Override
     public String toString() {

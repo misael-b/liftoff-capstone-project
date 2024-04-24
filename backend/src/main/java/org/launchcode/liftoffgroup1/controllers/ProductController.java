@@ -6,6 +6,7 @@ import org.launchcode.liftoffgroup1.model.data.ProductRepository;
 import org.launchcode.liftoffgroup1.model.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -51,7 +52,7 @@ public class ProductController {
         return new ResponseEntity<>(productRepository.findByNameContainsOrCategoryContainsOrDescriptionContains(searchTerm, searchTerm, searchTerm), HttpStatus.OK);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/get/product/{id}")
     public ResponseEntity<Object> displayProductById(@PathVariable Integer id) {
         return new ResponseEntity<>(productRepository.findById(id), HttpStatus.OK);
     }
@@ -59,6 +60,13 @@ public class ProductController {
     @GetMapping("/get")
     public ResponseEntity<Object> displayAllProductsList() {
         return new ResponseEntity<>(productRepository.findAllBy(), HttpStatus.OK);
+    }
+
+    @GetMapping("/get/user")
+    public ResponseEntity<Object> displayUserProducts(Authentication authentication) {
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUsername(username);
+        return new ResponseEntity<>(productRepository.findByUser(user.get()), HttpStatus.OK);
     }
 
     @DeleteMapping("/get/{id}")
