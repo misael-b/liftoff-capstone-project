@@ -76,7 +76,6 @@ public class ShoppingCartController {
             }
 
         }
-        System.out.println(shoppingCart);
 
 
         return shoppingCart;

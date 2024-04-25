@@ -81,7 +81,9 @@ const Message = () => {
                         data.map((item) => {
                             console.log(item)
                             if (item.user.username === fetchedUser) {
-                                return (<div><p id="1">{item.message}</p><Link href={"http://localhost:3000/messageLogs/messaging/update?log=" + item.id}>Update</Link><Link href={"http://localhost:3000/messageLogs/messaging/delete?log=" + item.id}>Delete</Link></div>)
+                                return (<div><p id="1">{item.message}</p>
+                                    {/* <Link href={"http://localhost:3000/messageLogs/messaging/update?log=" + item.id}>Update</Link> */}
+                                    <Link href={"http://localhost:3000/messageLogs/messaging/delete?log=" + item.id}>Delete</Link></div>)
                             } else if (item.user.username === fetchedOtherUser) {
                                 return (<div><p id="2">{item.message}</p></div>)
                             } else {
