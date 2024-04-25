@@ -63,6 +63,7 @@ public class ProductController {
     @GetMapping("list")
     public List<Product> displayAllProducts(Model model, @RequestParam(required = false) String sortBy){
         return (List<Product>) productRepository.findAll();
+
     }
 
     @GetMapping("/get/user")
@@ -70,6 +71,7 @@ public class ProductController {
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUsername(username);
         return new ResponseEntity<>(productRepository.findByUser(user.get()), HttpStatus.OK);
+
     }
 
     @DeleteMapping("/get/{id}")

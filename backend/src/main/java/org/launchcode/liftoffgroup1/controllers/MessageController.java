@@ -127,6 +127,13 @@ public class MessageController {
         return ResponseEntity.ok(messages);
     }
 
+    @PutMapping("/update/{message}!{id}")
+    public ResponseEntity<String> updateMessage (Authentication authentication, @PathVariable String message, @PathVariable Integer id) {
+        Message message1 = messageRepository.findById(id).get();
+        message1.setMessage(message);
+        messageRepository.save(message1);
+        return ResponseEntity.ok("ok");
+    }
 
         @DeleteMapping("/deleteLog")
     public ResponseEntity<String> deleteMessageLog(Authentication authentication) {
@@ -135,6 +142,18 @@ public class MessageController {
 
         return ResponseEntity.ok("ok");
     }
+
+    @CrossOrigin("http://localhost:3000")
+    @DeleteMapping("/delete/{confirm}!{id}")
+    public ResponseEntity<String> deleteMessage (Authentication authentication, @PathVariable String confirm, @PathVariable Integer id) {
+        if (confirm.equals("true")) {
+            messageRepository.deleteById(id);
+        } else {
+            return ResponseEntity.ok("failed to delete");
+        }
+        return ResponseEntity.ok("ok");
+    }
+
 
     public User returnUserFromToken(Authentication authentication){
         String username = authentication.getName();
@@ -156,18 +175,8 @@ public class MessageController {
         });
         return output[0];
     }
-//    @PutMapping("/update")
-//    public ResponseEntity<String> updateMessage () {
-//
-//        return ResponseEntity.ok("ok");
-//    }
-//
-//    @DeleteMapping("/delete")
-//    public ResponseEntity<String> deleteMessage () {
-//
-//        return ResponseEntity.ok("ok");
-//    }
-//
+
+
 
 
 

@@ -59,6 +59,7 @@ const page = () => {
             console.log("error", e);
         }
     }
+
     
 const handleView = async (event) => {
     event.preventDefault();
@@ -66,6 +67,7 @@ const handleView = async (event) => {
     localStorage.setItem('productId', event.target.id);
     window.location = '/product-info';
 }
+
 
     function HandleChangle(event) {
         const { name, value } = event.target
