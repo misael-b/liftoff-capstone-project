@@ -28,8 +28,9 @@ function getAllShoppingCartPosts() {
 };
 
 const page = () => {
-  const [loading, setLoading] = useState(true);
+  
   const [products, setProducts] = useState(null);
+  const [domLoaded, setDomLoaded] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -37,7 +38,7 @@ const page = () => {
       const token = JSON.parse(localStorage.getItem('user')).accessToken
       const AuthStr = 'Bearer '.concat(token);
 
-      const responseFromDelete = axios.get("http://localhost:8080/ShoppingCart/remove?Id=" + event.target.id
+      const responseFromDelete = await axios.delete("http://localhost:8080/ShoppingCart/remove?Id=" + event.target.id
         , {
           headers: {
             accept: "*/*",
@@ -54,13 +55,12 @@ const page = () => {
       setProducts(response.data);
 
     }
-    location.reload()
   }
 
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      setDomLoaded(true);
 
       try {
         const response = await getAllShoppingCartPosts();
@@ -72,29 +72,29 @@ const page = () => {
 
       } catch (error) {
         console.log(error);
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
     fetchData();
   }, []);
 
   return (<Layout>
+    {domLoaded && (
     <div >
       {!products ? /* TODO: LOGIN PAGE REDIRECT */ <p style={{ margin: 70, color: "red" }}>PLEASE LOGIN TO VIEW SHOPPING CART</p> :
         <div>
-          <h1>View All Posts</h1>
+          <h1 style={{margin:70, fontSize:30}}>Shopping Cart</h1>
 
           <table width='100%'>
             <thead>
               <tr>
-                <th>
+                  <th></th>
+                <th width='20%' >
                   Picture
                 </th>
                 <th>
                   Name
                 </th>
-                <th width='20%' >
+                <th width='25%' >
                   Description
                 </th>
                 <th>
@@ -103,25 +103,26 @@ const page = () => {
                 <th>
                   Price
                 </th>
-                <th></th>
+                
               </tr>
             </thead>
             {(
               <tbody>
                 {products.map((product) => (
                   <tr>
-                    <th><img src={product.picture} width={200} /></th>
+                    <th>
+
+                      <form onSubmit={handleSubmit} id={product.id}>
+                        <button type="submit" style={{ backgroundColor: "red", color: "white", width: 15, verticalAlign: "middle"}}>x</button>
+                      </form>
+                    </th>
+                    <th><img src={product.picture} width={200} style={{ marginLeft: "auto", marginRight: "auto"}}/></th>
                     <th>{product.name}</th>
                     <th>{product.description}</th>
                     <th>{product.category}</th>
                     <th> ${product.price}</th>
 
-                    <th>
-
-                      <form onSubmit={handleSubmit} id={product.id}>
-                        <button type="submit">Remove</button>
-                      </form>
-                    </th>
+                    
 
                   </tr>
 
@@ -130,9 +131,11 @@ const page = () => {
               </tbody>
             )}
           </table>
+          {(products.length == 0) && <p> No Items in Shopping Cart: <a href="http://localhost:3000/posts" style={{ color: "blue" }}>View All products</a> </p>}
         </div>
       }
-    </div>
+      </div>
+    )} 
   </Layout>
   )
 }

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Layout from '../layout'
 import axios from 'axios'
 import { userHomePage } from '../actions';
@@ -7,6 +7,11 @@ import { userHomePage } from '../actions';
 const page = () => {
     const [user, setUser] = useState({ username: '', password: '' })
     const [errors, setErrors] = useState(false)
+    const [domLoaded, setDomLoaded] = useState(false);
+
+    useEffect(() => {
+        setDomLoaded(true);
+    }, []);
 
 
     const payload = {
@@ -32,7 +37,7 @@ const page = () => {
             
         } catch (e) {
             setErrors(true)
-            // console.log(LoggedIn)
+            setUser({ username: '', password: '' })
         }
     }
 
@@ -43,7 +48,8 @@ const page = () => {
 
     return (
         <Layout>
-            <div className="userSignupForm">
+            {domLoaded && (
+            <div className="userLoginForm">
                 <h1>Login:</h1>
                 <form id="login" onSubmit={handleSubmit}>
                     <input
@@ -61,9 +67,14 @@ const page = () => {
                         placeholder="Enter your password:"
                     /><br />
                     <button type="submit">Submit</button>
-                </form>
+                </form><br />
+                {errors && <p style={{ color: "red", textAlign: "center" }}>Bad Login Credentials! Try Again!</p>}
+                <p style={{ textAlign: "center" }}>Create Account <a href='http://localhost:3000/signup' style={{ color: "blue"}}>Here</a></p><br />
+                
+                <p style={{ textAlign: "center" }}>Click <a href="http://localhost:3000/posts" style={{ color: "blue" }}>Here</a> to view all posts</p>
             </div>
-            {errors && <p style={{ color: "red" }}>Bad Login Credentials! Try Again!</p>}
+            )}
+            
         </Layout>
         
     )
