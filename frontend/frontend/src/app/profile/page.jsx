@@ -27,6 +27,7 @@ const handleDelete = async (e) => {
   e.preventDefault();
   const token = JSON.parse(localStorage.getItem('user')).accessToken
   const AuthStr = 'Bearer '.concat(token);
+  console.log(e.target.id)
   try {
     const response = await axios.delete(
       "http://localhost:8080/post/get/" + e.target.id,
@@ -150,8 +151,8 @@ const page = () => {
                     <th>{product.category}</th>
                     <th> ${product.price}</th>
                     <th>
-                      <form id={product.id}>
-                        <button type="submit"  onClick={handleDelete} style={{ backgroundColor: "red", color: "white", width: 15, verticalAlign: "middle" }}>x </button>
+                      <form id={product.id} onSubmit={handleDelete}>
+                        <button type="submit" style={{ backgroundColor: "red", color: "white", width: 15, verticalAlign: "middle" }}>x </button>
                       </form>
                     </th>
 
