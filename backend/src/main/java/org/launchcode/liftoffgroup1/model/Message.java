@@ -38,6 +38,8 @@ public class Message {
 
     public Date getDate() {return date;}
 
+    public int getId() {return id;}
+
     public MessageLog getMessageLog() {return messageLog;}
 
     public void setMessageLog(MessageLog messageLog) {this.messageLog = messageLog;}

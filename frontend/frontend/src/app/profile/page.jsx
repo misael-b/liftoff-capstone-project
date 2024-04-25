@@ -77,7 +77,6 @@ const page = () => {
     }
   }
 
-
   const handleUpdate = async (e) => {
     e.preventDefault();
     localStorage.setItem('productId', e.target.id);
@@ -120,9 +119,11 @@ const page = () => {
                 <th style={{ width: 200 }}>
                   Price
                 </th>
+
                 <th style={{ width: 200 }}>
                   Actions
                 </th>
+
               </tr>
 
             </thead>
@@ -135,9 +136,11 @@ const page = () => {
                     <th>{product.description}</th>
                     <th>{product.category}</th>
                     <th> ${product.price}</th>
+
                     <th><form id={product.id} onSubmit={handleUpdate}>
                       <button type="sumbit">Update</button></form>
                     </th>
+
 
                   </tr>
 

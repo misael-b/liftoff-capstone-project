@@ -28,8 +28,8 @@ function getAllShoppingCartPosts() {
 };
 
 const page = () => {
-  
-  const [products, setProducts] = useState(null);
+
+  const [products, setProducts] = useState([]);
   const [domLoaded, setDomLoaded] = useState(false);
 
   const handleSubmit = async (event) => {
@@ -72,70 +72,70 @@ const page = () => {
 
       } catch (error) {
         console.log(error);
-      } 
+      }
     };
     fetchData();
   }, []);
 
   return (<Layout>
     {domLoaded && (
-    <div >
-      {!products ? /* TODO: LOGIN PAGE REDIRECT */ <p style={{ margin: 70, color: "red" }}>PLEASE LOGIN TO VIEW SHOPPING CART</p> :
-        <div>
-          <h1 style={{margin:70, fontSize:30}}>Shopping Cart</h1>
+      <div >
+        {!products ? /* TODO: LOGIN PAGE REDIRECT */ <p style={{ margin: 70, color: "red" }}>PLEASE LOGIN TO VIEW SHOPPING CART</p> :
+          <div>
+            <h1 style={{ margin: 70, fontSize: 30 }}>Shopping Cart</h1>
 
-          <table width='100%'>
-            <thead>
-              <tr>
+            <table width='100%'>
+              <thead>
+                <tr>
                   <th></th>
-                <th width='20%' >
-                  Picture
-                </th>
-                <th>
-                  Name
-                </th>
-                <th width='25%' >
-                  Description
-                </th>
-                <th>
-                  Category
-                </th>
-                <th>
-                  Price
-                </th>
-                
-              </tr>
-            </thead>
-            {(
-              <tbody>
-                {products.map((product) => (
-                  <tr>
-                    <th>
+                  <th width='20%' >
+                    Picture
+                  </th>
+                  <th>
+                    Name
+                  </th>
+                  <th width='25%' >
+                    Description
+                  </th>
+                  <th>
+                    Category
+                  </th>
+                  <th>
+                    Price
+                  </th>
 
-                      <form onSubmit={handleSubmit} id={product.id}>
-                        <button type="submit" style={{ backgroundColor: "red", color: "white", width: 15, verticalAlign: "middle"}}>x</button>
-                      </form>
-                    </th>
-                    <th><img src={product.picture} width={200} style={{ marginLeft: "auto", marginRight: "auto"}}/></th>
-                    <th>{product.name}</th>
-                    <th>{product.description}</th>
-                    <th>{product.category}</th>
-                    <th> ${product.price}</th>
+                </tr>
+              </thead>
+              {(
+                <tbody>
+                  {products.map((product) => (
+                    <tr>
+                      <th>
 
-                    
-
-                  </tr>
+                        <form onSubmit={handleSubmit} id={product.id}>
+                          <button type="submit" style={{ backgroundColor: "red", color: "white", width: 15, verticalAlign: "middle" }}>x</button>
+                        </form>
+                      </th>
+                      <th><img src={product.picture} width={200} style={{ marginLeft: "auto", marginRight: "auto" }} /></th>
+                      <th>{product.name}</th>
+                      <th>{product.description}</th>
+                      <th>{product.category}</th>
+                      <th> ${product.price}</th>
 
 
-                ))}
-              </tbody>
-            )}
-          </table>
-          {(products.length == 0) && <p> No Items in Shopping Cart: <a href="http://localhost:3000/posts" style={{ color: "blue" }}>View All products</a> </p>}
-        </div>
-      }
+
+                    </tr>
+
+
+                  ))}
+                </tbody>
+              )}
+            </table>
+            {(products.length == 0) && <p> No Items in Shopping Cart: <a href="http://localhost:3000/posts" style={{ color: "blue" }}>View All products</a> </p>}
+          </div>
+        }
       </div>
-    )} 
+    )}
   </Layout>
   )
 }

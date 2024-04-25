@@ -285,7 +285,12 @@ button{
 #logout {
   margin-top: 70px;
 }
-=======
+
+
+#updateMessageForm {
+  margin-top: 70px;
+}
+
 
 
 thead {
@@ -356,3 +361,4 @@ thead {
   box-shadow: 0 5px #666;
   transform: translateY(5px);
 }
+

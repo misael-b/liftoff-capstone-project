@@ -30,7 +30,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(  name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

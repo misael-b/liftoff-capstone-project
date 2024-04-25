@@ -18,6 +18,8 @@ export async function messageLogs() {
   redirect("/messageLogs")
 }
 
+
+
 export async function userHomePage() {
   redirect("/profile");
 }

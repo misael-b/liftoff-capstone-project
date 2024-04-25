@@ -55,9 +55,9 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests((requests) -> requests
-//                .requestMatchers("/", "/list/**", "/search", "/login/login","/user/register").permitAll()
-//                .anyRequest().authenticated()
-                                .anyRequest().permitAll()
+                .requestMatchers("/", "/list/**", "/search", "/login/login","/user/register").permitAll()
+                .anyRequest().authenticated()
+//                                .anyRequest().permitAll()
         )
 //                .exceptionHandling((exception)-> exception.
 //                        authenticationEntryPoint(authEntryPoint))
