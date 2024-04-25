@@ -1,7 +1,7 @@
 package org.launchcode.liftoffgroup1.controllers;
 
-import org.launchcode.liftoffgroup1.model.CategoryComparator;
-import org.launchcode.liftoffgroup1.model.NameComparator;
+import org.launchcode.liftoffgroup1.model.comparator.CategoryComparator;
+import org.launchcode.liftoffgroup1.model.comparator.NameComparator;
 import org.launchcode.liftoffgroup1.model.Product;
 import org.launchcode.liftoffgroup1.model.data.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,25 +13,25 @@ import java.util.*;
 
 @RestController
 @CrossOrigin("http://localhost:3000/")
-public class HomeController {
+public class SearchAndSortController {
     @Autowired
     private ProductRepository productRepository;
 
 
     @GetMapping("list")
-    public List<Product> displayAllProducts(Model model, @RequestParam(required = false) String sortBy){
+    public List<Product> displayAllProducts(){
         return (List<Product>) productRepository.findAll();
     }
 
 
 //    http://localhost:8080/search?searchTerm=tv
     @GetMapping("search")
-    public List<Product> displaySearchResults(@RequestParam String searchTerm){
-        return  search(searchTerm);
+    public List<Product> displaySearchResults(@RequestParam String searchTerm, @RequestParam String sort){
+        return  search(searchTerm, sort);
     }
 
     @GetMapping("list/{sort}")
-    public List<Product> sortSearchResults(@PathVariable String sort){
+    public List<Product> sortAllResults(@PathVariable String sort){
        List<Product> products = (List<Product>) productRepository.findAll();
        return sortByPrice(products, sort);
     }
@@ -57,10 +57,10 @@ public class HomeController {
         }else if(sort.equals("desc")){
             products.sort((o1, o2) -> Double.compare(o2.getPrice(), o1.getPrice()));
         } else if (sort.equals("category-asc")) {
-            Comparator comparator = new CategoryComparator();
+            Comparator<Product> comparator = new CategoryComparator();
             products.sort(comparator);
         }else if (sort.equals("name-asc")) {
-            Comparator comparator = new NameComparator();
+            Comparator<Product> comparator = new NameComparator();
             products.sort(comparator);
         }
 

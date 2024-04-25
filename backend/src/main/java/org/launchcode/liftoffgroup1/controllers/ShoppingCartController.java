@@ -28,7 +28,7 @@ public class ShoppingCartController {
     private UserRepository userRepository;
     private ArrayList<Product> shoppingCart;
 
-    private String user;
+    private Object credentials;
 
     public ShoppingCartController() {
         this.shoppingCart = new ArrayList<>();
@@ -37,7 +37,7 @@ public class ShoppingCartController {
 
 
     // http://localhost:8080/ShoppingCart/add?Id=1
-    @GetMapping("add")
+    @PostMapping("add")
     public ResponseEntity processAddToShoppingCart(@RequestParam int Id){
         Optional<Product> productOptional = productRepository.findById(Id);
         if (productOptional.isPresent()){
@@ -49,7 +49,7 @@ public class ShoppingCartController {
     }
 
 //    http://localhost:8080/ShoppingCart/remove?Id=1
-    @GetMapping("remove")
+    @DeleteMapping("remove")
     public ResponseEntity processRemoveFromShoppingCart(@RequestParam int Id){
         Optional<Product> productOptional = productRepository.findById(Id);
         if (productOptional.isPresent()){
@@ -64,13 +64,13 @@ public class ShoppingCartController {
    // http://localhost:8080/ShoppingCart
     @GetMapping("")
     public List<Product> displayUserShoppingCart(Authentication authentication){
-        String username = authentication.getName();
-        if (this.user == null){
-            this.user = username;
+        Object credentials = authentication.getCredentials();
+        if (this.credentials == null){
+            this.credentials = credentials;
         }else{
-            if (!this.user.equals(username)) {
+            if (!this.credentials.equals(credentials)) {
                 clearShoppingCart();
-                this.user = username;
+                this.credentials = credentials;
                 return shoppingCart;
 
             }
