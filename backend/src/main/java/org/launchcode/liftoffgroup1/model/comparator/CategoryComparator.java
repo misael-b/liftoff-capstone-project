@@ -1,4 +1,6 @@
-package org.launchcode.liftoffgroup1.model;
+package org.launchcode.liftoffgroup1.model.comparator;
+
+import org.launchcode.liftoffgroup1.model.Product;
 
 import java.util.Comparator;
 

@@ -13,6 +13,7 @@ import org.springframework.http.CacheControl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -64,12 +65,12 @@ public class SecurityConfig {
                 .formLogin(
                         AbstractHttpConfigurer::disable
                 ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
-        http.httpBasic();
+                .oauth2ResourceServer((oauth) -> oauth.jwt((jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder()))));
+        http.httpBasic(Customizer.withDefaults());
         return http.build();
 
     }
-//
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();

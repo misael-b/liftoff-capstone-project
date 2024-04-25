@@ -13,11 +13,14 @@ function getAllPosts() {
 const handleSubmit = async (event) => {
     const token = JSON.parse(localStorage.getItem('user')).accessToken
     const AuthStr = 'Bearer '.concat(token);
-    console.log(AuthStr)
     event.preventDefault();
+
+    const payload = {
+        id: event.target.id
+    }
     try {
-        axios.get("http://localhost:8080/ShoppingCart/add?Id=" + event.target.id
-            , {
+        axios.post("http://localhost:8080/ShoppingCart/add?Id=" + event.target.id
+            , payload, {
                 headers: {
                     accept: "*/*",
                     "Content-Type": "application/json",
@@ -34,10 +37,11 @@ const page = () => {
 
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState(null);
+    const [domLoaded, setDomLoaded] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true);
+            setDomLoaded(true);
 
             try {
                 const response = await getAllPosts();
@@ -53,26 +57,24 @@ const page = () => {
 
     function HandleChangle(event) {
         const { name, value } = event.target
-        console.log(value)
-        try {
-            // console.log("http://localhost:8080/list/" + sorting)
-            const sortResponce = axios.get("http://localhost:8080/list/" + value).then(
-                function (response) {
-                    setProducts(response.data)
-                }
-            )
-        } catch (e) {
-            console.log("error", e);
+        if (value) {
+            try {
+                const sortResponce = axios.get("http://localhost:8080/list/" + value).then(
+                    function (response) {
+                        setProducts(response.data)
+                    }
+                )
+            } catch (e) {
+                console.log("error", e);
+            }
         }
-
-
-
 
     }
     return (
         <Layout>
+            {domLoaded && (
             <div>
-                <h1>View All Posts</h1>
+                <h1 style={{ margin: 50, fontSize:40}}>View All Posts</h1>
 
                 <form>
                     <label> Sort by:
@@ -87,7 +89,7 @@ const page = () => {
 
                     </label>
 
-                </form>
+                    </form> <br /><br />
 
 
 
@@ -124,8 +126,8 @@ const page = () => {
                                     <th> ${product.price}</th>
                                     <th>
                                         {localStorage.getItem('user') ? <form onSubmit={handleSubmit} id={product.id}>
-                                            <button type="submit">Buy</button>
-                                        </form> : <div><p>Login to purchage</p></div>}
+                                            <button type="submit" class="buyButton"><span>Buy </span></button>
+                                        </form> : <div><p><a href='http://localhost:3000/login' style={{ color: "blue" }}>Login</a> to purchage</p></div>}
 
 
                                     </th>
@@ -139,7 +141,8 @@ const page = () => {
                         </tbody>
                     )}
                 </table>
-            </div>
+                </div>
+            )} 
 
 
 
