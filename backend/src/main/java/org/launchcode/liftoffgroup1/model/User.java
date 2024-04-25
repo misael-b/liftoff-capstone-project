@@ -9,6 +9,7 @@ import java.util.*;
 
 @Entity
 public class User {
+
     @NotBlank
     private String name;
 
@@ -21,6 +22,7 @@ public class User {
 
     @NotBlank
     private String password;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -34,6 +34,7 @@ function userform() {
                 payload,
                 {
                     headers: {
+                        accept: "*/*",
                         'Content-Type': 'application/json',
                     },
                 }
