@@ -23,6 +23,26 @@ async function handleEdit(event) {
   updateUserInfo()
 }
 
+const handleDelete = async (e) => {
+  e.preventDefault();
+  const token = JSON.parse(localStorage.getItem('user')).accessToken
+  const AuthStr = 'Bearer '.concat(token);
+  try {
+    const response = await axios.delete(
+      "http://localhost:8080/post/get/" + e.target.id,
+      {
+        headers: {
+          accept: "*/*",
+          "Content-Type": "application/json",
+          Authorization: AuthStr
+        }
+      }
+    )
+  } catch (e) {
+    console.log("Product not deleted", e);
+  }
+}
+
 const page = () => {
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
@@ -116,6 +136,7 @@ const page = () => {
                 <th style={{ width: 200 }}>
                   Price
                 </th>
+                <th>Remove</th>
               </tr>
 
             </thead>
@@ -128,6 +149,11 @@ const page = () => {
                     <th>{product.description}</th>
                     <th>{product.category}</th>
                     <th> ${product.price}</th>
+                    <th>
+                      <form id={product.id}>
+                        <button type="submit"  onClick={handleDelete} style={{ backgroundColor: "red", color: "white", width: 15, verticalAlign: "middle" }}>x </button>
+                      </form>
+                    </th>
 
                   </tr>
 

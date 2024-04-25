@@ -62,25 +62,6 @@ const page = () => {
            });
     }, []);
 
-    const handleDelete = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.delete(
-                "http://localhost:8080/post/get/" + productId,
-                {
-                    headers: {
-                        accept: "*/*",
-                        "Content-Type": "application/json",
-                    }
-                }
-            )
-
-            window.location='/list';
-            console.log(response);
-        } catch (e) {
-            console.log("Product not deleted", e);
-        }
-    }
     
     const handleReview = async (event) => {
         event.preventDefault();
@@ -120,11 +101,11 @@ const page = () => {
             <form id={user.id} onSubmit={handleReview}>
                     <button type="submit">Leave a review<br/>for a user</button>
                 </form>
-            { product?.user?.id == user?.id && user?.id && (
+            {/* { product?.user?.id == user?.id && user?.id && (
                 <form id={{productId}} onSubmit={handleDelete}>
                     <button type="submit">Delete Listing</button>
                 </form>    
-            )}
+            )} */}
             </div>
         </div>
     )
