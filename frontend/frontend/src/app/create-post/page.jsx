@@ -42,7 +42,7 @@ const page = () => {
     const handleChange = (event) => {
         const {name, value} = event.target;
         setPost(prevPost => ({ ...prevPost, [name]: value}));
-      };
+    };
 
   return (
     <div>

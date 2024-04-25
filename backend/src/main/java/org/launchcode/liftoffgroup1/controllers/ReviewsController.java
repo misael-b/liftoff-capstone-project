@@ -16,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RestController("/review")
+@RestController
+@RequestMapping("/review")
 @CrossOrigin("http://localhost:3000/")
 public class ReviewsController {
 
