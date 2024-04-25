@@ -1,22 +1,21 @@
 package org.launchcode.liftoffgroup1.controllers;
 
 
-
-import jakarta.servlet.http.HttpServletRequest;
 import org.launchcode.liftoffgroup1.model.Message;
 import org.launchcode.liftoffgroup1.model.MessageLog;
 import org.launchcode.liftoffgroup1.model.User;
 import org.launchcode.liftoffgroup1.model.data.MessageLogRepository;
 import org.launchcode.liftoffgroup1.model.data.MessageRepository;
 import org.launchcode.liftoffgroup1.model.data.UserRepository;
+import org.launchcode.liftoffgroup1.model.dto.MessageDTO;
 import org.launchcode.liftoffgroup1.model.dto.MessageLogDTO;
+import org.launchcode.liftoffgroup1.model.dto.ReadMessageLogDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import java.io.IOException;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -38,7 +37,19 @@ public class MessageController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createMessage (@RequestBody Message message) {
+    public ResponseEntity<String> createMessage (@RequestBody MessageDTO messageDTO) {
+        User user = userController.findByUsername(messageDTO.getUsername());
+        User otherUser = userController.findByUsername(messageDTO.getOtherUsername());
+        Iterable<MessageLog> allLogs = messageLogRepository.findAll();
+        final MessageLog[] messageLog = new MessageLog[1];
+        allLogs.forEach(item -> {
+            if (item.getUser1().getId() == user.getId() && item.getUser2().getId() == otherUser.getId() ||
+                item.getUser1().getId() == otherUser.getId() && item.getUser2().getId() == user.getId()) {
+                messageLog[0] = item;
+            }
+        });
+        MessageLog fetchedMessageLog = messageLog[0];
+        Message message = new Message(messageDTO.getMessage(), user, fetchedMessageLog);
         messageRepository.save(message);
         return ResponseEntity.ok("Message created successfully");
     }
@@ -51,18 +62,27 @@ public class MessageController {
         return ResponseEntity.ok("Message Log Created");
     }
 
-    @GetMapping("/read/{otherUsername}")
-    public ResponseEntity<MessageLog> readMessageLog (Authentication authentication, @PathVariable String otherUsername) {
-       String username = authentication.getName();
-       Iterable<MessageLog> allLogs = messageLogRepository.findAll();
-        final MessageLog[] output = new MessageLog[1];
-       allLogs.forEach(item -> {
-           if (item.getUser1().getUsername().equals(username) && item.getUser2().getUsername().equals(otherUsername) ||
-               item.getUser1().getUsername().equals(otherUsername) && item.getUser2().getUsername().equals(username)) {
-               output[0] = item;
-           }    
-       });
-       return ResponseEntity.ok(output[0]);
+    @GetMapping("/read/{username}!{otherUsername}")
+    public ResponseEntity<List<Message>> readMessageLog (Authentication authentication,@PathVariable String username, @PathVariable String otherUsername) {
+        User user = userController.findByUsername(username);
+        User otherUser = userController.findByUsername(otherUsername);
+        Iterable<MessageLog> allLogs = messageLogRepository.findAll();
+        final MessageLog[] messageLog = new MessageLog[1];
+        allLogs.forEach(item -> {
+            if (item.getUser1().getId() == user.getId() && item.getUser2().getId() == otherUser.getId() ||
+                    item.getUser1().getId() == otherUser.getId() && item.getUser2().getId() == user.getId()) {
+                messageLog[0] = item;
+            }
+        });
+        MessageLog fetchedMessageLog = messageLog[0];
+        List<Message> messages = new ArrayList<>();
+        Iterable<Message> allMessages = messageRepository.findAll();
+        allMessages.forEach(item -> {
+            if (item.getMessageLog().getId() == fetchedMessageLog.getId()) {
+                messages.add(item);
+            }
+        });
+       return ResponseEntity.ok(messages);
     }
 
     @GetMapping("/readLogs")
@@ -83,6 +103,30 @@ public class MessageController {
         String username = authentication.getName();
         return ResponseEntity.ok(userController.findByUsername(username).getUsername());
     }
+
+    @GetMapping("/readMessages")
+    public ResponseEntity<List<Message>> readMessages (Authentication authentication, @RequestBody ReadMessageLogDTO readMessageLogDTO) {
+        User user = userController.findByUsername(readMessageLogDTO.getUser());
+        User otherUser = userController.findByUsername(readMessageLogDTO.getOtherUser());
+        Iterable<MessageLog> allLogs = messageLogRepository.findAll();
+        final MessageLog[] messageLog = new MessageLog[1];
+        allLogs.forEach(item -> {
+            if (item.getUser1().getId() == user.getId() && item.getUser2().getId() == otherUser.getId() ||
+                    item.getUser1().getId() == otherUser.getId() && item.getUser2().getId() == user.getId()) {
+                messageLog[0] = item;
+            }
+        });
+        MessageLog fetchedMessageLog = messageLog[0];
+        List<Message> messages = new ArrayList<>();
+        Iterable<Message> allMessages = messageRepository.findAll();
+        allMessages.forEach(item -> {
+            if (item.getMessageLog().getId() == fetchedMessageLog.getId()) {
+                messages.add(item);
+            }
+        });
+        return ResponseEntity.ok(messages);
+    }
+
 
         @DeleteMapping("/deleteLog")
     public ResponseEntity<String> deleteMessageLog(Authentication authentication) {

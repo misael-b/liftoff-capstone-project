@@ -21,9 +21,6 @@ public class MessageLog {
 
     private boolean user2Delete = false;
 
-    @OneToMany
-    private List<Message> messages;
-
     public MessageLog () {}
 
     public MessageLog (User user1, User user2) {
@@ -44,4 +41,5 @@ public class MessageLog {
     public boolean isUser2Delete() {return user2Delete;}
 
     public void setUser2Delete(boolean user2Delete) {this.user2Delete = user2Delete;}
+
 }

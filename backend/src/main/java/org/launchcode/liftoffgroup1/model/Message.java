@@ -14,15 +14,21 @@ public class Message {
 
     private Date date;
 
+    @ManyToOne
+    private MessageLog messageLog;
+
     @Id
     @GeneratedValue
     private int id;
 
-    public Message (String aMessage, User aUser) {
+    public Message (String aMessage, User aUser, MessageLog aMessageLog) {
         message = aMessage;
         user = aUser;
+        messageLog = aMessageLog;
         date = new Date();
     }
+
+    public Message () {}
 
     public String getMessage() {return message;}
 
@@ -32,4 +38,7 @@ public class Message {
 
     public Date getDate() {return date;}
 
+    public MessageLog getMessageLog() {return messageLog;}
+
+    public void setMessageLog(MessageLog messageLog) {this.messageLog = messageLog;}
 }
