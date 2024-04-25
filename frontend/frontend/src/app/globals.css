@@ -234,6 +234,16 @@ button{
 
 .logTable {
   margin-top: 70px;
+  width: 75%;
+}
+
+.logTable th {
+  background-color: black;
+  color: white;
+}
+
+.logTable td {
+  text-align: center;
 }
 
 #logout {

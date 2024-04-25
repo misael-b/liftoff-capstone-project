@@ -1,6 +1,8 @@
 package org.launchcode.liftoffgroup1.controllers;
 
 
+
+import jakarta.servlet.http.HttpServletRequest;
 import org.launchcode.liftoffgroup1.model.Message;
 import org.launchcode.liftoffgroup1.model.MessageLog;
 import org.launchcode.liftoffgroup1.model.User;
@@ -12,10 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.launchcode.liftoffgroup1.controllers.AuthenticationController;
-
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -43,21 +44,29 @@ public class MessageController {
     }
 
     @PostMapping("/createLog")
-    public ResponseEntity<String> createMessageLog (Authentication authentication, @RequestBody MessageLogDTO user) {
+    public ResponseEntity<String> createMessageLog (Authentication authentication, @RequestBody MessageLogDTO messageLogDTO) {
         User activeUser = returnUserFromToken(authentication);
-        User receivingUser = returnUserFromUsername(user.getUser());
+        User receivingUser = returnUserFromUsername(messageLogDTO.getUser());
         messageLogRepository.save(new MessageLog(activeUser, receivingUser));
         return ResponseEntity.ok("Message Log Created");
     }
 
-//    @GetMapping("/read")
-//    public ResponseEntity<String> readMessageLog (/* Some way to identify users */) {
-//
-//        return ResponseEntity.ok("ok");
-//    }
-//
+    @GetMapping("/read/{otherUsername}")
+    public ResponseEntity<MessageLog> readMessageLog (Authentication authentication, @PathVariable String otherUsername) {
+       String username = authentication.getName();
+       Iterable<MessageLog> allLogs = messageLogRepository.findAll();
+        final MessageLog[] output = new MessageLog[1];
+       allLogs.forEach(item -> {
+           if (item.getUser1().getUsername().equals(username) && item.getUser2().getUsername().equals(otherUsername) ||
+               item.getUser1().getUsername().equals(otherUsername) && item.getUser2().getUsername().equals(username)) {
+               output[0] = item;
+           }    
+       });
+       return ResponseEntity.ok(output[0]);
+    }
+
     @GetMapping("/readLogs")
-    public List<MessageLog> readAllMessageLogs (Authentication authentication) {
+    public ResponseEntity<List<MessageLog>> readAllMessageLogs (Authentication authentication) {
         User data = returnUserFromToken(authentication);
         Iterable<MessageLog> allLogs = messageLogRepository.findAll();
         List<MessageLog> output = new ArrayList<>();
@@ -66,7 +75,21 @@ public class MessageController {
                 output.add(item);
             }
         });
-        return ResponseEntity.ok(output).getBody();
+        return ResponseEntity.ok(output);
+    }
+
+    @GetMapping("/getUser")
+    public ResponseEntity<String> readActiveUser (Authentication authentication) {
+        String username = authentication.getName();
+        return ResponseEntity.ok(userController.findByUsername(username).getUsername());
+    }
+
+        @DeleteMapping("/deleteLog")
+    public ResponseEntity<String> deleteMessageLog(Authentication authentication) {
+        String username = authentication.getName();
+        User activeUser = userController.findByUsername(username);
+
+        return ResponseEntity.ok("ok");
     }
 
     public User returnUserFromToken(Authentication authentication){
@@ -76,6 +99,18 @@ public class MessageController {
 
     public User returnUserFromUsername(String username) {
         return userController.findByUsername(username);
+    }
+
+    public MessageLog returnLogFromTwoUsernames(String user1, String user2) {
+        Iterable<MessageLog> allLogs = messageLogRepository.findAll();
+        final MessageLog[] output = new MessageLog[1];
+        allLogs.forEach((item) -> {
+            if (item.getUser1().getUsername().equals(user1) && item.getUser2().getUsername().equals(user2) ||
+                item.getUser1().getUsername().equals(user2) && item.getUser2().getUsername().equals(user1)) {
+                output[0] = item;
+            }
+        });
+        return output[0];
     }
 //    @PutMapping("/update")
 //    public ResponseEntity<String> updateMessage () {
@@ -89,11 +124,7 @@ public class MessageController {
 //        return ResponseEntity.ok("ok");
 //    }
 //
-//    @DeleteMapping("/deleteLog")
-//    public ResponseEntity<String> deleteMessageLog() {
-//        // this should require both users in the log to delete. store 2 bools in log database?
-//        return ResponseEntity.ok("ok");
-//    }
+
 
 
 }

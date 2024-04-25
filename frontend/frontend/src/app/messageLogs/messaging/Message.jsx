@@ -2,48 +2,52 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import Layout from '../../layout'
+import { useSearchParams } from 'next/navigation';
 
 const Message = () => {
-    useEffect(() => {
-        fetchData()
-    }, []);
-
-    async function fetchData() {
-        const {data} = await axios.get(
-            'http://localhost:8080/message/read',
-
-            {
-                headers: {
-                    //user token
-                    accept: "*/*",
-                    "Content-Type": "application/json",
-                }
-            }
-        )
-    }
-
-
+    const searchParams = useSearchParams();
+    const fetchedUser = searchParams.get('user');
+    const fetchedOtherUser = searchParams.get('otherUser');
     const [message, setMessage] = useState({message: '', user: ''})
-
+    const [log, setLog] = useState([]);
     const payload = {
-        message: message.message,
-        user: message.user
+        user: fetchedUser,
+        otherUser: fetchedOtherUser
     }
+
+
+    const payload2 = {
+        message: message.message,
+        user: fetchedUser
+    }
+
+
+
+    useEffect(() => {
+        const token = JSON.parse(localStorage.getItem('user')).accessToken
+        const AuthStr = 'Bearer '.concat(token);
+        console.log(AuthStr);
+            axios.get(
+                'http://localhost:8080/message/read/' + fetchedOtherUser,
+                payload, 
+                {
+                    headers: {
+                        accept: "*/*",
+                        "Content-Type": "application/json",
+                        Authorization: AuthStr,
+                    }
+                }
+            ).then((res) => {
+                console.log(res)
+            })
+
+            
+
+            
+        }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        //add code to check logged in token and then get user
-        const response = await axios.post(
-            "http:localhost:8080/message/create",
-            payload,
-            {
-                headers: {
-                    accept: "*/*",
-                    "Content-Type": "application/json",
-                }
-            }
-        )
 
         
     }
