@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Layout from '../layout'
@@ -74,6 +75,7 @@ const page = () => {
 
 
   
+
   return (<Layout>
     {domLoaded && (
       <div>
@@ -153,8 +155,8 @@ const page = () => {
     )} 
     
 
-  </Layout>
 
+  </Layout>
   )
   
   
