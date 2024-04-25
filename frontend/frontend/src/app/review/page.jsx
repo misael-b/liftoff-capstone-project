@@ -78,7 +78,6 @@ const page = () => {
             </div>
             <br style={{clear:"both"}} />
             <form id="create-review" onSubmit={handleSubmit}>
-
                 <textarea style={{borderWidth: '1px'}} onChange={handleChange} name="description"></textarea>
             <button type="submit">Submit</button>
             </form>
