@@ -48,7 +48,7 @@ public class ShoppingCartController {
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
-//    http://localhost:8080/ShoppingCart/remove?Id=1
+    //    http://localhost:8080/ShoppingCart/remove?Id=1
     @DeleteMapping("remove")
     public ResponseEntity processRemoveFromShoppingCart(@RequestParam int Id){
         Optional<Product> productOptional = productRepository.findById(Id);
@@ -61,7 +61,7 @@ public class ShoppingCartController {
     }
 
 
-   // http://localhost:8080/ShoppingCart
+    // http://localhost:8080/ShoppingCart
     @GetMapping("")
     public List<Product> displayUserShoppingCart(Authentication authentication){
         Object credentials = authentication.getCredentials();

@@ -30,6 +30,7 @@ label{
 
 button{
   color: black;
+  border: 1px solid black;
 }
 @layer utilities {
   .text-balance {
@@ -130,9 +131,7 @@ button{
   bottom: 0px;
 }
 
-.body * {
-  margin-top: 27px;
-}
+
 
 .body input {
   color: black;
@@ -199,7 +198,7 @@ button{
   margin-left: 150px;
   background-color: #005F6A;
   border-radius: 8px;
-  width: 186px
+  width: 186px;
 }
 
 .userSignupForm h1 {
@@ -240,6 +239,56 @@ button{
 
 #login input {
   color: black;
+}
+
+.messageForm {
+  border-radius: 8px;
+  background-color: lightgray;
+  vertical-align: middle;
+  width: 1000px;
+  height: 1000px;
+  margin: auto;
+  margin-top: 70px;
+}
+
+#messageField {
+  margin: auto;
+  margin-left: 150px;
+  color: black;
+}
+
+#messageSubmit {
+  margin-left: 150px;
+  background-color: #005F6A;
+  border-radius: 8px;
+  width: 186px;
+}
+
+.login {
+  color: red;
+}
+
+.logTable {
+  margin-top: 70px;
+  width: 75%;
+}
+
+.logTable th {
+  background-color: black;
+  color: white;
+}
+
+.logTable td {
+  text-align: center;
+}
+
+#logout {
+  margin-top: 70px;
+}
+
+
+#updateMessageForm {
+  margin-top: 70px;
 }
 
 
@@ -312,6 +361,4 @@ thead {
   box-shadow: 0 5px #666;
   transform: translateY(5px);
 }
-
-
 

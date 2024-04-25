@@ -10,6 +10,16 @@ export async function homePage() {
   redirect("/login");
 }
 
+export async function newLog() {
+  redirect("/messageLogs/newLog")
+}
+
+export async function messageLogs() {
+  redirect("/messageLogs")
+}
+
+
+
 export async function userHomePage() {
   redirect("/profile");
 }
