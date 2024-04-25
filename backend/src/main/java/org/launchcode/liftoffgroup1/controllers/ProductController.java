@@ -45,7 +45,10 @@ public class ProductController {
     }
 
     @PutMapping
-    public ResponseEntity<String> updateProductListing(@RequestBody Product product) {
+    public ResponseEntity<String> updateProductListing(@RequestBody Product product, Authentication authentication) {
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUsername(username);
+        product.setUser(user.orElseThrow());
         productRepository.save(product);
         return new ResponseEntity<>("Product Updated", HttpStatus.OK);
     }
