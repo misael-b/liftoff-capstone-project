@@ -59,7 +59,13 @@ const page = () => {
             console.log("error", e);
         }
     }
+    
+const handleView = async (event) => {
+    event.preventDefault();
 
+    localStorage.setItem('productId', event.target.id);
+    window.location = '/product-info';
+}
 
     function HandleChangle(event) {
         const { name, value } = event.target
@@ -135,7 +141,7 @@ const page = () => {
                   {products.map((product) => (
                       <tr>
                           <th><img src={product.picture} width={200} /></th>
-                          <th>{product.name}</th>
+                          <th><a href="#" id={product.id} onClick={handleView}>{product.name}</a></th>
                           <th>{product.description}</th>
                           <th>{product.category}</th>
                           <th> ${product.price}</th>
