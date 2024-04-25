@@ -10,7 +10,7 @@ async function handleLogout(event) {
   try {
     const token = JSON.parse(localStorage.getItem('user')).accessToken
     const AuthStr = 'Bearer '.concat(token);
-    //window.localStorage.removeItem('user')
+    window.localStorage.removeItem('user')
   } catch (e) {
     console.log("Sign in to logout", e);
   }
