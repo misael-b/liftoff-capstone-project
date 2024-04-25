@@ -57,6 +57,13 @@ const page = () => {
     }
   }
 
+  const handleView = async (event) => {
+    event.preventDefault();
+
+    localStorage.setItem('productId', event.target.id);
+    window.location = '/product-info';
+  }
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -117,7 +124,7 @@ const page = () => {
                         </form>
                       </th>
                       <th><img src={product.picture} width={200} style={{ marginLeft: "auto", marginRight: "auto" }} /></th>
-                      <th>{product.name}</th>
+                      <th><a href="#" id={product.id} onClick={handleView}>{product.name}</a></th>
                       <th>{product.description}</th>
                       <th>{product.category}</th>
                       <th> ${product.price}</th>
