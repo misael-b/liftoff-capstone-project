@@ -1,5 +1,6 @@
 package org.launchcode.liftoffgroup1.controllers;
 
+import com.fasterxml.jackson.databind.util.ArrayIterator;
 import org.launchcode.liftoffgroup1.model.Product;
 import org.launchcode.liftoffgroup1.model.User;
 import org.launchcode.liftoffgroup1.model.data.ProductRepository;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -56,14 +59,29 @@ public class ProductController {
         return new ResponseEntity<>(productRepository.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/get")
-    public ResponseEntity<Object> displayAllProductsList() {
-        return new ResponseEntity<>(productRepository.findAllBy(), HttpStatus.OK);
+    @GetMapping("list")
+    public List<Product> displayAllProducts(Model model, @RequestParam(required = false) String sortBy){
+        return (List<Product>) productRepository.findAll();
     }
 
     @DeleteMapping("/get/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable Integer id) {
         productRepository.deleteById(id);
         return new ResponseEntity<>("Product deleted", HttpStatus.OK);
+    }
+
+    @GetMapping("/user-posts")
+    public ResponseEntity<Object> displayProductsByUser(Authentication authentication){
+        String username = authentication.getName();
+        User user = userRepository.findByUsername(username).get();
+        int id = user.getId();
+        Iterable<Product> allProducts = productRepository.findAll();
+        ArrayList<Product> productsbyId = new ArrayList<>();
+        for(Product product: allProducts){
+            if (product.getUser().getId() == id){
+                productsbyId.add(product);
+            }
+        }
+        return new ResponseEntity<>(productsbyId, HttpStatus.OK);
     }
 }
