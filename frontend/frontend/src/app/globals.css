@@ -30,6 +30,7 @@ label{
 
 button{
   color: black;
+  border: 1px solid black;
 }
 @layer utilities {
   .text-balance {
@@ -284,13 +285,12 @@ button{
 #logout {
   margin-top: 70px;
 }
-<<<<<<< HEAD
+
 
 #updateMessageForm {
   margin-top: 70px;
 }
-=======
-=======
+
 
 
 thead {
@@ -361,4 +361,4 @@ thead {
   box-shadow: 0 5px #666;
   transform: translateY(5px);
 }
->>>>>>> f09b62922f4b4794e93f5e8d60932539d3173225
+

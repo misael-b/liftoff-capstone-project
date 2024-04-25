@@ -10,7 +10,7 @@ async function handleLogout(event) {
   try {
     const token = JSON.parse(localStorage.getItem('user')).accessToken
     const AuthStr = 'Bearer '.concat(token);
-    window.localStorage.removeItem('user')
+    //window.localStorage.removeItem('user')
   } catch (e) {
     console.log("Sign in to logout", e);
   }
@@ -24,13 +24,11 @@ async function handleEdit(event) {
 }
 
 
-
-
-
 const page = () => {
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+
   const [domLoaded, setDomLoaded] = useState(false);
   
 
@@ -58,8 +56,6 @@ const page = () => {
           setName(user.name)
           setEmail(user.email)
 
-
-        })
         axios.get(
           'http://localhost:8080/post/user-posts',
           {
@@ -72,8 +68,6 @@ const page = () => {
         ).then((res) => {
           setProducts(res.data)
 
-
-        })
       }, []);
 
     } else {
@@ -83,8 +77,6 @@ const page = () => {
 
 
   
-
-
 
 
   return (<Layout>

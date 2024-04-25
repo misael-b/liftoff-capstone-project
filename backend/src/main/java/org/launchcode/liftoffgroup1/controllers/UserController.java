@@ -93,8 +93,8 @@ public class UserController {
     }
 
     @DeleteMapping("/{username}")
-    public ResponseEntity<String> deleteUser(@RequestBody RegisterDTO registerDTO){
-        Optional<User> user = userRepository.findByUsername(registerDTO.getUsername());
+    public ResponseEntity<String> deleteUser(@PathVariable String username){
+        Optional<User> user = userRepository.findByUsername(username);
         if(user.isPresent()){
             User user1 = user.get();
             userRepository.delete(user1);
