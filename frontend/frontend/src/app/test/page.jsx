@@ -6,7 +6,7 @@ const page = () => {
 
     useEffect(() => {
         const loadData = async () => {
-            const realTimeProductSearch = RealTimeProductSearch('Nintendo Switch');
+            const realTimeProductSearch = RealTimeProductSearch('iphone 15');
         }
 
         loadData();
