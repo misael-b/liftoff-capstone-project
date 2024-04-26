@@ -10,7 +10,7 @@ async function handleLogout(event) {
   try {
     const token = JSON.parse(localStorage.getItem('user')).accessToken
     const AuthStr = 'Bearer '.concat(token);
-    //window.localStorage.removeItem('user')
+    window.localStorage.removeItem('user')
   } catch (e) {
     console.log("Sign in to logout", e);
   }
@@ -21,6 +21,27 @@ async function handleLogout(event) {
 async function handleEdit(event) {
   event.preventDefault();
   updateUserInfo()
+}
+
+const handleDelete = async (e) => {
+  e.preventDefault();
+  const token = JSON.parse(localStorage.getItem('user')).accessToken
+  const AuthStr = 'Bearer '.concat(token);
+  console.log(e.target.id)
+  try {
+    const response = await axios.delete(
+      "http://localhost:8080/post/get/" + e.target.id,
+      {
+        headers: {
+          accept: "*/*",
+          "Content-Type": "application/json",
+          Authorization: AuthStr
+        }
+      }
+    )
+  } catch (e) {
+    console.log("Product not deleted", e);
+  }
 }
 
 const page = () => {
@@ -136,6 +157,11 @@ const page = () => {
                     <th>{product.description}</th>
                     <th>{product.category}</th>
                     <th> ${product.price}</th>
+                    <th>
+                      <form id={product.id} onSubmit={handleDelete}>
+                        <button type="submit" style={{ backgroundColor: "red", color: "white", width: 15, verticalAlign: "middle" }}>x </button>
+                      </form>
+                    </th>
 
                     <th><form id={product.id} onSubmit={handleUpdate}>
                       <button type="sumbit">Update</button></form>

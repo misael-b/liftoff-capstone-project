@@ -11,13 +11,13 @@ const page = () => {
     //category
     //price
 
-    // const payload = {
-    //     name: post.name,
-    //     description: post.description,
-    //     picture: post.picture,
-    //     category: post.category,
-    //     price: post.price
-    // }
+    const payload = {
+        name: post.name,
+        description: post.description,
+        picture: post.picture,
+        category: post.category,
+        price: post.price
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,7 +27,7 @@ const page = () => {
         try {
             const response = await axios.post(
                 "http://localhost:8080/post",
-                post,
+                payload,
                 {
                     headers: {
                         accept: "*/*",
