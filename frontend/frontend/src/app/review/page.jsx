@@ -19,21 +19,18 @@ const page = () => {
         productId = localStorage.getItem('productId');
         userId = localStorage.getItem('userId');
         name = localStorage.getItem('name');
-        console.log("product id =" + productId);
-        console.log("user id =" + userId);
-        console.log("name =" + name);
     }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("The userId is now " + userId);
         userId = localStorage.getItem('userId');
-        console.log("The userId is now " + userId);
+        productId = localStorage.getItem('productId')
+        console.log(productId)
         token = JSON.parse(localStorage.getItem('user')).accessToken;
         AuthStr = 'Bearer '.concat(token);
         try {
             const response = await axios.post(
-                "http://localhost:8080/review/" + userId,
+                "http://localhost:8080/review/" + productId,
                 review,
                 {
                     headers: {

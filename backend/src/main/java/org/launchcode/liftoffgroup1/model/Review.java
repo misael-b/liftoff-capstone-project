@@ -17,13 +17,16 @@ public class Review {
 
     private Integer rating;
 
+    private String reviewer;
+
     public Review() {
     }
 
-    public Review(String name, String description, Integer rating) {
+    public Review(String name, String description, Integer rating, String reviewer) {
         this.name = name;
         this.description = description;
         this.rating = rating;
+        this.reviewer = reviewer;
     }
 
     public int getId() {
@@ -64,6 +67,14 @@ public class Review {
 
     public void setRating(Integer rating) {
         this.rating = rating;
+    }
+
+    public String getReviewer() {
+        return reviewer;
+    }
+
+    public void setReviewer(String reviewer) {
+        this.reviewer = reviewer;
     }
 }
 
