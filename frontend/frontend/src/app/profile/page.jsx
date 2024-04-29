@@ -23,26 +23,7 @@ async function handleEdit(event) {
   updateUserInfo()
 }
 
-const handleDelete = async (e) => {
-  e.preventDefault();
-  const token = JSON.parse(localStorage.getItem('user')).accessToken
-  const AuthStr = 'Bearer '.concat(token);
-  console.log(e.target.id)
-  try {
-    const response = await axios.delete(
-      "http://localhost:8080/post/get/" + e.target.id,
-      {
-        headers: {
-          accept: "*/*",
-          "Content-Type": "application/json",
-          Authorization: AuthStr
-        }
-      }
-    )
-  } catch (e) {
-    console.log("Product not deleted", e);
-  }
-}
+
 
 const page = () => {
   const [username, setUsername] = useState("");
@@ -95,6 +76,41 @@ const page = () => {
 
     } else {
       homePage()
+    }
+  }
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    const token = JSON.parse(localStorage.getItem('user')).accessToken
+    const AuthStr = 'Bearer '.concat(token);
+    // console.log(e.target.id)
+    try {
+      const response = await axios.delete(
+        "http://localhost:8080/post/get/" + e.target.id,
+        {
+          headers: {
+            accept: "*/*",
+            "Content-Type": "application/json",
+            Authorization: AuthStr
+          }
+        }
+      )
+      axios.get(
+        'http://localhost:8080/post/user-posts',
+        {
+          headers: {
+            accept: "*/*",
+            "Content-Type": 'application/json',
+            Authorization: AuthStr
+          }
+        }
+      ).then((res) => {
+        setProducts(res.data)
+
+
+      })
+    } catch (e) {
+      console.log("Product not deleted", e);
     }
   }
 

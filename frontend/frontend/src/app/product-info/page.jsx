@@ -120,11 +120,6 @@ const page = () => {
         <form id={user.id} onSubmit={handleReview}>
           <button type="submit">Leave a review<br />for a user</button>
         </form>
-        {product?.user?.id == user?.id && user?.id && (
-          <form id={{ productId }} onSubmit={handleDelete}>
-            <button type="submit">Delete Listing</button>
-          </form>
-        )}
       </div>
     </div>
   )
