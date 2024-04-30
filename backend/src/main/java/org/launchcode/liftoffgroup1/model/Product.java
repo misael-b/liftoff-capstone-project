@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 public class Product {
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 

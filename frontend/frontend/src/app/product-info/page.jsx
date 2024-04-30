@@ -47,7 +47,7 @@ const page = () => {
       console.log(res.data);
       setUser(res.data);
       axios.get(
-        'http://localhost:8080/review/' + res.data.id,
+        'http://localhost:8080/review/' + productId,
         {
           headers: {
             accept: "*/*",
@@ -62,25 +62,6 @@ const page = () => {
     });
   }, []);
 
-  const handleDelete = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.delete(
-        "http://localhost:8080/post/get/" + productId,
-        {
-          headers: {
-            accept: "*/*",
-            "Content-Type": "application/json",
-          }
-        }
-      )
-
-      window.location = '/list';
-      console.log(response);
-    } catch (e) {
-      console.log("Product not deleted", e);
-    }
-  }
 
   const handleReview = async (event) => {
     event.preventDefault();
@@ -103,6 +84,7 @@ const page = () => {
         <thead>
           <tr>
             <th>Rating</th>
+            <th>Reviewer</th>
             <th width='80%'>Description</th>
           </tr>
         </thead>
@@ -110,6 +92,7 @@ const page = () => {
           {reviews.map((review) => (
             <tr>
               <td>{review.rating}</td>
+              <td>{review.reviewer}</td>
               <td>{review.description}</td>
             </tr>
           ))}
@@ -120,11 +103,6 @@ const page = () => {
         <form id={user.id} onSubmit={handleReview}>
           <button type="submit">Leave a review<br />for a user</button>
         </form>
-        {product?.user?.id == user?.id && user?.id && (
-          <form id={{ productId }} onSubmit={handleDelete}>
-            <button type="submit">Delete Listing</button>
-          </form>
-        )}
       </div>
     </div>
   )
