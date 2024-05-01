@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react'
 import axios from 'axios';
-import { userHomePage } from '../actions';
+import { homePage} from '../actions';
 
 const Delete = () => {
     const [user, setUser] = useState({ name: '', email: '', id: '', password: '' });
@@ -52,7 +52,8 @@ const Delete = () => {
                     } catch (e) {
                         console.log("failed", e)
                     } finally {
-                        userHomePage()
+                        window.localStorage.removeItem('user')
+                        homePage()
                     }
 
 
@@ -62,9 +63,9 @@ const Delete = () => {
         }
     };
 
-    return (<div className="userSignupForm">
+    return (<div>
         <form onSubmit={handleSubmit} >
-            <button type="submit">Submit</button>
+            <button type="submit">Delete Account</button>
         </form>
         
     </div>

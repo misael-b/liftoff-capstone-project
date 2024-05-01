@@ -1,6 +1,8 @@
 package org.launchcode.liftoffgroup1.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 
@@ -10,6 +12,7 @@ public class Message {
     private String message;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     private Date date;

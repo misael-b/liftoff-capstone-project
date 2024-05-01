@@ -3,6 +3,7 @@ package org.launchcode.liftoffgroup1.controllers;
 import org.launchcode.liftoffgroup1.model.comparator.CategoryComparator;
 import org.launchcode.liftoffgroup1.model.comparator.NameComparator;
 import org.launchcode.liftoffgroup1.model.Product;
+import org.launchcode.liftoffgroup1.model.comparator.NameComparatorBackwards;
 import org.launchcode.liftoffgroup1.model.data.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -61,6 +62,9 @@ public class SearchAndSortController {
             products.sort(comparator);
         }else if (sort.equals("name-asc")) {
             Comparator<Product> comparator = new NameComparator();
+            products.sort(comparator);
+        }else if (sort.equals("name-desc")) {
+            Comparator<Product> comparator = new NameComparatorBackwards();
             products.sort(comparator);
         }
 

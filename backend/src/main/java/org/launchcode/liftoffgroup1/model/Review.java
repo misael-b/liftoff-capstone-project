@@ -1,6 +1,8 @@
 package org.launchcode.liftoffgroup1.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 public class Review {
@@ -9,6 +11,7 @@ public class Review {
     private int id;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     private String name;

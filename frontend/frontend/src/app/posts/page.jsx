@@ -33,11 +33,15 @@ const handleSubmit = async (event) => {
     }
 }
 
+
+
 const page = () => {
 
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState(null);
     const [domLoaded, setDomLoaded] = useState(false);
+    const [nameSorter, setNameSorter] = useState(false);
+    const [priceSorter, setPriceSorter] = useState(false)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -76,6 +80,50 @@ const page = () => {
         localStorage.setItem('productId', event.target.id);
         window.location = '/product-info';
     }
+
+    const handleNameChange = () => {
+        if (nameSorter === false) {
+            setNameSorter(true)
+            axios.get("http://localhost:8080/list/name-asc").then(
+                function (response) {
+                    setProducts(response.data)
+                }
+            )
+            
+        } 
+        else {
+            setNameSorter(false)
+            let sortResponce = axios.get("http://localhost:8080/list/name-desc").then(
+                function (response) {
+                    setProducts(response.data)
+                }
+            )
+            
+        } 
+    }
+
+    const handlePriceChange = () => {
+        if (priceSorter === false) {
+            setPriceSorter(true)
+            axios.get("http://localhost:8080/list/asc").then(
+                function (response) {
+                    setProducts(response.data)
+                }
+            )
+
+        }
+        else {
+            setPriceSorter(false)
+            let sortResponce = axios.get("http://localhost:8080/list/desc").then(
+                function (response) {
+                    setProducts(response.data)
+                }
+            )
+
+        }
+    }
+
+
     return (
         <Layout>
             {domLoaded && (
@@ -106,7 +154,7 @@ const page = () => {
                             <th>
                                 Picture
                             </th>
-                            <th>
+                            <th onClick={handleNameChange}>
                                 Name
                             </th>
                             <th width='20%' >
@@ -115,7 +163,7 @@ const page = () => {
                             <th>
                                 Category
                             </th>
-                            <th>
+                            <th onClick={handlePriceChange}>
                                 Price
                             </th>
                             <th></th>

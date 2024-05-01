@@ -1,6 +1,8 @@
 package org.launchcode.liftoffgroup1.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 
@@ -8,9 +10,11 @@ import java.util.List;
 public class MessageLog {
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user1;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user2;
 
     @Id
